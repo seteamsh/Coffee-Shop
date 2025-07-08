@@ -10,9 +10,22 @@
 		C87BA4A52E1D64A300D64D51 /* Coffee Shop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Coffee Shop.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		C87BA4DD2E1D728F00D64D51 /* Exceptions for "Coffee Shop" folder in "Coffee Shop" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"Coffee-Shop-Info.plist",
+			);
+			target = C87BA4A42E1D64A300D64D51 /* Coffee Shop */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		C87BA4A72E1D64A300D64D51 /* Coffee Shop */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				C87BA4DD2E1D728F00D64D51 /* Exceptions for "Coffee Shop" folder in "Coffee Shop" target */,
+			);
 			path = "Coffee Shop";
 			sourceTree = "<group>";
 		};
@@ -254,6 +267,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Coffee Shop/Resources/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Coffee-Shop-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -282,6 +296,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Coffee Shop/Resources/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Coffee-Shop-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
