@@ -3,28 +3,112 @@ import SwiftUI
 struct MainScreen: View {
     @State var searhBar = ""
     var body: some View {
-        VStack(spacing: 0) {
-            ZStack {
-                Rectangle()
-                    .fill(
-                        LinearGradient(
-                            stops: [
-                                Gradient.Stop(color: .mainBgGradientEnd, location: 0.2),
-                                Gradient.Stop(color: .mainBgGradientStart, location: 1)
-                                ],
-                            startPoint: .bottomLeading,
-                            endPoint: .topTrailing
+        ZStack {
+            VStack(spacing: 0) {
+                ZStack {
+                    Rectangle()
+                        .fill(
+                            LinearGradient(
+                                stops: [
+                                    Gradient.Stop(color: .mainBgGradientEnd, location: 0.2),
+                                    Gradient.Stop(color: .mainBgGradientStart, location: 1)
+                                    ],
+                                startPoint: .bottomLeading,
+                                endPoint: .topTrailing
+                            )
                         )
-                    )
-                    
-                VStack {
-                    Location()
-                    SearchBar(searhBar: $searhBar)
+                        
+                }
+                .frame(height: 238)
+                Spacer()
+            }
+            VStack(spacing: 0) {
+                Location()
+                    .padding(EdgeInsets(top: 24, leading: 0, bottom: 24, trailing: 0))
+                SearchBar(searhBar: $searhBar)
+                    .padding(EdgeInsets(top: 0, leading: 24, bottom: 24, trailing: 24))
+                Image(.banner)
+                    .resizable()
+                    .frame(height: 140)
+                    .clipShape(RoundedRectangle(cornerRadius: 16))
+                    .padding(EdgeInsets(top: 0, leading: 24, bottom: 24, trailing: 24))
+                ScrollView(.horizontal) {
+                    HStack(spacing: 0) {
+                        Button {
+                            
+                        } label: {
+                            ZStack {
+                                Rectangle()
+                                    .fill(Color.brownNormal)
+                                    .clipShape(RoundedRectangle(cornerRadius: 6))
+                                    .frame(width: 87, height: 27)
+                                Text("All Coffee")
+                                    .font(Font.custom(.sora, size: 14))
+                                    .fontWeight(.semibold)
+                                    .foregroundStyle(.white)
+                                    .lineLimit(1)
+                                    .padding(EdgeInsets(top: 4, leading: 8, bottom: 4, trailing: 8))
+                            }
+                        }
+                        .padding(.trailing, 16)
+                        Button {
+                            
+                        } label: {
+                            ZStack {
+                                Rectangle()
+                                    .fill(Color.categoryNotActive)
+                                    .clipShape(RoundedRectangle(cornerRadius: 6))
+                                    .frame(width: 83, height: 29)
+                                Text("Machiato")
+                                    .font(Font.custom(.sora, size: 14))
+                                    .fontWeight(.regular)
+                                    .foregroundStyle(.grayNormal)
+                                    .lineLimit(1)
+                                    .padding(EdgeInsets(top: 4, leading: 8, bottom: 4, trailing: 8))
+                            }
+                            
+                        }
+                        .padding(.trailing, 16)
+                        Button {
+                            
+                        } label: {
+                            ZStack {
+                                Rectangle()
+                                    .fill(Color.categoryNotActive)
+                                    .clipShape(RoundedRectangle(cornerRadius: 6))
+                                    .frame(height: 29)
+                                Text("Latte")
+                                    .font(Font.custom(.sora, size: 14))
+                                    .fontWeight(.regular)
+                                    .foregroundStyle(.grayNormal)
+                                    .lineLimit(1)
+                                    .padding(EdgeInsets(top: 4, leading: 8, bottom: 4, trailing: 8))
+                            }
+                            
+                        }
+                        .padding(.trailing, 16)
+                        Button {
+                            
+                        } label: {
+                            ZStack {
+                                Rectangle()
+                                    .fill(Color.categoryNotActive)
+                                    .clipShape(RoundedRectangle(cornerRadius: 6))
+                                    .frame(height: 29)
+                                Text("Americano")
+                                    .font(Font.custom(.sora, size: 14))
+                                    .fontWeight(.regular)
+                                    .foregroundStyle(.grayNormal)
+                                    .lineLimit(1)
+                                    .padding(EdgeInsets(top: 4, leading: 8, bottom: 4, trailing: 8))
+                            }
+                            
+                        }
+                    }
+                    .padding(EdgeInsets(top: 0, leading: 24, bottom: 0, trailing: 24))
                     Spacer()
                 }
             }
-            .frame(height: 280)
-            Spacer()
         }
     }
 }
@@ -35,13 +119,14 @@ struct Banner: View {
     }
 }
 
+
 struct Location: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
                 Text("Location")
                     .font(Font.custom(.sora, size: 12))
                     .foregroundStyle(.grayLighter)
-                    .padding(.bottom, 11.5)
+                    .padding(.bottom, 8)
                 HStack(spacing: 0) {
                     Text("Bilzen, Tanjungbalai")
                         .font(Font.custom(.sora, size: 14))
@@ -56,8 +141,6 @@ struct Location: View {
                 }
                 .frame(width: 327)
             }
-            
-        .padding(EdgeInsets(top: 24, leading: 24, bottom: 24, trailing: 0))
     }
 }
 
@@ -68,7 +151,7 @@ struct SearchBar: View {
             ZStack {
                 Rectangle()
                     .fill(.blackLighter)
-                    .frame(width: 259, height: 52)
+                    .frame(height: 52)
                     .clipShape(RoundedRectangle(cornerRadius: 12))
                 
                 HStack(spacing: 0) {
