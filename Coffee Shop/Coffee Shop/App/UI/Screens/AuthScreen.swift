@@ -40,6 +40,8 @@ private struct Container: View {
                 VStack(spacing: 0) {
                     Text("Fall in Love with Coffee in Blissful Delight!")
                         .font(Font.custom(.sora, size: 32))
+                        .fontWeight(.semibold)
+                        .multilineTextAlignment(.center)
                         .foregroundStyle(.white)
                         .padding(.bottom, 8)
                     Text("Welcome to our cozy coffee corner, where every cup is a delightful for you.")
@@ -59,6 +61,7 @@ private struct Container: View {
                             .cornerRadius(16)
                         Text("Get Started")
                             .font(Font.custom(.sora, size: 16))
+                            .fontWeight(.semibold)
                             .foregroundStyle(.white)
                     }
                 }
