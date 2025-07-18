@@ -27,98 +27,14 @@ struct MainScreen: View {
                     .padding(EdgeInsets(top: 24, leading: 0, bottom: 24, trailing: 0))
                 SearchBar(searhBar: $searhBar)
                     .padding(EdgeInsets(top: 0, leading: 24, bottom: 24, trailing: 24))
-                Image(.banner)
-                    .resizable()
-                    .frame(height: 140)
-                    .clipShape(RoundedRectangle(cornerRadius: 16))
-                    .padding(EdgeInsets(top: 0, leading: 24, bottom: 24, trailing: 24))
-                ScrollView(.horizontal) {
-                    HStack(spacing: 0) {
-                        Button {
-                            
-                        } label: {
-                            ZStack {
-                                Rectangle()
-                                    .fill(Color.brownNormal)
-                                    .clipShape(RoundedRectangle(cornerRadius: 6))
-                                    .frame(width: 87, height: 27)
-                                Text("All Coffee")
-                                    .font(Font.custom(.sora, size: 14))
-                                    .fontWeight(.semibold)
-                                    .foregroundStyle(.white)
-                                    .lineLimit(1)
-                                    .padding(EdgeInsets(top: 4, leading: 8, bottom: 4, trailing: 8))
-                            }
-                        }
-                        .padding(.trailing, 16)
-                        Button {
-                            
-                        } label: {
-                            ZStack {
-                                Rectangle()
-                                    .fill(Color.categoryNotActive)
-                                    .clipShape(RoundedRectangle(cornerRadius: 6))
-                                    .frame(width: 83, height: 29)
-                                Text("Machiato")
-                                    .font(Font.custom(.sora, size: 14))
-                                    .fontWeight(.regular)
-                                    .foregroundStyle(.grayNormal)
-                                    .lineLimit(1)
-                                    .padding(EdgeInsets(top: 4, leading: 8, bottom: 4, trailing: 8))
-                            }
-                            
-                        }
-                        .padding(.trailing, 16)
-                        Button {
-                            
-                        } label: {
-                            ZStack {
-                                Rectangle()
-                                    .fill(Color.categoryNotActive)
-                                    .clipShape(RoundedRectangle(cornerRadius: 6))
-                                    .frame(height: 29)
-                                Text("Latte")
-                                    .font(Font.custom(.sora, size: 14))
-                                    .fontWeight(.regular)
-                                    .foregroundStyle(.grayNormal)
-                                    .lineLimit(1)
-                                    .padding(EdgeInsets(top: 4, leading: 8, bottom: 4, trailing: 8))
-                            }
-                            
-                        }
-                        .padding(.trailing, 16)
-                        Button {
-                            
-                        } label: {
-                            ZStack {
-                                Rectangle()
-                                    .fill(Color.categoryNotActive)
-                                    .clipShape(RoundedRectangle(cornerRadius: 6))
-                                    .frame(height: 29)
-                                Text("Americano")
-                                    .font(Font.custom(.sora, size: 14))
-                                    .fontWeight(.regular)
-                                    .foregroundStyle(.grayNormal)
-                                    .lineLimit(1)
-                                    .padding(EdgeInsets(top: 4, leading: 8, bottom: 4, trailing: 8))
-                            }
-                            
-                        }
-                    }
-                    .padding(EdgeInsets(top: 0, leading: 24, bottom: 0, trailing: 24))
-                    Spacer()
-                }
+                Banner()
+                CategorySlider()
+                Product()
+                Spacer()
             }
         }
     }
 }
-
-struct Banner: View {
-    var body: some View {
-        Image(.banner)
-    }
-}
-
 
 struct Location: View {
     var body: some View {
@@ -184,6 +100,135 @@ struct SearchBar: View {
                     .frame(width: 20, height: 20)
             }
             .padding(.leading, 16)
+        }
+    }
+}
+
+struct Banner: View {
+    var body: some View {
+        Image(.banner)
+            .resizable()
+            .frame(height: 140)
+            .clipShape(RoundedRectangle(cornerRadius: 16))
+            .padding(EdgeInsets(top: 0, leading: 24, bottom: 24, trailing: 24))
+    }
+}
+
+struct CategorySlider: View {
+    var body: some View {
+        ScrollView(.horizontal) {
+            HStack(spacing: 0) {
+                Button {
+                    
+                } label: {
+                    ZStack {
+                        Rectangle()
+                            .fill(Color.brownNormal)
+                            .clipShape(RoundedRectangle(cornerRadius: 6))
+                            .frame(width: 87, height: 27)
+                        Text("All Coffee")
+                            .font(Font.custom(.sora, size: 14))
+                            .fontWeight(.semibold)
+                            .foregroundStyle(.white)
+                            .lineLimit(1)
+                            .padding(EdgeInsets(top: 4, leading: 8, bottom: 4, trailing: 8))
+                    }
+                }
+                .padding(.trailing, 16)
+                Button {
+                    
+                } label: {
+                    ZStack {
+                        Rectangle()
+                            .fill(Color.categoryNotActive)
+                            .clipShape(RoundedRectangle(cornerRadius: 6))
+                            .frame(width: 83, height: 29)
+                        Text("Machiato")
+                            .font(Font.custom(.sora, size: 14))
+                            .fontWeight(.regular)
+                            .foregroundStyle(.grayNormal)
+                            .lineLimit(1)
+                            .padding(EdgeInsets(top: 4, leading: 8, bottom: 4, trailing: 8))
+                    }
+                    
+                }
+                .padding(.trailing, 16)
+                Button {
+                    
+                } label: {
+                    ZStack {
+                        Rectangle()
+                            .fill(Color.categoryNotActive)
+                            .clipShape(RoundedRectangle(cornerRadius: 6))
+                            .frame(height: 29)
+                        Text("Latte")
+                            .font(Font.custom(.sora, size: 14))
+                            .fontWeight(.regular)
+                            .foregroundStyle(.grayNormal)
+                            .lineLimit(1)
+                            .padding(EdgeInsets(top: 4, leading: 8, bottom: 4, trailing: 8))
+                    }
+                    
+                }
+                .padding(.trailing, 16)
+                Button {
+                    
+                } label: {
+                    ZStack {
+                        Rectangle()
+                            .fill(Color.categoryNotActive)
+                            .clipShape(RoundedRectangle(cornerRadius: 6))
+                            .frame(height: 29)
+                        Text("Americano")
+                            .font(Font.custom(.sora, size: 14))
+                            .fontWeight(.regular)
+                            .foregroundStyle(.grayNormal)
+                            .lineLimit(1)
+                            .padding(EdgeInsets(top: 4, leading: 8, bottom: 4, trailing: 8))
+                    }
+                    
+                }
+            }
+        }.padding(EdgeInsets(top: 0, leading: 24, bottom: 0, trailing: 24))
+    }
+}
+
+struct Product: View {
+    var body: some View {
+        VStack(spacing: 0) {
+            ZStack {
+                Image(.caffeMocha)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 140, height: 128)
+                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                VStack(spacing: 0) {
+                    HStack(spacing: 0) {
+                        Spacer()
+                        ZStack {
+                            Rectangle()
+                                .fill(LinearGradient(colors: [.mainBgGradientStart, .mainBgGradientEnd], startPoint: .bottomLeading, endPoint: .topTrailing))
+                                
+                                .clipShape(UnevenRoundedRectangle(bottomLeadingRadius: CGFloat(24.0), topTrailingRadius: CGFloat(12.0)))
+                                .opacity(0.3)
+                            HStack(spacing: 0) {
+                                Image(.star)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 12, height: 12)
+                                    .padding(.trailing, 4)
+                                Text("4.8")
+                                    .font(Font.custom(.sora, size: 8))
+                                    .fontWeight(.semibold)
+                                    .foregroundStyle(.white)
+                            }
+                            .padding(EdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 14))
+                        }
+                        .frame(width: 51, height: 28)
+                    }
+                    Spacer()
+                }
+            }.frame(width: 140, height: 128)
         }
     }
 }
