@@ -113,82 +113,68 @@ struct Banner: View {
     }
 }
 
+///
+
 struct CategorySlider: View {
+    @State var isActive: Bool
     var body: some View {
         ScrollView(.horizontal) {
             HStack(spacing: 0) {
-                Button {
-                    
-                } label: {
-                    ZStack {
-                        Rectangle()
-                            .fill(Color.brownNormal)
-                            .clipShape(RoundedRectangle(cornerRadius: 6))
-                            .frame(width: 87, height: 27)
-                        Text("All Coffee")
-                            .font(Font.custom(.sora, size: 14))
-                            .fontWeight(.semibold)
-                            .foregroundStyle(.white)
-                            .lineLimit(1)
-                            .padding(EdgeInsets(top: 4, leading: 8, bottom: 4, trailing: 8))
+                ForEach(categories) { category in
+                    if category.isSelected {
+                        CategorySliderActiveButton(name: category)
+                    } else {
+                        CategorySliderNotActiveButton(name: category)
                     }
-                }
-                .padding(.trailing, 16)
-                Button {
-                    
-                } label: {
-                    ZStack {
-                        Rectangle()
-                            .fill(Color.categoryNotActive)
-                            .clipShape(RoundedRectangle(cornerRadius: 6))
-                            .frame(width: 83, height: 29)
-                        Text("Machiato")
-                            .font(Font.custom(.sora, size: 14))
-                            .fontWeight(.regular)
-                            .foregroundStyle(.grayNormal)
-                            .lineLimit(1)
-                            .padding(EdgeInsets(top: 4, leading: 8, bottom: 4, trailing: 8))
-                    }
-                    
-                }
-                .padding(.trailing, 16)
-                Button {
-                    
-                } label: {
-                    ZStack {
-                        Rectangle()
-                            .fill(Color.categoryNotActive)
-                            .clipShape(RoundedRectangle(cornerRadius: 6))
-                            .frame(height: 29)
-                        Text("Latte")
-                            .font(Font.custom(.sora, size: 14))
-                            .fontWeight(.regular)
-                            .foregroundStyle(.grayNormal)
-                            .lineLimit(1)
-                            .padding(EdgeInsets(top: 4, leading: 8, bottom: 4, trailing: 8))
-                    }
-                    
-                }
-                .padding(.trailing, 16)
-                Button {
-                    
-                } label: {
-                    ZStack {
-                        Rectangle()
-                            .fill(Color.categoryNotActive)
-                            .clipShape(RoundedRectangle(cornerRadius: 6))
-                            .frame(height: 29)
-                        Text("Americano")
-                            .font(Font.custom(.sora, size: 14))
-                            .fontWeight(.regular)
-                            .foregroundStyle(.grayNormal)
-                            .lineLimit(1)
-                            .padding(EdgeInsets(top: 4, leading: 8, bottom: 4, trailing: 8))
-                    }
-                    
                 }
             }
         }.padding(EdgeInsets(top: 0, leading: 24, bottom: 0, trailing: 24))
+    }
+}
+
+struct CategorySliderActiveButton: View {
+    var name: CategoryModel
+    var body: some View {
+        Button {
+            
+        } label: {
+            ZStack {
+                Rectangle()
+                    .fill(Color.brownNormal)
+                    .clipShape(RoundedRectangle(cornerRadius: 6))
+                    .frame(width: 87, height: 27)
+                Text(name.name)
+                    .font(Font.custom(.sora, size: 14))
+                    .fontWeight(.semibold)
+                    .foregroundStyle(.white)
+                    .lineLimit(1)
+                    .padding(EdgeInsets(top: 4, leading: 8, bottom: 4, trailing: 8))
+            }
+        }
+        .padding(.trailing, 16)
+    }
+}
+
+struct CategorySliderNotActiveButton: View {
+    var name: CategoryModel
+    var body: some View {
+        Button {
+        } label: {
+            ZStack {
+                Rectangle()
+                    .fill(Color.categoryNotActive)
+                    .clipShape(RoundedRectangle(cornerRadius: 6))
+                    .frame(height: 29)
+                Text(name.name)
+                    .font(Font.custom(.sora, size: 14))
+                    .fontWeight(.regular)
+                    .foregroundStyle(.grayNormal)
+                    .lineLimit(1)
+                    .padding(EdgeInsets(top: 4, leading: 8, bottom: 4, trailing: 8))
+            }
+            
+        }
+        .padding(.trailing, 16)
     }
 }
 
@@ -256,7 +242,7 @@ struct Product: View {
                             .fill(Color.brownNormal)
                             .frame(width: 32, height: 32)
                             .clipShape(RoundedRectangle(cornerRadius: 8))
-                        Image(.add)
+                        Image(.productAdd)
                             .resizable()
                             .aspectRatio(contentMode: .fill)
                             .frame(width: 16, height: 16)
@@ -276,7 +262,7 @@ struct Product: View {
 
 struct Category: View {
     var body: some View {
-        CategorySlider()
+        CategorySlider(isActive: true)
             .padding(.bottom, 16)
         ScrollView {
             LazyVGrid(columns: [
