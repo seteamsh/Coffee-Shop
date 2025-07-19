@@ -28,11 +28,10 @@ struct MainScreen: View {
                 SearchBar(searhBar: $searhBar)
                     .padding(EdgeInsets(top: 0, leading: 24, bottom: 24, trailing: 24))
                 Banner()
-                CategorySlider()
-                Product()
-                Spacer()
+                Category()
             }
         }
+        .background(Color.mainBg)
     }
 }
 
@@ -194,8 +193,12 @@ struct CategorySlider: View {
 }
 
 struct Product: View {
+    var Name: String
+    var description: String
+    var rating: Double
+    var price: String
     var body: some View {
-        VStack(spacing: 0) {
+        VStack(alignment: .leading, spacing: 0) {
             ZStack {
                 Image(.caffeMocha)
                     .resizable()
@@ -229,6 +232,62 @@ struct Product: View {
                     Spacer()
                 }
             }.frame(width: 140, height: 128)
+            Text("Caffe Mocha")
+                .font(Font.custom(.sora, size: 16))
+                .fontWeight(.semibold)
+                .foregroundStyle(.grayNormalActive)
+                .padding(EdgeInsets(top: 8, leading: 0, bottom: 4, trailing: 0))
+            Text("Deep Foam")
+                .font(Font.custom(.sora, size: 12))
+                .fontWeight(.regular)
+                .foregroundStyle(.grayLighter)
+                .padding(.bottom, 8)
+            HStack(spacing: 0) {
+                Text("$ 4.53")
+                    .font(Font.custom(.sora, size: 16))
+                    .fontWeight(.semibold)
+                    .foregroundStyle(.greyDarkActive)
+                Spacer()
+                Button {
+                    
+                } label: {
+                    ZStack {
+                        Rectangle()
+                            .fill(Color.brownNormal)
+                            .frame(width: 32, height: 32)
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                        Image(.add)
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 16, height: 16)
+                        
+                    }
+                    
+                }
+
+            }
+        }
+        .padding(EdgeInsets(top: 8, leading: 8, bottom: 12, trailing: 8))
+        .frame(width: 156, height: 238)
+        .background(Color.white)
+        .clipShape(RoundedRectangle(cornerRadius: 16))
+    }
+}
+
+struct Category: View {
+    var body: some View {
+        CategorySlider()
+            .padding(.bottom, 16)
+        ScrollView {
+            LazyVGrid(columns: [
+                GridItem(.fixed(156), spacing: 15),
+                GridItem(.fixed(156))
+            ], spacing: 24) {
+                Product(Name: "", description: "", rating: 2.1, price: "")
+                Product(Name: "", description: "", rating: 2.1, price: "")
+                Product(Name: "", description: "", rating: 2.1, price: "")
+                Product(Name: "", description: "", rating: 2.1, price: "")
+            }.padding(EdgeInsets(top: 0, leading: 24, bottom: 24, trailing: 24))
         }
     }
 }
