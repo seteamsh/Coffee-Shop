@@ -116,14 +116,15 @@ struct Banner: View {
 ///
 
 struct CategorySlider: View {
-    @State var isActive: Bool
+    @State var isActive: CategorySelectedState = .active
     var body: some View {
         ScrollView(.horizontal) {
             HStack(spacing: 0) {
                 ForEach(categories) { category in
-                    if category.isSelected {
+                    switch isActive {
+                    case .active:
                         CategorySliderActiveButton(name: category)
-                    } else {
+                    case .inActive:
                         CategorySliderNotActiveButton(name: category)
                     }
                 }
@@ -159,6 +160,7 @@ struct CategorySliderNotActiveButton: View {
     var name: CategoryModel
     var body: some View {
         Button {
+            
         } label: {
             ZStack {
                 Rectangle()
@@ -262,7 +264,7 @@ struct Product: View {
 
 struct Category: View {
     var body: some View {
-        CategorySlider(isActive: true)
+        CategorySlider()
             .padding(.bottom, 16)
         ScrollView {
             LazyVGrid(columns: [
