@@ -182,14 +182,11 @@ struct CategorySliderNotActiveButton: View {
 }
 
 struct Product: View {
-    var Name: String
-    var description: String
-    var rating: Double
-    var price: String
+    var product: ProductModel
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             ZStack {
-                Image(.caffeMocha)
+                Image(product.image)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 140, height: 128)
@@ -209,7 +206,7 @@ struct Product: View {
                                     .aspectRatio(contentMode: .fill)
                                     .frame(width: 12, height: 12)
                                     .padding(.trailing, 4)
-                                Text("4.8")
+                                Text("\(product.rating)")
                                     .font(Font.custom(.sora, size: 8))
                                     .fontWeight(.semibold)
                                     .foregroundStyle(.white)
@@ -221,18 +218,18 @@ struct Product: View {
                     Spacer()
                 }
             }.frame(width: 140, height: 128)
-            Text("Caffe Mocha")
+            Text(product.name)
                 .font(Font.custom(.sora, size: 16))
                 .fontWeight(.semibold)
                 .foregroundStyle(.grayNormalActive)
                 .padding(EdgeInsets(top: 8, leading: 0, bottom: 4, trailing: 0))
-            Text("Deep Foam")
+            Text(product.description)
                 .font(Font.custom(.sora, size: 12))
                 .fontWeight(.regular)
                 .foregroundStyle(.grayLighter)
                 .padding(.bottom, 8)
             HStack(spacing: 0) {
-                Text("$ 4.53")
+                Text(product.price)
                     .font(Font.custom(.sora, size: 16))
                     .fontWeight(.semibold)
                     .foregroundStyle(.greyDarkActive)
@@ -272,10 +269,9 @@ struct Category: View {
                 GridItem(.fixed(156), spacing: 15),
                 GridItem(.fixed(156))
             ], spacing: 24) {
-                Product(Name: "", description: "", rating: 2.1, price: "")
-                Product(Name: "", description: "", rating: 2.1, price: "")
-                Product(Name: "", description: "", rating: 2.1, price: "")
-                Product(Name: "", description: "", rating: 2.1, price: "")
+                ForEach(products) { product in
+                    Product(product: product)
+                }
             }.padding(EdgeInsets(top: 0, leading: 24, bottom: 24, trailing: 24))
         }
     }
