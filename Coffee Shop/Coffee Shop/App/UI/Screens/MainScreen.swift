@@ -116,39 +116,34 @@ struct Banner: View {
 ///
 
 struct CategorySlider: View {
-    @State var isActive: Bool = false
+    @State var isActive: CategorySelected = .all
     var body: some View {
         ScrollView(.horizontal) {
             HStack(spacing: 0) {
-                ForEach(categories, id: \.self) { category in
-                    
-                    if isActive {
-                        
+                ForEach(categories) { category in
+                    if isActive == category.isActive {
                         CategorySliderActiveButton(isActive: $isActive, name: category)
                     } else {
                         CategorySliderNotActiveButton(isActive: $isActive, name: category)
                     }
                 }
-//                CategorySliderNotActiveButton(name: "Machiato")
-//                CategorySliderNotActiveButton(name: "Latte")
-//                CategorySliderNotActiveButton(name: "Americano")
             }
         }.padding(EdgeInsets(top: 0, leading: 24, bottom: 0, trailing: 24))
     }
 }
 
 struct CategorySliderActiveButton: View {
-    @Binding var isActive: Bool
+    @Binding var isActive: CategorySelected
     var name: CategoryModel
     var body: some View {
         Button {
-            isActive.toggle()
+            isActive = name.isActive
         } label: {
             ZStack {
                 Rectangle()
                     .fill(Color.brownNormal)
                     .clipShape(RoundedRectangle(cornerRadius: 6))
-                    .frame(width: 87, height: 27)
+                    .frame(height: 29)
                 Text(name.name)
                     .font(Font.custom(.sora, size: 14))
                     .fontWeight(.semibold)
@@ -162,11 +157,11 @@ struct CategorySliderActiveButton: View {
 }
 
 struct CategorySliderNotActiveButton: View {
-    @Binding var isActive: Bool
+    @Binding var isActive: CategorySelected
     var name: CategoryModel
     var body: some View {
         Button {
-            isActive.toggle()
+            isActive = name.isActive
         } label: {
             ZStack {
                 Rectangle()
