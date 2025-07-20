@@ -116,28 +116,33 @@ struct Banner: View {
 ///
 
 struct CategorySlider: View {
-    @State var isActive: CategorySelectedState = .active
+    @State var isActive: Bool = false
     var body: some View {
         ScrollView(.horizontal) {
             HStack(spacing: 0) {
-                ForEach(categories) { category in
-                    switch isActive {
-                    case .active:
-                        CategorySliderActiveButton(name: category)
-                    case .inActive:
-                        CategorySliderNotActiveButton(name: category)
+                ForEach(categories, id: \.self) { category in
+                    
+                    if isActive {
+                        
+                        CategorySliderActiveButton(isActive: $isActive, name: category)
+                    } else {
+                        CategorySliderNotActiveButton(isActive: $isActive, name: category)
                     }
                 }
+//                CategorySliderNotActiveButton(name: "Machiato")
+//                CategorySliderNotActiveButton(name: "Latte")
+//                CategorySliderNotActiveButton(name: "Americano")
             }
         }.padding(EdgeInsets(top: 0, leading: 24, bottom: 0, trailing: 24))
     }
 }
 
 struct CategorySliderActiveButton: View {
+    @Binding var isActive: Bool
     var name: CategoryModel
     var body: some View {
         Button {
-            
+            isActive.toggle()
         } label: {
             ZStack {
                 Rectangle()
@@ -157,10 +162,11 @@ struct CategorySliderActiveButton: View {
 }
 
 struct CategorySliderNotActiveButton: View {
+    @Binding var isActive: Bool
     var name: CategoryModel
     var body: some View {
         Button {
-            
+            isActive.toggle()
         } label: {
             ZStack {
                 Rectangle()
