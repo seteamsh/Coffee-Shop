@@ -188,7 +188,7 @@ struct Product: View {
             ZStack {
                 Image(product.image)
                     .resizable()
-                    .aspectRatio(contentMode: .fit)
+                    .aspectRatio(contentMode: .fill)
                     .frame(width: 140, height: 128)
                     .clipShape(RoundedRectangle(cornerRadius: 12))
                 VStack(spacing: 0) {
