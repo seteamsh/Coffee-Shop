@@ -115,71 +115,27 @@ struct Banner: View {
 
 ///
 
-struct CategorySlider: View {
-    @State var isActive: CategorySelected = .all
-    var body: some View {
-        ScrollView(.horizontal) {
-            HStack(spacing: 0) {
-                ForEach(categories) { category in
-                    if isActive == category.isActive {
-                        CategorySliderActiveButton(isActive: $isActive, name: category)
-                    } else {
-                        CategorySliderNotActiveButton(isActive: $isActive, name: category)
-                    }
-                }
-            }
-        }.padding(EdgeInsets(top: 0, leading: 24, bottom: 0, trailing: 24))
-    }
-}
+//struct CategorySlider: View {
+//    var body: some View {
+//        ScrollView(.horizontal) {
+//            HStack(spacing: 0) {
+//                ForEach(categories) { category in
+//                    if category.category == isSecelted {
+//                        CategorySliderButton(isActive: true, name: category) {
+//                            action()
+//                        }
+//                    } else {
+//                        CategorySliderButton(isActive: false, name: category) {
+//                            action()
+//                        }
+//                    }
+//                }
+//            }
+//        }.padding(EdgeInsets(top: 0, leading: 24, bottom: 0, trailing: 24))
+//    }
+//}
 
-struct CategorySliderActiveButton: View {
-    @Binding var isActive: CategorySelected
-    var name: CategoryModel
-    var body: some View {
-        Button {
-            isActive = name.isActive
-        } label: {
-            ZStack {
-                Rectangle()
-                    .fill(Color.brownNormal)
-                    .clipShape(RoundedRectangle(cornerRadius: 6))
-                    .frame(height: 29)
-                Text(name.name)
-                    .font(Font.custom(.sora, size: 14))
-                    .fontWeight(.semibold)
-                    .foregroundStyle(.white)
-                    .lineLimit(1)
-                    .padding(EdgeInsets(top: 4, leading: 8, bottom: 4, trailing: 8))
-            }
-        }
-        .padding(.trailing, 16)
-    }
-}
 
-struct CategorySliderNotActiveButton: View {
-    @Binding var isActive: CategorySelected
-    var name: CategoryModel
-    var body: some View {
-        Button {
-            isActive = name.isActive
-        } label: {
-            ZStack {
-                Rectangle()
-                    .fill(Color.categoryNotActive)
-                    .clipShape(RoundedRectangle(cornerRadius: 6))
-                    .frame(height: 29)
-                Text(name.name)
-                    .font(Font.custom(.sora, size: 14))
-                    .fontWeight(.regular)
-                    .foregroundStyle(.grayNormal)
-                    .lineLimit(1)
-                    .padding(EdgeInsets(top: 4, leading: 8, bottom: 4, trailing: 8))
-            }
-            
-        }
-        .padding(.trailing, 16)
-    }
-}
 
 struct Product: View {
     var product: ProductModel
@@ -259,21 +215,65 @@ struct Product: View {
         .clipShape(RoundedRectangle(cornerRadius: 16))
     }
 }
-
+///////////////////////////////////////////////////////////
 struct Category: View {
+    @State var categorySelected: CategorySelected = .all
     var body: some View {
-        CategorySlider()
-            .padding(.bottom, 16)
+        
+        ScrollView(.horizontal) {
+            HStack(spacing: 0) {
+                ForEach(categories) { category in
+                    CategorySliderButton(isActive:
+                        category.category == categorySelected ? true : false, name: category
+                    ){
+                        categorySelected = category.category
+                    }
+                }
+            }
+        }.padding(EdgeInsets(top: 0, leading: 24, bottom: 0, trailing: 24))
+
+//        CategorySlider(action: {
+//
+//        })
+//            .padding(.bottom, 16)
         ScrollView {
             LazyVGrid(columns: [
                 GridItem(.fixed(156), spacing: 15),
                 GridItem(.fixed(156))
             ], spacing: 24) {
                 ForEach(products) { product in
-                    Product(product: product)
+                    if product.category == categorySelected {
+                        Product(product: product)
+                    }
                 }
             }.padding(EdgeInsets(top: 0, leading: 24, bottom: 24, trailing: 24))
         }
+    }
+}
+
+struct CategorySliderButton: View {
+    var isActive: Bool
+    var name: CategoryModel
+    var action: () -> Void
+    var body: some View {
+        Button {
+            action()
+        } label: {
+            ZStack {
+                Rectangle()
+                    .fill(isActive ? Color.brownNormal : Color.categoryNotActive)
+                    .clipShape(RoundedRectangle(cornerRadius: 6))
+                    .frame(height: 29)
+                Text(name.name)
+                    .font(Font.custom(.sora, size: 14))
+                    .fontWeight(.regular)
+                    .foregroundStyle(isActive ? Color.white : Color.grayNormal)
+                    .lineLimit(1)
+                    .padding(EdgeInsets(top: 4, leading: 8, bottom: 4, trailing: 8))
+            }
+            
+        }
+        .padding(.trailing, 16)
     }
 }
 

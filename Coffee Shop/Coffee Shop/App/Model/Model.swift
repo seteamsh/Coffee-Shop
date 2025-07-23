@@ -8,14 +8,15 @@ enum CategorySelected {
 struct CategoryModel: Identifiable, Hashable {
     let id: Int
     var name: String
-    var isActive: CategorySelected
+    var isActive: Bool = false
+    var category : CategorySelected
 }
 
 var categories = [
-    CategoryModel(id: 1, name: "All Coffee", isActive: .all),
-    CategoryModel(id: 2, name: "Machiato", isActive: .machiato),
-    CategoryModel(id: 3, name: "Latte", isActive: .latte),
-    CategoryModel(id: 4, name: "Americano", isActive: .americano)
+    CategoryModel(id: 1, name: "All Coffee", category: .all),
+    CategoryModel(id: 2, name: "Machiato", category: .machiato),
+    CategoryModel(id: 3, name: "Latte", category: .latte),
+    CategoryModel(id: 4, name: "Americano", category: .americano)
 ]
 
 struct ProductModel: Identifiable, Hashable {
