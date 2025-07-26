@@ -232,9 +232,6 @@ struct Category: View {
             }
         }.padding(EdgeInsets(top: 0, leading: 24, bottom: 0, trailing: 24))
 
-//        CategorySlider(action: {
-//
-//        })
 //            .padding(.bottom, 16)
         ScrollView {
             LazyVGrid(columns: [
@@ -242,8 +239,10 @@ struct Category: View {
                 GridItem(.fixed(156))
             ], spacing: 24) {
                 ForEach(products) { product in
-                    if product.category == categorySelected {
-                        Product(product: product)
+                    ForEach(product.category) { cat in
+                        if cat == categorySelected {
+                            Product(product: product)
+                        }
                     }
                 }
             }.padding(EdgeInsets(top: 0, leading: 24, bottom: 24, trailing: 24))
