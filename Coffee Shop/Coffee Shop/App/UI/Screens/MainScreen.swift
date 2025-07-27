@@ -105,35 +105,81 @@ struct SearchBar: View {
 
 struct Banner: View {
     var body: some View {
-        Image(.banner)
-            .resizable()
-            .frame(height: 140)
-            .clipShape(RoundedRectangle(cornerRadius: 16))
-            .padding(EdgeInsets(top: 0, leading: 24, bottom: 24, trailing: 24))
+        ZStack {
+            Image(.banner)
+                .resizable()
+                .frame(height: 140)
+                .clipShape(RoundedRectangle(cornerRadius: 16))
+            HStack(spacing: 0) {
+                VStack(alignment: .leading, spacing: 0) {
+                    ZStack {
+                        Rectangle()
+                            .fill(.promoBanner)
+                            .frame(width: 60, height: 26)
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                        Text("Promo")
+                            .font(Font.custom(.sora, size: 14))
+                            .foregroundStyle(.white)
+                            .fontWeight(.semibold)
+                            .padding(EdgeInsets(top: 4, leading: 6, bottom: 4, trailing: 6))
+                    }
+                    
+                    ZStack(alignment: .leading) {
+                        Rectangle()
+                            .fill(LinearGradient(colors: [Color.mainBgGradientEnd, Color.mainBgGradientStart], startPoint: .bottomLeading, endPoint: .topTrailing))
+                            .frame(width: 200, height: 27)
+                            .padding(EdgeInsets(top: 29, leading: 1, bottom: 12, trailing: 0))
+                        Text("Buy one get")
+                            .font(Font.custom(.sora, size: 32))
+                            .foregroundStyle(.white)
+                            .fontWeight(.semibold)
+                    }
+                    ZStack(alignment: .leading) {
+                        Rectangle()
+                            .fill(LinearGradient(colors: [Color.mainBgGradientEnd, Color.mainBgGradientStart], startPoint: .bottomLeading, endPoint: .topTrailing))
+                            .frame(width: 149, height: 23)
+                            .padding(.top, 11)
+                        
+                        Text("one FREE")
+                            .font(Font.custom(.sora, size: 32))
+                            .foregroundStyle(.white)
+                            .fontWeight(.semibold)
+                            .padding(.leading, 1)
+                    }
+                }
+                .frame(width: 204, height: 114)
+                .padding(EdgeInsets(top: 13, leading: 24, bottom: 13, trailing: 99))
+                
+                Spacer()
+            }
+        }
+        
+        .padding(EdgeInsets(top: 0, leading: 24, bottom: 24, trailing: 24))
     }
 }
 
 ///
 
-//struct CategorySlider: View {
-//    var body: some View {
-//        ScrollView(.horizontal) {
-//            HStack(spacing: 0) {
-//                ForEach(categories) { category in
-//                    if category.category == isSecelted {
-//                        CategorySliderButton(isActive: true, name: category) {
-//                            action()
-//                        }
-//                    } else {
-//                        CategorySliderButton(isActive: false, name: category) {
-//                            action()
-//                        }
-//                    }
-//                }
-//            }
-//        }.padding(EdgeInsets(top: 0, leading: 24, bottom: 0, trailing: 24))
-//    }
-//}
+struct CategorySlider: View {
+    @Binding var categorySelected: CategorySelected
+    var body: some View {
+        ScrollView(.horizontal) {
+            HStack(spacing: 0) {
+                ForEach(categories) { category in
+                    
+                    CategorySliderButton(isActive:
+                        category.category == categorySelected ? true : false,
+                                         isLast:
+                        categories.lastIndex(of: category) == categories.count - 1 ? true : false,
+                                         name: category
+                    ){
+                        categorySelected = category.category
+                    }
+                }
+            }
+        }.padding(EdgeInsets(top: 0, leading: 24, bottom: 16, trailing: 24))
+    }
+}
 
 
 
@@ -219,23 +265,10 @@ struct Product: View {
 struct Category: View {
     @State var categorySelected: CategorySelected = .all
     var body: some View {
-        
-        ScrollView(.horizontal) {
-            HStack(spacing: 0) {
-                ForEach(categories) { category in
-                    CategorySliderButton(isActive:
-                        category.category == categorySelected ? true : false, name: category
-                    ){
-                        categorySelected = category.category
-                    }
-                }
-            }
-        }.padding(EdgeInsets(top: 0, leading: 24, bottom: 0, trailing: 24))
-
-//            .padding(.bottom, 16)
+        CategorySlider(categorySelected: $categorySelected)
         ScrollView {
             LazyVGrid(columns: [
-                GridItem(.fixed(156), spacing: 15),
+                GridItem(.fixed(156), spacing: 21),
                 GridItem(.fixed(156))
             ], spacing: 24) {
                 ForEach(products) { product in
@@ -245,13 +278,14 @@ struct Category: View {
                         }
                     }
                 }
-            }.padding(EdgeInsets(top: 0, leading: 24, bottom: 24, trailing: 24))
-        }
+            }
+        }.padding(EdgeInsets(top: 0, leading: 24, bottom: 24, trailing: 24))
     }
 }
 
 struct CategorySliderButton: View {
     var isActive: Bool
+    var isLast: Bool
     var name: CategoryModel
     var action: () -> Void
     var body: some View {
@@ -272,7 +306,7 @@ struct CategorySliderButton: View {
             }
             
         }
-        .padding(.trailing, 16)
+        .padding(.trailing, isLast ? 0 : 16)
     }
 }
 
