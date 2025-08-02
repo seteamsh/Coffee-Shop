@@ -1,7 +1,38 @@
 import SwiftUI
 
+class MainScreenModel: ObservableObject {
+    @Published var searchBar = ""
+    @Published var categorySelected: CategorySelected = .all
+    
+    var filteredProducts: [ProductModel] {
+        get {
+            if categorySelected == .all {
+                return products
+            } else {
+                return products.filter { $0.category.contains(categorySelected) }
+            }
+        }
+    }
+    
+    var categories = [
+        CategoryModel(id: 1, name: "All Coffee", category: .all),
+        CategoryModel(id: 2, name: "Machiato", category: .machiato),
+        CategoryModel(id: 3, name: "Latte", category: .latte),
+        CategoryModel(id: 4, name: "Americano", category: .americano)
+    ]
+
+
+    var products = [
+        ProductModel(id: 1, name: "Caffe Mocha", description: "Deep Foam", price: "$ 4.53", rating: "4.8", image: "caffeMocha", category: [.all, .machiato]),
+        ProductModel(id: 2, name: "Flat White", description: "Espresso", price: "$ 3.53", rating: "4.8", image: "flatWhite", category:  [.all, .americano]),
+        ProductModel(id: 3, name: "Mocha Fusion", description: "Ice/Hot", price: "$ 7.53", rating: "4.8", image: "mochaFusi", category:  [.all, .machiato]),
+        ProductModel(id: 4, name: "Caffe Panna", description: "Ice/Hot", price: "$ 5.53", rating: "4.8", image: "caffePanna", category:  [.all, .latte])
+    ]
+
+}
+
 struct MainScreen: View {
-    @State var searhBar = ""
+    @StateObject var model = MainScreenModel()
     var body: some View {
         ZStack {
             VStack(spacing: 0) {
@@ -25,10 +56,10 @@ struct MainScreen: View {
             VStack(spacing: 0) {
                 Location()
                     .padding(EdgeInsets(top: 24, leading: 0, bottom: 24, trailing: 0))
-                SearchBar(searhBar: $searhBar)
+                SearchBar(searchBar: $model.searchBar)
                     .padding(EdgeInsets(top: 0, leading: 24, bottom: 24, trailing: 24))
                 Banner()
-                Category()
+                Category(model: model)
             }
         }
         .background(Color.mainBg)
@@ -60,7 +91,7 @@ struct Location: View {
 }
 
 struct SearchBar: View {
-    @Binding var searhBar: String
+    @Binding var searchBar: String
     var body: some View {
         HStack(spacing: 0) {
             ZStack {
@@ -76,7 +107,7 @@ struct SearchBar: View {
                         .frame(width: 20, height: 20)
                         .padding(.trailing, 8)
                         
-                    TextField(text: $searhBar) {
+                    TextField(text: $searchBar) {
                         Text("Search coffee")
                             .font(Font.custom(.sora, size: 14))
                             .foregroundStyle(.grayLighter)
@@ -108,7 +139,7 @@ struct Banner: View {
         ZStack {
             Image(.banner)
                 .resizable()
-                .frame(height: 140)
+                .aspectRatio(contentMode: .fill)
                 .clipShape(RoundedRectangle(cornerRadius: 16))
             HStack(spacing: 0) {
                 VStack(alignment: .leading, spacing: 0) {
@@ -121,14 +152,13 @@ struct Banner: View {
                             .font(Font.custom(.sora, size: 14))
                             .foregroundStyle(.white)
                             .fontWeight(.semibold)
-                            .padding(EdgeInsets(top: 4, leading: 6, bottom: 4, trailing: 6))
                     }
-                    
+                    .padding(.bottom, 8)
                     ZStack(alignment: .leading) {
                         Rectangle()
                             .fill(LinearGradient(colors: [Color.mainBgGradientEnd, Color.mainBgGradientStart], startPoint: .bottomLeading, endPoint: .topTrailing))
                             .frame(width: 200, height: 27)
-                            .padding(EdgeInsets(top: 29, leading: 1, bottom: 12, trailing: 0))
+                            .padding(.top, 15)
                         Text("Buy one get")
                             .font(Font.custom(.sora, size: 32))
                             .foregroundStyle(.white)
@@ -138,7 +168,7 @@ struct Banner: View {
                         Rectangle()
                             .fill(LinearGradient(colors: [Color.mainBgGradientEnd, Color.mainBgGradientStart], startPoint: .bottomLeading, endPoint: .topTrailing))
                             .frame(width: 149, height: 23)
-                            .padding(.top, 11)
+                            .padding(.top, 15)
                         
                         Text("one FREE")
                             .font(Font.custom(.sora, size: 32))
@@ -147,13 +177,12 @@ struct Banner: View {
                             .padding(.leading, 1)
                     }
                 }
-                .frame(width: 204, height: 114)
-                .padding(EdgeInsets(top: 13, leading: 24, bottom: 13, trailing: 99))
+                .padding(EdgeInsets(top: 13, leading: 24, bottom: 13, trailing: 0))
                 
                 Spacer()
             }
         }
-        
+        .frame(height: 140)
         .padding(EdgeInsets(top: 0, leading: 24, bottom: 24, trailing: 24))
     }
 }
@@ -161,19 +190,19 @@ struct Banner: View {
 ///
 
 struct CategorySlider: View {
-    @Binding var categorySelected: CategorySelected
+    @ObservedObject var model: MainScreenModel
     var body: some View {
         ScrollView(.horizontal) {
             HStack(spacing: 0) {
-                ForEach(categories) { category in
+                ForEach(model.categories) { category in
                     
                     CategorySliderButton(isActive:
-                        category.category == categorySelected ? true : false,
+                                            category.category == model.categorySelected ? true : false,
                                          isLast:
-                        categories.lastIndex(of: category) == categories.count - 1 ? true : false,
+                                            model.categories.lastIndex(of: category) == model.categories.count - 1 ? true : false,
                                          name: category
                     ){
-                        categorySelected = category.category
+                        model.categorySelected = category.category
                     }
                 }
             }
@@ -263,20 +292,16 @@ struct Product: View {
 }
 ///////////////////////////////////////////////////////////
 struct Category: View {
-    @State var categorySelected: CategorySelected = .all
+    @ObservedObject var model: MainScreenModel
     var body: some View {
-        CategorySlider(categorySelected: $categorySelected)
+        CategorySlider(model: model)
         ScrollView {
             LazyVGrid(columns: [
                 GridItem(.fixed(156), spacing: 21),
                 GridItem(.fixed(156))
             ], spacing: 24) {
-                ForEach(products) { product in
-                    ForEach(product.category) { cat in
-                        if cat == categorySelected {
-                            Product(product: product)
-                        }
-                    }
+                ForEach(model.filteredProducts) { product in
+                    Product(product: product)
                 }
             }
         }.padding(EdgeInsets(top: 0, leading: 24, bottom: 24, trailing: 24))
