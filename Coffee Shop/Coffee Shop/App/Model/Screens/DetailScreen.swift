@@ -2,6 +2,7 @@ import SwiftUI
 
 class DetailScreenModel: ObservableObject {
     @Published var isMore: Bool = false
+    @Published var sizeSelected: Size?
     func lineLimit() -> Int {
         isMore ? .max: 3
     }
@@ -11,12 +12,28 @@ class DetailScreenModel: ObservableObject {
     func textMore() -> String {
         isMore ? ReadState.less.rawValue : ReadState.more.rawValue
     }
+//    func activeToggle() {
+//        isActive.toggle()
+//    }
+//    func colorActive(activeColor: Color, notActiveColor: Color) -> Color {
+//        isActive ? activeColor : notActiveColor
+//    }
+    var sizes: [Size] = [
+        Size(id: 1, text: "S"),
+        Size(id: 2, text: "M"),
+        Size(id: 3, text: "L")
+    ]
+}
+
+struct Size: Identifiable, Equatable {
+    var id: Int
+    var text: String
 }
 
 struct DetailScreen: View {
     @StateObject var model = DetailScreenModel()
     var body: some View {
-        VStack(spacing: 0) {
+        VStack(alignment: .leading, spacing: 0) {
             HStack(spacing: 0) {
                 Button {
                     
@@ -93,30 +110,73 @@ struct DetailScreen: View {
                 .font(Font.custom(.sora, size: 16))
                 .fontWeight(.semibold)
                 .foregroundStyle(.grayNormalActive)
+                .padding(.bottom, 8)
             Text("A cappuccino is an approximately 150 ml (5 oz) beverage, with 25 ml of espresso coffee and 85 ml of fresh milk. The foam on top, made from steamed milk, adds both texture and sweetness to the drink. Traditionally served in a ceramic cup, the cappuccino is known for its perfect balance between bold espresso and creamy milk.")
                 .font(Font.custom(.sora, size: 14))
                 .fontWeight(.light)
                 .foregroundStyle(.grayLighter)
                 .lineLimit(model.lineLimit())
-            Button(action: {
-                model.toggleMore()
-            }, label: {
-                Text(model.textMore())
-                    .font(Font.custom(.sora, size: 14))
-                    .fontWeight(.semibold)
-                    .foregroundStyle(.brownNormal)
-            })
-                .font(Font.custom(.sora, size: 14))
-                .fontWeight(.light)
-                .foregroundStyle(.grayLighter)
+            HStack(spacing: 0) {
+                Spacer()
+                Button(action: {
+                    model.toggleMore()
+                }, label: {
+                    Text(model.textMore())
+                        .font(Font.custom(.sora, size: 14))
+                        .fontWeight(.semibold)
+                        .foregroundStyle(.brownNormal)
+                })
+            }
+            .padding(.bottom, 24)
             Text("Size")
-            
+            ChoiceSize(model: model)
             Spacer()
             
         }
+        
         .padding([.leading, .trailing], 24)
+        .background(Color.mainBg)
     }
 }
+
+struct ChoiceSize: View {
+    @StateObject var model: DetailScreenModel
+    var body: some View {
+        HStack(spacing: 0) {
+            ForEach(model.sizes) { size in
+                ChoiceButton(isActive: model.sizeSelected == size, size: size) {
+                    model.sizeSelected = size
+                }
+            }
+        }
+    }
+}
+
+struct ChoiceButton: View {
+    var isActive: Bool
+    var size: Size
+    var action: () -> Void
+    var body: some View {
+        Button {
+            action()
+        } label: {
+            ZStack{
+                Rectangle()
+                    .frame(width: 96, height: 41)
+                    .foregroundStyle(isActive ? .brownLight : .white)
+                    .cornerRadius(12)
+                    .overlay(RoundedRectangle(cornerRadius: 12).stroke(isActive ? .brownNormal : .lightActive, lineWidth: 1))
+                Text(size.text)
+                    .font(Font.custom(.sora, size: 14))
+                    .fontWeight(.regular)
+                    .foregroundStyle(isActive ? .brownNormal : .grayNormalActive)
+            }
+        }
+
+    }
+}
+
+
 
 enum ReadState: String {
     case more = "Read more"
