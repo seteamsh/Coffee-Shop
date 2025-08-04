@@ -25,3 +25,8 @@ struct ProductModel: Identifiable, Hashable {
     var image: String
     var category: [CategorySelected] = [.all]
 }
+
+struct TypeOrder: Identifiable, Hashable {
+    let id: Int
+    var name: String
+}
