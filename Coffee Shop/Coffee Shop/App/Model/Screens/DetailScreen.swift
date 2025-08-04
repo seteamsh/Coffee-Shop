@@ -33,109 +33,156 @@ struct Size: Identifiable, Equatable {
 struct DetailScreen: View {
     @StateObject var model = DetailScreenModel()
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            HStack(spacing: 0) {
-                Button {
-                    
-                } label: {
-                    Image(.back)
-                        .resizable()
-                        .frame(width: 24, height: 24)
-                }
-                .padding(10)
-                    
+        VStack(spacing: 0) {
+            VStack(alignment: .leading, spacing: 0) {
+                HStack(spacing: 0) {
+                    Button {
+                        
+                    } label: {
+                        Image(.back)
+                            .resizable()
+                            .frame(width: 24, height: 24)
+                    }
+                    .padding(10)
+                        
 
-                Spacer()
-                Text("Detail")
+                    Spacer()
+                    Text("Detail")
+                        .font(Font.custom(.sora, size: 16))
+                        .fontWeight(.semibold)
+                        .foregroundStyle(.grayNormalActive)
+                    Spacer()
+                    Button {
+                        
+                    } label: {
+                        Image(.favorite)
+                            .resizable()
+                            .frame(width: 24, height: 24)
+                    }
+                    .padding(10)
+
+                }
+                .padding(.top, 24)
+                Image(.fullCaffeMocha)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height: 202)
+                HStack(spacing: 0) {
+                    VStack(alignment: .leading, spacing: 0) {
+                        Text("Caffe Mocha")
+                            .font(Font.custom(.sora, size: 20))
+                            .fontWeight(.semibold)
+                            .foregroundStyle(.grayNormalActive)
+                            .padding(.bottom, 4)
+                        Text("Ice/Hot")
+                            .font(Font.custom(.sora, size: 12))
+                            .fontWeight(.regular)
+                            .foregroundStyle(.grayLighter)
+                            .padding(.bottom,  16)
+                        HStack(spacing: 0) {
+                            Image(.star)
+                                .resizable()
+                                .frame(width: 20, height: 20)
+                            Text("4.8")
+                                .font(Font.custom(.sora, size: 15))
+                                .fontWeight(.semibold)
+                                .foregroundStyle(.greyNormalHover)
+                            Text("(230)")
+                                .font(Font.custom(.sora, size: 12))
+                                .foregroundStyle(.grayLighter)
+                        }
+                    }
+                    Spacer()
+                    HStack(spacing: 0) {
+                        Superiority(logo: .fastDelivery)
+                            .padding(.trailing, 12)
+                        Superiority(logo: .qualityBean)
+                            .padding(.trailing, 12)
+                        Superiority(logo: .extraMilk)
+                    }
+                    .padding([.top, .bottom], 20)
+                }
+                .padding(.bottom, 16)
+                Rectangle()
+                    .frame(height: 1)
+                    .foregroundStyle(.lightActive)
+                    .padding([.leading, .trailing], 16)
+                Text("Description")
                     .font(Font.custom(.sora, size: 16))
                     .fontWeight(.semibold)
                     .foregroundStyle(.grayNormalActive)
+                    .padding(.bottom, 8)
+                Text("A cappuccino is an approximately 150 ml (5 oz) beverage, with 25 ml of espresso coffee and 85 ml of fresh milk. The foam on top, made from steamed milk, adds both texture and sweetness to the drink. Traditionally served in a ceramic cup, the cappuccino is known for its perfect balance between bold espresso and creamy milk.")
+                    .font(Font.custom(.sora, size: 14))
+                    .fontWeight(.light)
+                    .foregroundStyle(.grayLighter)
+                    .lineLimit(model.lineLimit())
+                HStack(spacing: 0) {
+                    Spacer()
+                    Button(action: {
+                        model.toggleMore()
+                    }, label: {
+                        Text(model.textMore())
+                            .font(Font.custom(.sora, size: 14))
+                            .fontWeight(.semibold)
+                            .foregroundStyle(.brownNormal)
+                    })
+                }
+                .padding(.bottom, 24)
+                Text("Size")
+                    .font(Font.custom(.sora, size: 16))
+                    .fontWeight(.semibold)
+                    .foregroundStyle(.grayNormalActive)
+                    .padding(.bottom, 16)
+                ChoiceSize(model: model)
+                Spacer()
+            }
+            
+            .padding([.leading, .trailing], 24)
+            .background(Color.mainBg)
+        }
+        ZStack {
+            Rectangle()
+                .fill(.white)
+                .frame(height: 118)
+                .clipShape(
+                    .rect(topLeadingRadius: 16, bottomLeadingRadius: 0, bottomTrailingRadius: 0, topTrailingRadius: 16))
+            
+            HStack(spacing: 0) {
+                VStack(spacing: 0) {
+                    Text("Price")
+                        .font(Font.custom(.sora, size: 14))
+                        .fontWeight(.regular)
+                        .foregroundStyle(.greyLightHover)
+                        .padding(.bottom, 4)
+                    Text("$4.53")
+                        .font(Font.custom(.sora, size: 18))
+                        .fontWeight(.semibold)
+                        .foregroundStyle(.brownNormal)
+                }
                 Spacer()
                 Button {
                     
                 } label: {
-                    Image(.favorite)
-                        .resizable()
-                        .frame(width: 24, height: 24)
-                }
-                .padding(10)
+                    ZStack {
+                        Rectangle()
+                            .fill(.brownNormal)
+                            .frame(width: 217, height: 56)
+                            .clipShape(RoundedRectangle(cornerRadius: 16))
 
-            }
-            .padding(.top, 24)
-            Image(.fullCaffeMocha)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(height: 202)
-            HStack(spacing: 0) {
-                VStack(alignment: .leading, spacing: 0) {
-                    Text("Caffe Mocha")
-                        .font(Font.custom(.sora, size: 20))
-                        .fontWeight(.semibold)
-                        .foregroundStyle(.grayNormalActive)
-                        .padding(.bottom, 4)
-                    Text("Ice/Hot")
-                        .font(Font.custom(.sora, size: 12))
-                        .fontWeight(.regular)
-                        .foregroundStyle(.grayLighter)
-                        .padding(.bottom,  16)
-                    HStack(spacing: 0) {
-                        Image(.star)
-                            .resizable()
-                            .frame(width: 20, height: 20)
-                        Text("4.8")
-                            .font(Font.custom(.sora, size: 15))
+                        Text("Buy Now")
+                            .font(Font.custom(.sora, size: 16))
                             .fontWeight(.semibold)
-                            .foregroundStyle(.greyNormalHover)
-                        Text("(230)")
-                            .font(Font.custom(.sora, size: 12))
-                            .foregroundStyle(.grayLighter)
+                            .foregroundStyle(.white)
                     }
                 }
-                Spacer()
-                HStack(spacing: 0) {
-                    Superiority(logo: .fastDelivery)
-                        .padding(.trailing, 12)
-                    Superiority(logo: .qualityBean)
-                        .padding(.trailing, 12)
-                    Superiority(logo: .extraMilk)
-                }
-                .padding([.top, .bottom], 20)
+
+                    
             }
-            .padding(.bottom, 16)
-            Rectangle()
-                .frame(height: 1)
-                .foregroundStyle(.lightActive)
-                .padding([.leading, .trailing], 16)
-            Text("Description")
-                .font(Font.custom(.sora, size: 16))
-                .fontWeight(.semibold)
-                .foregroundStyle(.grayNormalActive)
-                .padding(.bottom, 8)
-            Text("A cappuccino is an approximately 150 ml (5 oz) beverage, with 25 ml of espresso coffee and 85 ml of fresh milk. The foam on top, made from steamed milk, adds both texture and sweetness to the drink. Traditionally served in a ceramic cup, the cappuccino is known for its perfect balance between bold espresso and creamy milk.")
-                .font(Font.custom(.sora, size: 14))
-                .fontWeight(.light)
-                .foregroundStyle(.grayLighter)
-                .lineLimit(model.lineLimit())
-            HStack(spacing: 0) {
-                Spacer()
-                Button(action: {
-                    model.toggleMore()
-                }, label: {
-                    Text(model.textMore())
-                        .font(Font.custom(.sora, size: 14))
-                        .fontWeight(.semibold)
-                        .foregroundStyle(.brownNormal)
-                })
-            }
-            .padding(.bottom, 24)
-            Text("Size")
-            ChoiceSize(model: model)
-            Spacer()
             
-        }
-        
-        .padding([.leading, .trailing], 24)
-        .background(Color.mainBg)
+            .padding(EdgeInsets(top: 16, leading: 24, bottom: 12, trailing: 24))
+            
+        }.background(Color.mainBg)
     }
 }
 
@@ -144,7 +191,9 @@ struct ChoiceSize: View {
     var body: some View {
         HStack(spacing: 0) {
             ForEach(model.sizes) { size in
-                ChoiceButton(isActive: model.sizeSelected == size, size: size) {
+                ChoiceButton(isActive: model.sizeSelected == size,
+                             isLast: model.sizes.last == size,
+                             size: size) {
                     model.sizeSelected = size
                 }
             }
@@ -154,6 +203,7 @@ struct ChoiceSize: View {
 
 struct ChoiceButton: View {
     var isActive: Bool
+    var isLast: Bool
     var size: Size
     var action: () -> Void
     var body: some View {
@@ -171,7 +221,7 @@ struct ChoiceButton: View {
                     .fontWeight(.regular)
                     .foregroundStyle(isActive ? .brownNormal : .grayNormalActive)
             }
-        }
+        }.padding(.trailing, isLast ? 0 : 16)
 
     }
 }
