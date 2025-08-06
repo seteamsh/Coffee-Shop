@@ -30,3 +30,14 @@ struct TypeOrder: Identifiable, Hashable {
     let id: Int
     var name: String
 }
+
+struct EditTypeButton: Identifiable, Hashable {
+    let id: Int
+    var name: String
+    var image: String
+}
+
+enum TypeCountButton: String {
+    case add = "add"
+    case minus = "minus"
+}
