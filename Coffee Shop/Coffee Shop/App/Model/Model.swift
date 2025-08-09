@@ -38,6 +38,7 @@ struct EditTypeButton: Identifiable, Hashable {
 }
 
 enum TypeCountButton: String {
-    case add = "add"
-    case minus = "minus"
+    case plus = "plus"
+    case notActiveMinus = "notActiveMinus"
+    case activeMinus = "activeMinus"
 }

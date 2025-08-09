@@ -108,10 +108,7 @@ struct DetailScreen: View {
                             .padding([.top, .bottom], 20)
                         }
                         .padding(.bottom, 16)
-                        Rectangle()
-                            .frame(height: 1)
-                            .foregroundStyle(.lightActive)
-                            .padding([.leading, .trailing], 16)
+                        CustomDivider()
                         Text("Description")
                             .font(Font.custom(.sora, size: 16))
                             .fontWeight(.semibold)
@@ -146,52 +143,59 @@ struct DetailScreen: View {
                     .padding([.leading, .trailing], 24)
                     .background(Color.mainBg)
                 }
-                ZStack {
-                    Rectangle()
-                        .fill(.white)
-                        .frame(height: 118)
-                        .clipShape(
-                            .rect(topLeadingRadius: 16, bottomLeadingRadius: 0, bottomTrailingRadius: 0, topTrailingRadius: 16))
-                    
-                    HStack(spacing: 0) {
-                        VStack(spacing: 0) {
-                            Text("Price")
-                                .font(Font.custom(.sora, size: 14))
-                                .fontWeight(.regular)
-                                .foregroundStyle(.greyLightHover)
-                                .padding(.bottom, 4)
-                            Text("$4.53")
-                                .font(Font.custom(.sora, size: 18))
-                                .fontWeight(.semibold)
-                                .foregroundStyle(.brownNormal)
-                        }
-                        Spacer()
-                        Button {
-                            
-                        } label: {
-                            ZStack {
-                                Rectangle()
-                                    .fill(.brownNormal)
-                                    .frame(width: 217, height: 56)
-                                    .clipShape(RoundedRectangle(cornerRadius: 16))
-
-                                Text("Buy Now")
-                                    .font(Font.custom(.sora, size: 16))
-                                    .fontWeight(.semibold)
-                                    .foregroundStyle(.white)
-                            }
-                        }
-
-                            
-                    }
-                    
-                    .padding(EdgeInsets(top: 16, leading: 24, bottom: 12, trailing: 24))
-                    
-                }.background(Color.mainBg)
+                TapBar()
+                .background(Color.mainBg)
             }
         })
             .ignoresSafeArea(edges: .bottom)
             
+    }
+}
+
+struct TapBar: View {
+    var body: some View {
+        ZStack {
+            Rectangle()
+                .fill(.white)
+                .frame(height: 118)
+                .clipShape(
+                    .rect(topLeadingRadius: 16, bottomLeadingRadius: 0, bottomTrailingRadius: 0, topTrailingRadius: 16))
+            
+            HStack(spacing: 0) {
+                VStack(spacing: 0) {
+                    Text("Price")
+                        .font(Font.custom(.sora, size: 14))
+                        .fontWeight(.regular)
+                        .foregroundStyle(.greyLightHover)
+                        .padding(.bottom, 4)
+                    Text("$4.53")
+                        .font(Font.custom(.sora, size: 18))
+                        .fontWeight(.semibold)
+                        .foregroundStyle(.brownNormal)
+                }
+                Spacer()
+                Button {
+                    
+                } label: {
+                    ZStack {
+                        Rectangle()
+                            .fill(.brownNormal)
+                            .frame(width: 217, height: 56)
+                            .clipShape(RoundedRectangle(cornerRadius: 16))
+
+                        Text("Buy Now")
+                            .font(Font.custom(.sora, size: 16))
+                            .fontWeight(.semibold)
+                            .foregroundStyle(.white)
+                    }
+                }
+
+                    
+            }
+            
+            .padding(EdgeInsets(top: 16, leading: 24, bottom: 12, trailing: 24))
+            
+        }
     }
 }
 
@@ -235,7 +239,14 @@ struct ChoiceButton: View {
     }
 }
 
-
+struct CustomDivider: View {
+    var body: some View {
+        Rectangle()
+            .frame(height: 1)
+            .foregroundStyle(.lightActive)
+            .padding([.leading, .trailing], 16)
+    }
+}
 
 enum ReadState: String {
     case more = "Read more"

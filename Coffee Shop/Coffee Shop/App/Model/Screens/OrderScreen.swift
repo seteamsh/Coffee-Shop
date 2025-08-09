@@ -11,46 +11,69 @@ class OrderScreenModel: ObservableObject {
         EditTypeButton(id: 1, name: "Edit Address", image: "edit"),
         EditTypeButton(id: 2, name: "Add note", image: "note")
         ]
-        
+    var isActiveMinus: Bool {
+        count == 1 ? false : true
+    }
+    func increaseCount() {
+        if count == 1 {
+            return
+        } else if count > 1 {
+            count -= 1
+        }
+    }
 }
 
 struct OrderScreen: View {
     @StateObject var model = OrderScreenModel()
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            HStack(spacing: 0) {
-                Button {
-                    
-                } label: {
-                    Image(.back)
-                        .resizable()
-                        .frame(width: 24, height: 24)
-                }
-                .padding(10)
-                
-                Spacer()
-
-                Text("Detail")
-                    .font(Font.custom(.sora, size: 16))
-                    .fontWeight(.semibold)
-                    .foregroundStyle(.grayNormalActive)
-                    .padding(EdgeInsets(top: 12.5, leading: 0, bottom: 12.5, trailing: 0))
-                
-                Spacer()
-                
-                Rectangle()
-                    .fill(.white)
-                    .frame(width: 24, height: 24)
+        VStack(spacing: 0) {
+            VStack(alignment: .leading, spacing: 0) {
+                HStack(spacing: 0) {
+                    Button {
+                        
+                    } label: {
+                        Image(.back)
+                            .resizable()
+                            .frame(width: 24, height: 24)
+                    }
                     .padding(10)
+                    
+                    Spacer()
+
+                    Text("Detail")
+                        .font(Font.custom(.sora, size: 16))
+                        .fontWeight(.semibold)
+                        .foregroundStyle(.grayNormalActive)
+                        .padding(EdgeInsets(top: 12.5, leading: 0, bottom: 12.5, trailing: 0))
+                    
+                    Spacer()
+                    
+                    Rectangle()
+                        .fill(.white)
+                        .frame(width: 24, height: 24)
+                        .padding(10)
+                }
+                .padding(.top, 24)
+                OrderType(model: model)
+                    .padding(.bottom, 24)
+                DeliveryAddress(model: model)
+                    .padding(.bottom, 16)
+                CustomDivider()
+                    .padding(.bottom, 16)
+                CheckoutProduct(model: model)
+                Rectangle()
+                    .fill(.brownLight)
+                    .frame(height: 4)
+                    .padding([.top, .bottom], 16)
+                Discount()
+                    .padding(.bottom, 24)
+                PaymentSummary()
             }
-            .padding(.top, 24)
-            OrderType(model: model)
-                .padding(.bottom, 24)
-            DeliveryAddress(model: model)
-            CheckoutProduct(model: model)
+            .padding([.leading, .trailing], 24)
             Spacer()
-        }
-        .padding([.leading, .trailing], 24)
+            TapBar()
+        }.background(.mainBg)
+            .ignoresSafeArea(edges: .bottom)
     }
 }
 
@@ -72,6 +95,70 @@ struct TypeCountBtn: View {
                     .aspectRatio(contentMode: .fill)
             }
         }
+    }
+}
+
+struct PaymentSummary: View {
+    var body: some View {
+        Text("Payment Summary")
+            .font(Font.custom(.sora, size: 16))
+            .fontWeight(.semibold)
+            .foregroundStyle(.grayNormalActive)
+        HStack(spacing: 0) {
+            Text("Price")
+                .font(Font.custom(.sora, size: 14))
+                .fontWeight(.regular)
+                .foregroundStyle(.grayNormal)
+            Spacer()
+            Text("$4.53")
+                .font(Font.custom(.sora, size: 16))
+                .fontWeight(.semibold)
+                .foregroundStyle(.grayNormalActive)
+        }
+        HStack(spacing: 0) {
+            Text("Delivery Fee")
+                .font(Font.custom(.sora, size: 14))
+                .fontWeight(.regular)
+                .foregroundStyle(.grayNormal)
+            Spacer()
+            Text("$2.00")
+                .font(Font.custom(.sora, size: 16))
+                .fontWeight(.regular)
+                .foregroundStyle(.grayNormalActive)
+                .padding(.trailing, 8)
+            Text("$1.00")
+                .font(Font.custom(.sora, size: 16))
+                .fontWeight(.semibold)
+                .foregroundStyle(.grayNormalActive)
+        }
+    }
+}
+
+struct Discount: View {
+    var body: some View {
+        ZStack {
+            Rectangle()
+                .fill(.white)
+                .frame(height: 56)
+                .cornerRadius(16)
+                .overlay(RoundedRectangle(cornerRadius: 16) .stroke(.categoryNotActive, lineWidth: 1))
+            HStack(spacing: 0) {
+                Image(.discount)
+                    .resizable()
+                    .frame(width: 20, height: 20)
+                    .aspectRatio(contentMode: .fill)
+                    .padding(.trailing, 16)
+                Text("1 Discount is Applies")
+                    .font(Font.custom(.sora, size: 14))
+                    .fontWeight(.semibold)
+                Spacer()
+                Image(.right)
+                    .resizable()
+                    .frame(width: 21, height: 21)
+                    .aspectRatio(contentMode: .fill)
+            }.padding(EdgeInsets(top: 18, leading: 16, bottom: 18, trailing: 16))
+        }
+            
     }
 }
 
@@ -97,13 +184,13 @@ struct CheckoutProduct: View {
             .padding(.leading, 16)
             Spacer()
             HStack(spacing: 0) {
-                TypeCountBtn(type: .minus) {
-                    model.count -= 1
+                TypeCountBtn(type: model.isActiveMinus ? .activeMinus : .notActiveMinus) {
+                    model.increaseCount()
                 }
                 .padding(.trailing, 18)
                 Text("\(model.count)")
                     .padding(.trailing, 18)
-                TypeCountBtn(type: .add) {
+                TypeCountBtn(type: .plus) {
                     model.count += 1
                 }
             }
