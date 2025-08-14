@@ -34,6 +34,7 @@ class DetailScreenModel: ObservableObject {
 struct DetailScreen: View {
     @StateObject var model = DetailScreenModel()
     @ObservedObject var mainModel: MainScreenModel
+    @Environment(\.dismiss) var dismiss
     var body: some View {
         VStack(spacing: 0, content: {
             ScrollView(.vertical) {
@@ -41,7 +42,7 @@ struct DetailScreen: View {
                     VStack(alignment: .leading, spacing: 0) {
                         HStack(spacing: 0) {
                             Button {
-                                
+                                dismiss()
                             } label: {
                                 Image(.back)
                                     .resizable()
@@ -147,6 +148,7 @@ struct DetailScreen: View {
                 .background(Color.mainBg)
             }
         })
+            .navigationBarBackButtonHidden()
             .ignoresSafeArea(edges: .bottom)
             
     }

@@ -26,12 +26,14 @@ class OrderScreenModel: ObservableObject {
 struct OrderScreen: View {
     @StateObject var model = OrderScreenModel()
     @ObservedObject var mainModel: MainScreenModel
+    @Environment(\.dismiss) var dismiss
     var body: some View {
+        
         VStack(spacing: 0) {
             VStack(alignment: .leading, spacing: 0) {
                 HStack(spacing: 0) {
                     Button {
-                        
+                        dismiss()
                     } label: {
                         Image(.back)
                             .resizable()
@@ -120,7 +122,9 @@ struct OrderScreen: View {
                 }
             }
         }.background(.mainBg)
+            .navigationBarBackButtonHidden()
             .ignoresSafeArea(edges: .bottom)
+
     }
 }
 

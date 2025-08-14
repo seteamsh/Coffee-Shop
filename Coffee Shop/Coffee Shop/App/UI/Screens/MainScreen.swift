@@ -5,7 +5,7 @@ class MainScreenModel: ObservableObject {
     @Published var searchBar = ""
     @Published var categorySelected: CategorySelected = .all
     @Published var selectedProduct: SelectedProduct?
-    
+    @Environment(\.dismiss) var dismiss
     var filteredProducts: [ProductModel] {
         get {
             if categorySelected == .all {
@@ -87,6 +87,7 @@ struct MainScreen: View {
             }
             .background(Color.mainBg)
         }
+        .navigationBarBackButtonHidden()
     }
 }
 

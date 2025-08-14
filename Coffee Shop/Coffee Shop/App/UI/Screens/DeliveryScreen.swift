@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct DeliveryScreen: View {
+    @Environment(\.dismiss) var dismiss
     var body: some View {
         ZStack {
             Image(.map)
@@ -16,7 +17,7 @@ struct DeliveryScreen: View {
             VStack(spacing: 0) {
                 HStack(spacing: 0) {
                     Button {
-                        
+                        dismiss()
                     } label: {
                         ZStack{
                             Rectangle()
@@ -166,6 +167,7 @@ struct DeliveryScreen: View {
                 }
             }
         }
+            .navigationBarBackButtonHidden()
     }
 }
 
