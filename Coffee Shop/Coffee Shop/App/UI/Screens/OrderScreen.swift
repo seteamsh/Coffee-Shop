@@ -25,6 +25,7 @@ class OrderScreenModel: ObservableObject {
 
 struct OrderScreen: View {
     @StateObject var model = OrderScreenModel()
+    @ObservedObject var mainModel: MainScreenModel
     var body: some View {
         VStack(spacing: 0) {
             VStack(alignment: .leading, spacing: 0) {
@@ -60,18 +61,64 @@ struct OrderScreen: View {
                     .padding(.bottom, 16)
                 CustomDivider()
                     .padding(.bottom, 16)
-                CheckoutProduct(model: model)
+                CheckoutProduct(model: model, mainModel: mainModel)
                 Rectangle()
                     .fill(.brownLight)
                     .frame(height: 4)
                     .padding([.top, .bottom], 16)
                 Discount()
                     .padding(.bottom, 24)
-                PaymentSummary()
+                PaymentSummary(mainModel: mainModel)
             }
             .padding([.leading, .trailing], 24)
             Spacer()
-            TapBar()
+            ZStack {
+                Rectangle()
+                    .fill(.white)
+                    .frame(height: 165)
+                    .clipShape(
+                        .rect(topLeadingRadius: 16, bottomLeadingRadius: 0, bottomTrailingRadius: 0, topTrailingRadius: 16))
+                VStack(spacing: 0) {
+                    HStack(spacing: 0) {
+                        Image(.wallet)
+                            .resizable()
+                            .frame(width: 15.95, height: 14.73)
+                            .padding(.trailing, 9.5)
+                        VStack(alignment: .leading, spacing: 0) {
+                            Text("Cash/Wallet")
+                                .font(Font.custom(.sora, size: 14))
+                                .fontWeight(.semibold)
+                                .foregroundStyle(.grayNormalActive)
+                            Text(mainModel.selectedProduct?.product?.price ?? "")
+                                .font(Font.custom(.sora, size: 12))
+                                .fontWeight(.semibold)
+                                .foregroundStyle(.brownNormal)
+                        }
+                        Spacer()
+                        Image(.down)
+                            .resizable()
+                            .frame(width: 24, height: 24)
+                    }
+                    .padding(EdgeInsets(top: 16, leading: 24, bottom: 12, trailing: 24))
+                    Button {
+                        print("\(String(describing: mainModel.selectedProduct))")
+                        mainModel.goToDelivery()
+                    } label: {
+                        ZStack {
+                            Rectangle()
+                                .fill(.brownNormal)
+                                .frame(height: 56)
+                                .clipShape(RoundedRectangle(cornerRadius: 16))
+
+                            Text("Buy Now")
+                                .font(Font.custom(.sora, size: 16))
+                                .fontWeight(.semibold)
+                                .foregroundStyle(.white)
+                        }
+                    }
+                .padding(EdgeInsets(top: 16, leading: 24, bottom: 12, trailing: 24))
+                }
+            }
         }.background(.mainBg)
             .ignoresSafeArea(edges: .bottom)
     }
@@ -99,6 +146,7 @@ struct TypeCountBtn: View {
 }
 
 struct PaymentSummary: View {
+    @ObservedObject var mainModel: MainScreenModel
     var body: some View {
         Text("Payment Summary")
             .font(Font.custom(.sora, size: 16))
@@ -110,7 +158,7 @@ struct PaymentSummary: View {
                 .fontWeight(.regular)
                 .foregroundStyle(.grayNormal)
             Spacer()
-            Text("$4.53")
+            Text(mainModel.selectedProduct?.product?.price ?? "")
                 .font(Font.custom(.sora, size: 16))
                 .fontWeight(.semibold)
                 .foregroundStyle(.grayNormalActive)
@@ -164,19 +212,20 @@ struct Discount: View {
 
 struct CheckoutProduct: View {
     @ObservedObject var model: OrderScreenModel
+    @ObservedObject var mainModel: MainScreenModel
     var body: some View {
         HStack(spacing: 0) {
-            Image(.caffeMocha)
+            Image(mainModel.selectedProduct?.product?.image ?? "")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .clipShape(RoundedRectangle(cornerRadius: 8))
             VStack(alignment: .leading, spacing: 0) {
-                Text("Caffe Mocha")
+                Text(mainModel.selectedProduct?.product?.name ?? "")
                     .font(Font.custom(.sora, size: 16))
                     .fontWeight(.semibold)
                     .foregroundStyle(.grayNormalActive)
                 
-                Text("Deep Foam")
+                Text(mainModel.selectedProduct?.product?.description ?? "")
                     .font(Font.custom(.sora, size: 12))
                     .fontWeight(.regular)
                     .foregroundStyle(.grayLighter)
@@ -289,5 +338,5 @@ struct OrderTypeButton: View {
 }
 
 #Preview {
-    OrderScreen()
+    OrderScreen(mainModel: MainScreenModel())
 }

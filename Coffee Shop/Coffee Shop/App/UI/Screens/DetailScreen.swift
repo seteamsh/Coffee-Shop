@@ -3,6 +3,7 @@ import SwiftUI
 class DetailScreenModel: ObservableObject {
     @Published var isMore: Bool = false
     @Published var sizeSelected: Size?
+    @Published var selectedSize: Size?
     var lineLimit: Int {
         isMore ? .max : 3
     }
@@ -28,13 +29,11 @@ class DetailScreenModel: ObservableObject {
     ]
 }
 
-struct Size: Identifiable, Equatable {
-    var id: Int
-    var text: String
-}
+
 
 struct DetailScreen: View {
     @StateObject var model = DetailScreenModel()
+    @ObservedObject var mainModel: MainScreenModel
     var body: some View {
         VStack(spacing: 0, content: {
             ScrollView(.vertical) {
@@ -68,13 +67,14 @@ struct DetailScreen: View {
 
                         }
                         .padding(.top, 24)
-                        Image(.fullCaffeMocha)
+                        Image(mainModel.selectedProduct?.product?.image ?? "")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(height: 202)
+                            .frame(width: 327, height: 202, alignment: .center)
+                        
                         HStack(spacing: 0) {
                             VStack(alignment: .leading, spacing: 0) {
-                                Text("Caffe Mocha")
+                                Text(mainModel.selectedProduct?.product?.name ?? "")
                                     .font(Font.custom(.sora, size: 20))
                                     .fontWeight(.semibold)
                                     .foregroundStyle(.grayNormalActive)
@@ -88,7 +88,7 @@ struct DetailScreen: View {
                                     Image(.star)
                                         .resizable()
                                         .frame(width: 20, height: 20)
-                                    Text("4.8")
+                                    Text(mainModel.selectedProduct?.product?.rating ?? "")
                                         .font(Font.custom(.sora, size: 15))
                                         .fontWeight(.semibold)
                                         .foregroundStyle(.greyNormalHover)
@@ -136,14 +136,14 @@ struct DetailScreen: View {
                             .fontWeight(.semibold)
                             .foregroundStyle(.grayNormalActive)
                             .padding(.bottom, 16)
-                        ChoiceSize(model: model)
+                        ChoiceSize(model: model, mainModel: mainModel)
                         Spacer()
                     }
                     
                     .padding([.leading, .trailing], 24)
                     .background(Color.mainBg)
                 }
-                TapBar()
+                TapBar(mainModel: mainModel, model: model)
                 .background(Color.mainBg)
             }
         })
@@ -153,6 +153,8 @@ struct DetailScreen: View {
 }
 
 struct TapBar: View {
+    @ObservedObject var mainModel: MainScreenModel
+    @ObservedObject var model: DetailScreenModel
     var body: some View {
         ZStack {
             Rectangle()
@@ -168,14 +170,16 @@ struct TapBar: View {
                         .fontWeight(.regular)
                         .foregroundStyle(.greyLightHover)
                         .padding(.bottom, 4)
-                    Text("$4.53")
+                    Text(mainModel.selectedProduct?.product?.price ?? "")
                         .font(Font.custom(.sora, size: 18))
                         .fontWeight(.semibold)
                         .foregroundStyle(.brownNormal)
                 }
                 Spacer()
                 Button {
-                    
+                    if model.selectedSize != nil {
+                        mainModel.goToOrder()
+                    }
                 } label: {
                     ZStack {
                         Rectangle()
@@ -201,13 +205,15 @@ struct TapBar: View {
 
 struct ChoiceSize: View {
     @ObservedObject var model: DetailScreenModel
+    @ObservedObject var mainModel: MainScreenModel
     var body: some View {
         HStack(spacing: 0) {
             ForEach(model.sizes) { size in
-                ChoiceButton(isActive: model.sizeSelected == size,
+                ChoiceButton(isActive: model.selectedSize == size,
                              isLast: model.sizes.last == size,
                              size: size) {
-                    model.sizeSelected = size
+                    model.selectedSize = size
+                    mainModel.selectedProduct?.size = size
                 }
             }
         }
@@ -278,5 +284,5 @@ struct Superiority: View {
 
 
 #Preview {
-    DetailScreen()
+    DetailScreen(mainModel: MainScreenModel())
 }

@@ -1,8 +1,10 @@
 import SwiftUI
 
 class MainScreenModel: ObservableObject {
+    @Published var path : [Screen] = []
     @Published var searchBar = ""
     @Published var categorySelected: CategorySelected = .all
+    @Published var selectedProduct: SelectedProduct?
     
     var filteredProducts: [ProductModel] {
         get {
@@ -28,41 +30,63 @@ class MainScreenModel: ObservableObject {
         ProductModel(id: 3, name: "Mocha Fusion", description: "Ice/Hot", price: "$ 7.53", rating: "4.8", image: "mochaFusi", category:  [.all, .machiato]),
         ProductModel(id: 4, name: "Caffe Panna", description: "Ice/Hot", price: "$ 5.53", rating: "4.8", image: "caffePanna", category:  [.all, .latte])
     ]
-
+    func goToDetails () {
+        path.append(.details)
+    }
+    func goToOrder() {
+        path.append(.order)
+    }
+    func goToDelivery() {
+        path.append(.delivery)
+    }
 }
 
 struct MainScreen: View {
     @StateObject var model = MainScreenModel()
     var body: some View {
-        ZStack {
-            VStack(spacing: 0) {
-                ZStack {
-                    Rectangle()
-                        .fill(
-                            LinearGradient(
-                                stops: [
-                                    Gradient.Stop(color: .mainBgGradientEnd, location: 0.2),
-                                    Gradient.Stop(color: .mainBgGradientStart, location: 1)
-                                    ],
-                                startPoint: .bottomLeading,
-                                endPoint: .topTrailing
+        NavigationStack(path: $model.path) {
+            ZStack {
+                VStack(spacing: 0) {
+                    ZStack {
+                        Rectangle()
+                            .fill(
+                                LinearGradient(
+                                    stops: [
+                                        Gradient.Stop(color: .mainBgGradientEnd, location: 0.2),
+                                        Gradient.Stop(color: .mainBgGradientStart, location: 1)
+                                        ],
+                                    startPoint: .bottomLeading,
+                                    endPoint: .topTrailing
+                                )
                             )
-                        )
-                        
+                            
+                    }
+                    .frame(height: 238)
+                    Spacer()
                 }
-                .frame(height: 238)
-                Spacer()
+                VStack(spacing: 0) {
+                    Location()
+                        .padding(EdgeInsets(top: 24, leading: 0, bottom: 24, trailing: 0))
+                    SearchBar(searchBar: $model.searchBar)
+                        .padding(EdgeInsets(top: 0, leading: 24, bottom: 24, trailing: 24))
+                    Banner()
+                    Category(model: model)
+                        .navigationDestination(for: Screen.self) { screen in
+                            switch screen {
+                            case .details:
+                                DetailScreen(mainModel: model)
+                            case .delivery:
+                                DeliveryScreen()
+                            case .order:
+                                OrderScreen(mainModel: model)
+                            case .main:
+                                EmptyView()
+                            }
+                        }
+                }
             }
-            VStack(spacing: 0) {
-                Location()
-                    .padding(EdgeInsets(top: 24, leading: 0, bottom: 24, trailing: 0))
-                SearchBar(searchBar: $model.searchBar)
-                    .padding(EdgeInsets(top: 0, leading: 24, bottom: 24, trailing: 24))
-                Banner()
-                Category(model: model)
-            }
+            .background(Color.mainBg)
         }
-        .background(Color.mainBg)
     }
 }
 
@@ -301,7 +325,16 @@ struct Category: View {
                 GridItem(.fixed(156))
             ], spacing: 24) {
                 ForEach(model.filteredProducts) { product in
-                    Product(product: product)
+                    Button {
+                        if model.selectedProduct == nil {
+                            model.selectedProduct = SelectedProduct(product: product)
+                        }
+                        model.goToDetails()
+                        
+                    } label: {
+                        Product(product: product)
+                    }
+
                 }
             }
         }.padding(EdgeInsets(top: 0, leading: 24, bottom: 24, trailing: 24))

@@ -16,6 +16,11 @@ struct CategoryModel: Identifiable, Hashable, Equatable {
     var category : CategorySelected
 }
 
+struct Size: Identifiable, Hashable {
+    var id: Int
+    var text: String
+}
+
 struct ProductModel: Identifiable, Hashable {
     let id: Int
     var name: String
@@ -24,6 +29,11 @@ struct ProductModel: Identifiable, Hashable {
     var rating: String
     var image: String
     var category: [CategorySelected] = [.all]
+}
+
+struct SelectedProduct: Hashable {
+    var product: ProductModel?
+    var size: Size?
 }
 
 struct TypeOrder: Identifiable, Hashable {
@@ -41,4 +51,11 @@ enum TypeCountButton: String {
     case plus = "plus"
     case notActiveMinus = "notActiveMinus"
     case activeMinus = "activeMinus"
+}
+
+enum Screen: Hashable {
+    case main
+    case details
+    case order
+    case delivery
 }
