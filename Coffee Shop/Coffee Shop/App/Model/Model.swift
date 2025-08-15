@@ -25,7 +25,7 @@ struct ProductModel: Identifiable, Hashable {
     let id: Int
     var name: String
     var description: String
-    var price: String
+    var price: Double
     var rating: String
     var image: String
     var category: [CategorySelected] = [.all]
@@ -34,6 +34,10 @@ struct ProductModel: Identifiable, Hashable {
 struct SelectedProduct: Hashable {
     var product: ProductModel?
     var size: Size?
+    var count = 1
+    var totalAmount: Double? {
+        (product?.price ?? 0.0) * Double(count)
+    }
 }
 
 struct TypeOrder: Identifiable, Hashable {

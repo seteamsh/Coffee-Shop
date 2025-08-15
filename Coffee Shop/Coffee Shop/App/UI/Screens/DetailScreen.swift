@@ -42,9 +42,10 @@ struct DetailScreen: View {
                     VStack(alignment: .leading, spacing: 0) {
                         HStack(spacing: 0) {
                             Button {
+                                mainModel.selectedProduct = nil
                                 dismiss()
                             } label: {
-                                Image(.back)
+                                Image("back")
                                     .resizable()
                                     .frame(width: 24, height: 24)
                             }
@@ -172,7 +173,7 @@ struct TapBar: View {
                         .fontWeight(.regular)
                         .foregroundStyle(.greyLightHover)
                         .padding(.bottom, 4)
-                    Text(mainModel.selectedProduct?.product?.price ?? "")
+                    Text("\(String(mainModel.selectedProduct?.product?.price ?? 0.0))")
                         .font(Font.custom(.sora, size: 18))
                         .fontWeight(.semibold)
                         .foregroundStyle(.brownNormal)

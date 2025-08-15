@@ -25,10 +25,10 @@ class MainScreenModel: ObservableObject {
 
 
     var products = [
-        ProductModel(id: 1, name: "Caffe Mocha", description: "Deep Foam", price: "$ 4.53", rating: "4.8", image: "caffeMocha", category: [.all, .machiato]),
-        ProductModel(id: 2, name: "Flat White", description: "Espresso", price: "$ 3.53", rating: "4.8", image: "flatWhite", category:  [.all, .americano]),
-        ProductModel(id: 3, name: "Mocha Fusion", description: "Ice/Hot", price: "$ 7.53", rating: "4.8", image: "mochaFusi", category:  [.all, .machiato]),
-        ProductModel(id: 4, name: "Caffe Panna", description: "Ice/Hot", price: "$ 5.53", rating: "4.8", image: "caffePanna", category:  [.all, .latte])
+        ProductModel(id: 1, name: "Caffe Mocha", description: "Deep Foam", price: 4.53, rating: "4.8", image: "caffeMocha", category: [.all, .machiato]),
+        ProductModel(id: 2, name: "Flat White", description: "Espresso", price: 3.53, rating: "4.8", image: "flatWhite", category:  [.all, .americano]),
+        ProductModel(id: 3, name: "Mocha Fusion", description: "Ice/Hot", price: 7.53, rating: "4.8", image: "mochaFusi", category:  [.all, .machiato]),
+        ProductModel(id: 4, name: "Caffe Panna", description: "Ice/Hot", price: 5.53, rating: "4.8", image: "caffePanna", category:  [.all, .latte])
     ]
     func goToDetails () {
         path.append(.details)
@@ -285,7 +285,7 @@ struct Product: View {
                 .foregroundStyle(.grayLighter)
                 .padding(.bottom, 8)
             HStack(spacing: 0) {
-                Text(product.price)
+                Text("$ \(String(product.price))")
                     .font(Font.custom(.sora, size: 16))
                     .fontWeight(.semibold)
                     .foregroundStyle(.greyDarkActive)
