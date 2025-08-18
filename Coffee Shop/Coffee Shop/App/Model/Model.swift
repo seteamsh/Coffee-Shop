@@ -62,4 +62,6 @@ enum Screen: Hashable {
     case details
     case order
     case delivery
+    case search
 }
+

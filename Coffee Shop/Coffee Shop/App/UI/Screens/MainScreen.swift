@@ -22,8 +22,8 @@ class MainScreenModel: ObservableObject {
         CategoryModel(id: 3, name: "Latte", category: .latte),
         CategoryModel(id: 4, name: "Americano", category: .americano)
     ]
-
-
+    
+    
     var products = [
         ProductModel(id: 1, name: "Caffe Mocha", description: "Deep Foam", price: 4.53, rating: "4.8", image: "caffeMocha", category: [.all, .machiato]),
         ProductModel(id: 2, name: "Flat White", description: "Espresso", price: 3.53, rating: "4.8", image: "flatWhite", category:  [.all, .americano]),
@@ -39,53 +39,64 @@ class MainScreenModel: ObservableObject {
     func goToDelivery() {
         path.append(.delivery)
     }
+    func goToSearch() {
+        path.append(.search)
+    }
 }
 
 struct MainScreen: View {
     @StateObject var model = MainScreenModel()
     var body: some View {
         NavigationStack(path: $model.path) {
-            ZStack {
-                VStack(spacing: 0) {
-                    ZStack {
-                        Rectangle()
-                            .fill(
-                                LinearGradient(
-                                    stops: [
-                                        Gradient.Stop(color: .mainBgGradientEnd, location: 0.2),
-                                        Gradient.Stop(color: .mainBgGradientStart, location: 1)
+            ScrollView(.vertical) {
+                ZStack {
+                    VStack(spacing: 0) {
+                        ZStack {
+                            Rectangle()
+                                .fill(
+                                    LinearGradient(
+                                        stops: [
+                                            Gradient.Stop(color: .mainBgGradientEnd, location: 0.2),
+                                            Gradient.Stop(color: .mainBgGradientStart, location: 1)
                                         ],
-                                    startPoint: .bottomLeading,
-                                    endPoint: .topTrailing
+                                        startPoint: .bottomLeading,
+                                        endPoint: .topTrailing
+                                    )
                                 )
-                            )
                             
-                    }
-                    .frame(height: 238)
-                    Spacer()
-                }
-                VStack(spacing: 0) {
-                    Location()
-                        .padding(EdgeInsets(top: 24, leading: 0, bottom: 24, trailing: 0))
-                    SearchBar(searchBar: $model.searchBar)
-                        .padding(EdgeInsets(top: 0, leading: 24, bottom: 24, trailing: 24))
-                    Banner()
-                    Category(model: model)
-                        .navigationDestination(for: Screen.self) { screen in
-                            switch screen {
-                            case .details:
-                                DetailScreen(mainModel: model)
-                            case .delivery:
-                                DeliveryScreen()
-                            case .order:
-                                OrderScreen(mainModel: model)
-                            case .main:
-                                EmptyView()
-                            }
                         }
+                        .frame(height: 238)
+                        Spacer()
+                    }
+                    VStack(spacing: 0) {
+                        Location()
+                            .padding(EdgeInsets(top: 24, leading: 0, bottom: 24, trailing: 0))
+                        Button(action: {
+                            model.goToSearch()
+                        }, label: {
+                            SearchBarView()
+                        })
+                        .padding(EdgeInsets(top: 0, leading: 24, bottom: 24, trailing: 24))
+                        Banner()
+                        Category(model: model)
+                            .navigationDestination(for: Screen.self) { screen in
+                                switch screen {
+                                case .details:
+                                    DetailScreen(mainModel: model)
+                                case .delivery:
+                                    DeliveryScreen()
+                                case .order:
+                                    OrderScreen(mainModel: model)
+                                case .main:
+                                    EmptyView()
+                                case .search:
+                                    SearchScreen()
+                                }
+                            }
+                    }
                 }
+                .background(Color.mainBg)
             }
-            .background(Color.mainBg)
         }
         .navigationBarBackButtonHidden()
     }
@@ -94,29 +105,28 @@ struct MainScreen: View {
 struct Location: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-                Text("Location")
-                    .font(Font.custom(.sora, size: 12))
-                    .foregroundStyle(.grayLighter)
-                    .padding(.bottom, 8)
-                HStack(spacing: 0) {
-                    Text("Bilzen, Tanjungbalai")
-                        .font(Font.custom(.sora, size: 14))
-                        .foregroundStyle(.whiteNormal)
-                        .fontWeight(.semibold)
-                    Image(.locationArrow)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 14, height: 14)
-                        .padding(EdgeInsets(top: 3.5, leading: 4, bottom: 0, trailing: 3.5))
-                    Spacer()
-                }
-                .frame(width: 327)
+            Text("Location")
+                .font(Font.custom(.sora, size: 12))
+                .foregroundStyle(.grayLighter)
+                .padding(.bottom, 8)
+            HStack(spacing: 0) {
+                Text("Bilzen, Tanjungbalai")
+                    .font(Font.custom(.sora, size: 14))
+                    .foregroundStyle(.whiteNormal)
+                    .fontWeight(.semibold)
+                Image(.locationArrow)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 14, height: 14)
+                    .padding(EdgeInsets(top: 3.5, leading: 4, bottom: 0, trailing: 3.5))
+                Spacer()
             }
+            .frame(width: 327)
+        }
     }
 }
 
-struct SearchBar: View {
-    @Binding var searchBar: String
+struct SearchBarView: View {
     var body: some View {
         HStack(spacing: 0) {
             ZStack {
@@ -131,15 +141,10 @@ struct SearchBar: View {
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 20, height: 20)
                         .padding(.trailing, 8)
-                        
-                    TextField(text: $searchBar) {
-                        Text("Search coffee")
-                            .font(Font.custom(.sora, size: 14))
-                            .foregroundStyle(.grayLighter)
-                    }
-                    .font(Font.custom(.sora, size: 14))
-                    .frame(width: 207, height: 17)
-                    
+                    Text("Search coffee")
+                        .font(Font.custom(.sora, size: 14))
+                        .foregroundStyle(.grayLighter)
+                        .frame(width: 207, height: 17)
                 }
                 .background(.blackLighter)
                 .padding(EdgeInsets(top: 17.5, leading: 16, bottom: 17.5, trailing: 0))
@@ -253,7 +258,7 @@ struct Product: View {
                         ZStack {
                             Rectangle()
                                 .fill(LinearGradient(colors: [.mainBgGradientStart, .mainBgGradientEnd], startPoint: .bottomLeading, endPoint: .topTrailing))
-                                
+                            
                                 .clipShape(UnevenRoundedRectangle(bottomLeadingRadius: CGFloat(24.0), topTrailingRadius: CGFloat(12.0)))
                                 .opacity(0.3)
                             HStack(spacing: 0) {
@@ -306,7 +311,7 @@ struct Product: View {
                     }
                     
                 }
-
+                
             }
         }
         .padding(EdgeInsets(top: 8, leading: 8, bottom: 12, trailing: 8))
@@ -320,25 +325,24 @@ struct Category: View {
     @ObservedObject var model: MainScreenModel
     var body: some View {
         CategorySlider(model: model)
-        ScrollView {
-            LazyVGrid(columns: [
-                GridItem(.fixed(156), spacing: 21),
-                GridItem(.fixed(156))
-            ], spacing: 24) {
-                ForEach(model.filteredProducts) { product in
-                    Button {
-                        if model.selectedProduct == nil {
-                            model.selectedProduct = SelectedProduct(product: product)
-                        }
-                        model.goToDetails()
-                        
-                    } label: {
-                        Product(product: product)
+        LazyVGrid(columns: [
+            GridItem(.fixed(156), spacing: 20),
+            GridItem(.fixed(156))
+        ], spacing: 24) {
+            ForEach(model.filteredProducts) { product in
+                Button {
+                    if model.selectedProduct == nil {
+                        model.selectedProduct = SelectedProduct(product: product)
                     }
-
+                    model.goToDetails()
+                    
+                } label: {
+                    Product(product: product)
                 }
+                
             }
-        }.padding(EdgeInsets(top: 0, leading: 24, bottom: 24, trailing: 24))
+        }
+        .padding(EdgeInsets(top: 0, leading: 24, bottom: 24, trailing: 24))
     }
 }
 
