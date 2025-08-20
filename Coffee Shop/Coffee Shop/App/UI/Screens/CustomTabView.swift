@@ -30,28 +30,45 @@ var arrIcons: [TabViewButton] = [
     TabViewButton(id: 2, activeIcon: .activeFavorite, inactiveIcon: .inactiveFavorite, tab: .Favorites),
     TabViewButton(id: 3, activeIcon: .activeShoppingBag, inactiveIcon: .inactiveShoppingBag, tab: .ShoppingBag),
     TabViewButton(id: 4, activeIcon: .activeNotifications, inactiveIcon: .inactiveNotifications, tab: .Notifications)
-    
 ]
+
 struct CustomTabView: View {
-    @State var selectionTab: Tab = .ShoppingBag
+    @State var selectionTab: Tab = .Main
+    @State var path: [Tab] = [.Main]
     var body: some View {
-        VStack(spacing: 0) {
-            HStack(spacing: 0) {
-                ForEach(arrIcons) { icon in
-                    ButtonIcon(icon: icon, isActive: selectionTab == icon.tab) {
-                        selectionTab = icon.tab
-                    }
-                    if !(arrIcons.last == icon) {
-                        Spacer()
+        NavigationStack(path: $path) {
+            VStack(spacing: 0) {
+                ZStack {
+                    switch selectionTab {
+                    case .Main:
+                        MainScreen()
+                    case .Favorites:
+                        FavoritesScreen()
+                    case .ShoppingBag:
+                        ShoppingBagScreen()
+                    case .Notifications:
+                        NotificationsScreen()
                     }
                 }
+                   
+                HStack(spacing: 0) {
+                    ForEach(arrIcons) { icon in
+                        ButtonIcon(icon: icon, isActive: selectionTab == icon.tab) {
+                            selectionTab = icon.tab
+                            
+                        }
+                        if !(arrIcons.last == icon) {
+                            Spacer()
+                        }
+                    }
+                }
+                .padding(EdgeInsets(top: 24, leading: 55.5, bottom: 51, trailing: 55.5))
+                .background(.white)
+                .clipShape(UnevenRoundedRectangle(cornerRadii: RectangleCornerRadii(topLeading: 24, topTrailing: 24)))
             }
-            .padding(EdgeInsets(top: 24, leading: 55.5, bottom: 51, trailing: 55.5))
-            .background(.white)
-            .clipShape(UnevenRoundedRectangle(cornerRadii: RectangleCornerRadii(topLeading: 24, topTrailing: 24)))
+            .background(.mainBg)
+            .ignoresSafeArea()
         }
-        .background(.mainBg)
-        .ignoresSafeArea()
     }
 }
 

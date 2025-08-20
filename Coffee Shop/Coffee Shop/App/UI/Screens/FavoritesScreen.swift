@@ -10,7 +10,9 @@ import SwiftUI
 struct FavoritesScreen: View {
     var body: some View {
         VStack(spacing: 0) {
+            Spacer()
             Text("Favorites")
+            Spacer()
         }
     }
 }

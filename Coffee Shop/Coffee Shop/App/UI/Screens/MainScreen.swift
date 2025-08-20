@@ -84,7 +84,7 @@ struct MainScreen: View {
                                 case .details:
                                     DetailScreen(mainModel: model)
                                 case .delivery:
-                                    DeliveryScreen()
+                                    DeliveryScreen(model: model)
                                 case .order:
                                     OrderScreen(mainModel: model)
                                 case .main:
