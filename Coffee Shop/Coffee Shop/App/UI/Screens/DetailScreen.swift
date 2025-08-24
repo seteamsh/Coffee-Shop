@@ -35,6 +35,9 @@ struct DetailScreen: View {
     @StateObject var model = DetailScreenModel()
     @ObservedObject var mainModel: MainScreenModel
     @Environment(\.dismiss) var dismiss
+    var isAdded: Bool {
+        wishList.contains(mainModel.selectedProduct?.product)
+    }
     var body: some View {
         VStack(spacing: 0, content: {
             ScrollView(.vertical) {
@@ -59,9 +62,13 @@ struct DetailScreen: View {
                                 .foregroundStyle(.grayNormalActive)
                             Spacer()
                             Button {
-                                
+                                if isAdded { wishList.remove(at: wishList.firstIndex(of: mainModel.selectedProduct?.product)!) }
+                                else {
+                                    wishList.append(mainModel.selectedProduct?.product)
+                                }
+                                print("\(wishList)")
                             } label: {
-                                Image(.favorite)
+                                Image(isAdded ? .addedToWishList : .favorite)
                                     .resizable()
                                     .frame(width: 24, height: 24)
                             }

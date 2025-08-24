@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct AuthScreen: View {
+    var action: () -> Void
     var body: some View {
         ZStack {
             VStack(spacing: 0) {
@@ -19,17 +20,20 @@ struct AuthScreen: View {
             }
             VStack(spacing: 0) {
                 Spacer()
-                Container()
+                Container() {
+                    action()
+                }
             }
         }.ignoresSafeArea(edges: .bottom)
     }
 }
 
 #Preview {
-    AuthScreen()
+    AuthScreen(action: {})
 }
 
 private struct Container: View {
+    var action: () -> Void
     var body: some View {
         ZStack {
             Rectangle()
@@ -52,7 +56,7 @@ private struct Container: View {
                 .padding(EdgeInsets(top: 24, leading: 24, bottom: 32, trailing: 24))
                 
                 Button {
-                    
+                    action()
                 } label: {
                     ZStack {
                         Rectangle()

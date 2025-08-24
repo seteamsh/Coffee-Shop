@@ -11,7 +11,7 @@ import SwiftUI
 struct Coffee_ShopApp: App {
     var body: some Scene {
         WindowGroup {
-            MainScreen()
+            AppFlowScreen()
         }
     }
 }

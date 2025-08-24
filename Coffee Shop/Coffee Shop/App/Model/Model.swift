@@ -38,6 +38,7 @@ struct SelectedProduct: Hashable {
     var totalAmount: Double? {
         (product?.price ?? 0.0) * Double(count)
     }
+    var typeDelivery: String?
 }
 
 struct TypeOrder: Identifiable, Hashable {
@@ -65,3 +66,4 @@ enum Screen: Hashable {
     case search
 }
 
+var wishList: [ProductModel?] = []

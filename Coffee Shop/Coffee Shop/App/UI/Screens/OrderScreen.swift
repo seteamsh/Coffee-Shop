@@ -57,7 +57,7 @@ struct OrderScreen: View {
                             .padding(10)
                     }
                     .padding(.top, 24)
-                    OrderType(model: model)
+                    OrderType(model: model, mainModel: mainModel)
                         .padding(.bottom, 24)
                     DeliveryAddress(model: model)
                         .padding(.bottom, 16)
@@ -91,7 +91,7 @@ struct OrderScreen: View {
                                     .font(Font.custom(.sora, size: 14))
                                     .fontWeight(.semibold)
                                     .foregroundStyle(.grayNormalActive)
-                                Text("$ \(String(mainModel.selectedProduct?.totalAmount ?? 0.0))")
+                                Text("$ \(String(format: "%.2f", mainModel.selectedProduct?.totalAmount ?? 0.0))")
                                     .font(Font.custom(.sora, size: 12))
                                     .fontWeight(.semibold)
                                     .foregroundStyle(.brownNormal)
@@ -104,8 +104,12 @@ struct OrderScreen: View {
                         .padding(EdgeInsets(top: 16, leading: 24, bottom: 12, trailing: 24))
                         Button {
                             //mainModel.selectedProduct?.count = model.count
-                            print("\(String(describing: mainModel.selectedProduct))")
-                            mainModel.goToDelivery()
+                            if mainModel.selectedProduct?.typeDelivery == nil {
+                                return
+                            } else {
+                                print("\(String(describing: mainModel.selectedProduct))")
+                                mainModel.goToDelivery()
+                            }
                         } label: {
                             ZStack {
                                 Rectangle()
@@ -163,7 +167,7 @@ struct PaymentSummary: View {
                 .fontWeight(.regular)
                 .foregroundStyle(.grayNormal)
             Spacer()
-            Text("$ \(String(mainModel.selectedProduct?.totalAmount ?? 0.0))")
+            Text("$ \(String(format: "%.2f", mainModel.selectedProduct?.totalAmount ?? 0.0))")
                 .font(Font.custom(.sora, size: 16))
                 .fontWeight(.semibold)
                 .foregroundStyle(.grayNormalActive)
@@ -309,6 +313,7 @@ struct DeliveryAddress: View {
 
 struct OrderType: View {
     @ObservedObject var model: OrderScreenModel
+    @ObservedObject var mainModel: MainScreenModel
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 12)
@@ -317,6 +322,7 @@ struct OrderType: View {
                 ForEach(model.orderTypes) { type in
                     OrderTypeButton(isActive: model.selectedTypeOrder == type, type: type) {
                         model.selectedTypeOrder = type
+                        mainModel.selectedProduct?.typeDelivery = type.name
                     }
                 }
             }
