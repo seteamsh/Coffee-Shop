@@ -46,6 +46,7 @@ class MainScreenModel: ObservableObject {
 
 struct MainScreen: View {
     @StateObject var model = MainScreenModel()
+    @Binding var wishList: [ProductModel?]
     var body: some View {
         NavigationStack(path: $model.path) {
             ScrollView(.vertical) {
@@ -82,7 +83,7 @@ struct MainScreen: View {
                             .navigationDestination(for: Screen.self) { screen in
                                 switch screen {
                                 case .details:
-                                    DetailScreen(mainModel: model)
+                                    DetailScreen(mainModel: model, wishList: $wishList)
                                 case .delivery:
                                     DeliveryScreen(model: model)
                                 case .order:
@@ -374,5 +375,5 @@ struct CategorySliderButton: View {
 }
 
 #Preview {
-    MainScreen()
+    MainScreen(wishList: .constant([ProductModel(id: 1, name: "", description: "", price: 4.4, rating: "", image: "")]))
 }

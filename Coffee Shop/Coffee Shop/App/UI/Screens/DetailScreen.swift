@@ -35,6 +35,7 @@ struct DetailScreen: View {
     @StateObject var model = DetailScreenModel()
     @ObservedObject var mainModel: MainScreenModel
     @Environment(\.dismiss) var dismiss
+    @Binding var wishList: [ProductModel?]
     var isAdded: Bool {
         wishList.contains(mainModel.selectedProduct?.product)
     }
@@ -294,5 +295,5 @@ struct Superiority: View {
 
 
 #Preview {
-    DetailScreen(mainModel: MainScreenModel())
+    DetailScreen(mainModel: MainScreenModel(), wishList: .constant([ProductModel(id: 1, name: "", description: "", price: 3.3, rating: "", image: "")]))
 }

@@ -35,15 +35,16 @@ var arrIcons: [TabViewButton] = [
 struct CustomTabView: View {
     @State var selectionTab: Tab = .Main
     @State var path: [Tab] = [.Main]
+    @State var wishList: [ProductModel?] = []
     var body: some View {
         NavigationStack(path: $path) {
             VStack(spacing: 0) {
                 ZStack {
                     switch selectionTab {
                     case .Main:
-                        MainScreen()
+                        MainScreen(wishList: $wishList)
                     case .Favorites:
-                        FavoritesScreen()
+                        FavoritesScreen(wishList: $wishList)
                     case .ShoppingBag:
                         ShoppingBagScreen()
                     case .Notifications:

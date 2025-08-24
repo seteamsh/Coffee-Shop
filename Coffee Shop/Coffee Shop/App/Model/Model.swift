@@ -66,4 +66,4 @@ enum Screen: Hashable {
     case search
 }
 
-var wishList: [ProductModel?] = []
+
