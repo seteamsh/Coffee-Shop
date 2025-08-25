@@ -68,7 +68,7 @@ struct CustomTabView: View {
                 .clipShape(UnevenRoundedRectangle(cornerRadii: RectangleCornerRadii(topLeading: 24, topTrailing: 24)))
             }
             .background(.mainBg)
-            .ignoresSafeArea()
+            .ignoresSafeArea(edges: .bottom)
         }
     }
 }

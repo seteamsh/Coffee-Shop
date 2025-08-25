@@ -158,7 +158,7 @@ struct DetailScreen: View {
             }
         })
             .navigationBarBackButtonHidden()
-            .ignoresSafeArea(edges: .bottom)
+            //.ignoresSafeArea(edges: .bottom)
             
     }
 }

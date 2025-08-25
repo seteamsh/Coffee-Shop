@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		C8E8A2312E5CA7B400EE5EA8 /* SwipeActions in Frameworks */ = {isa = PBXBuildFile; productRef = C8E8A2302E5CA7B400EE5EA8 /* SwipeActions */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		C87BA4A52E1D64A300D64D51 /* Coffee Shop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Coffee Shop.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C8E8A2312E5CA7B400EE5EA8 /* SwipeActions in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +70,7 @@
 			);
 			name = "Coffee Shop";
 			packageProductDependencies = (
+				C8E8A2302E5CA7B400EE5EA8 /* SwipeActions */,
 			);
 			productName = "Coffee Shop";
 			productReference = C87BA4A52E1D64A300D64D51 /* Coffee Shop.app */;
@@ -94,6 +100,9 @@
 			);
 			mainGroup = C87BA49C2E1D64A300D64D51;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				C8E8A22F2E5CA7B400EE5EA8 /* XCRemoteSwiftPackageReference "SwipeActions" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = C87BA4A62E1D64A300D64D51 /* Products */;
 			projectDirPath = "";
@@ -324,6 +333,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		C8E8A22F2E5CA7B400EE5EA8 /* XCRemoteSwiftPackageReference "SwipeActions" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/c-villain/SwipeActions";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.4.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C8E8A2302E5CA7B400EE5EA8 /* SwipeActions */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C8E8A22F2E5CA7B400EE5EA8 /* XCRemoteSwiftPackageReference "SwipeActions" */;
+			productName = SwipeActions;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = C87BA49D2E1D64A300D64D51 /* Project object */;
 }
