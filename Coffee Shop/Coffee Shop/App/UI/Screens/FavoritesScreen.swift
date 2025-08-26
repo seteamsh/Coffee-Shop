@@ -7,6 +7,11 @@
 
 import SwiftUI
 import SwipeActions
+
+class FavoritesScreenModel: ObservableObject {
+    @Published var wishList: [ProductModel?] = []
+}
+
 struct FavoritesScreen: View {
     @Binding var wishList: [ProductModel?]
     var body: some View {

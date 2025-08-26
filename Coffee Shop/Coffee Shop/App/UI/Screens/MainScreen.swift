@@ -46,7 +46,7 @@ class MainScreenModel: ObservableObject {
 
 struct MainScreen: View {
     @StateObject var model = MainScreenModel()
-    @Binding var wishList: [ProductModel?]
+    //@Binding var wishList: [ProductModel?]
     var body: some View {
         NavigationStack(path: $model.path) {
             ScrollView(.vertical) {

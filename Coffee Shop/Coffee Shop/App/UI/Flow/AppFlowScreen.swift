@@ -12,8 +12,11 @@ enum AppFlowState {
     case Main
 }
 
+
 struct AppFlowScreen: View {
+    @StateObject var favoritesScreenModel = FavoritesScreenModel()
     @State var appFlowState: AppFlowState = .Auth
+    
     var body: some View {
         switch appFlowState {
         case .Auth:
@@ -22,6 +25,7 @@ struct AppFlowScreen: View {
             }
         case .Main:
             CustomTabView()
+                .environmentObject(favoritesScreenModel)
         }
     }
 }
