@@ -65,10 +65,6 @@ enum Screen: Hashable {
     case delivery
     case search
 }
-
-
-
-
 enum IconsState: String {
     case activeHome = "activeHome"
     case inactiveHome = "inactiveHome"
@@ -94,9 +90,3 @@ struct TabViewButton: Identifiable, Equatable {
     var tab: Tab
 }
 
-var tabViewIcons: [TabViewButton] = [
-    TabViewButton(id: 1, activeIcon: .activeHome, inactiveIcon: .inactiveHome, tab: .Main),
-    TabViewButton(id: 2, activeIcon: .activeFavorite, inactiveIcon: .inactiveFavorite, tab: .Favorites),
-    TabViewButton(id: 3, activeIcon: .activeShoppingBag, inactiveIcon: .inactiveShoppingBag, tab: .ShoppingBag),
-    TabViewButton(id: 4, activeIcon: .activeNotifications, inactiveIcon: .inactiveNotifications, tab: .Notifications)
-]

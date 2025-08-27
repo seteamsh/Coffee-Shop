@@ -46,7 +46,6 @@ class MainScreenModel: ObservableObject {
 
 struct MainScreen: View {
     @StateObject var model = MainScreenModel()
-    //@Binding var wishList: [ProductModel?]
     var body: some View {
         NavigationStack(path: $model.path) {
             ScrollView(.vertical) {
@@ -83,11 +82,11 @@ struct MainScreen: View {
                             .navigationDestination(for: Screen.self) { screen in
                                 switch screen {
                                 case .details:
-                                    DetailScreen(mainModel: model, wishList: $wishList)
+                                    DetailScreen(inputSelectedProduct: $model.selectedProduct)
                                 case .delivery:
                                     DeliveryScreen(model: model)
                                 case .order:
-                                    OrderScreen(mainModel: model)
+                                    OrderScreen(inputSelectedProduct: $model.selectedProduct)
                                 case .main:
                                     EmptyView()
                                 case .search:
@@ -375,5 +374,6 @@ struct CategorySliderButton: View {
 }
 
 #Preview {
-    MainScreen(wishList: .constant([ProductModel(id: 1, name: "", description: "", price: 4.4, rating: "", image: "")]))
+    MainScreen()
+        .environmentObject(FavoritesScreenModel())
 }

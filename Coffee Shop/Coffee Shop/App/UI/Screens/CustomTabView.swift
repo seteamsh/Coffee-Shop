@@ -3,11 +3,19 @@ import SwiftUI
 class CustomTabViewModel: ObservableObject {
     @Published var selectionTab: Tab = .Main
     @Published var path: [Tab] = [.Main]
+    
+    var tabViewIcons: [TabViewButton] = [
+        TabViewButton(id: 1, activeIcon: .activeHome, inactiveIcon: .inactiveHome, tab: .Main),
+        TabViewButton(id: 2, activeIcon: .activeFavorite, inactiveIcon: .inactiveFavorite, tab: .Favorites),
+        TabViewButton(id: 3, activeIcon: .activeShoppingBag, inactiveIcon: .inactiveShoppingBag, tab: .ShoppingBag),
+        TabViewButton(id: 4, activeIcon: .activeNotifications, inactiveIcon: .inactiveNotifications, tab: .Notifications)
+    ]
+
+    
 }
 
 struct CustomTabView: View {
     @StateObject var model = CustomTabViewModel()
-    @EnvironmentObject var favoritesScreenModel: FavoritesScreenModel
     var body: some View {
         NavigationStack(path: $model.path) {
             VStack(spacing: 0) {
@@ -16,7 +24,7 @@ struct CustomTabView: View {
                     case .Main:
                         MainScreen()
                     case .Favorites:
-                        FavoritesScreen(wishList: favoritesScreenModel.wishList)
+                        FavoritesScreen()
                     case .ShoppingBag:
                         ShoppingBagScreen()
                     case .Notifications:
@@ -35,12 +43,12 @@ struct TabView: View {
     @ObservedObject var model: CustomTabViewModel
     var body: some View {
         HStack(spacing: 0) {
-            ForEach(tabViewIcons) { icon in
+            ForEach(model.tabViewIcons) { icon in
                 ButtonIcon(icon: icon, isActive: model.selectionTab == icon.tab) {
                     model.selectionTab = icon.tab
                     
                 }
-                if !(tabViewIcons.last == icon) {
+                if !(model.tabViewIcons.last == icon) {
                     Spacer()
                 }
             }
@@ -79,4 +87,5 @@ struct ButtonIcon: View {
 
 #Preview {
     CustomTabView()
+        .environmentObject(FavoritesScreenModel())
 }
