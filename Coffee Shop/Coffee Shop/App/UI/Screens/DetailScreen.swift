@@ -27,7 +27,7 @@ class DetailScreenModel: ObservableObject {
 
 struct DetailScreen: View {
     @StateObject var model = DetailScreenModel()
-    @Binding var inputSelectedProduct: SelectedProduct?
+    @State var inputSelectedProduct: SelectedProduct?
     @EnvironmentObject var favoritesScreenModel: FavoritesScreenModel
     @Environment(\.dismiss) var dismiss
     var isAdded: Bool {
@@ -289,6 +289,6 @@ struct Superiority: View {
 
 
 #Preview {
-    DetailScreen(inputSelectedProduct: .constant(SelectedProduct()))
+    DetailScreen(inputSelectedProduct: SelectedProduct())
         .environmentObject(FavoritesScreenModel())
 }

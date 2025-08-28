@@ -9,7 +9,7 @@ import SwiftUI
 
 struct DeliveryScreen: View {
     @Environment(\.dismiss) var dismiss
-    @State var model: MainScreenModel
+    //@State var model: MainScreenModel
     var body: some View {
         ZStack {
             Image(.map)
@@ -18,7 +18,7 @@ struct DeliveryScreen: View {
             VStack(spacing: 0) {
                 HStack(spacing: 0) {
                     Button {
-                        model.path = []
+                        //model.path = []
                     } label: {
                         ZStack{
                             Rectangle()
@@ -173,5 +173,5 @@ struct DeliveryScreen: View {
 }
 
 #Preview {
-    DeliveryScreen(model: MainScreenModel())
+    DeliveryScreen()
 }

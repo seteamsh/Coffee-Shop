@@ -1,10 +1,10 @@
 import SwiftUI
 
 class MainScreenModel: ObservableObject {
-    @Published var path : [Screen] = []
     @Published var searchBar = ""
     @Published var categorySelected: CategorySelected = .all
     @Published var selectedProduct: SelectedProduct?
+    @Published var path: [Screen] = []
     @Environment(\.dismiss) var dismiss
     var filteredProducts: [ProductModel] {
         get {
@@ -30,6 +30,7 @@ class MainScreenModel: ObservableObject {
         ProductModel(id: 3, name: "Mocha Fusion", description: "Ice/Hot", price: 7.53, rating: "4.8", image: "mochaFusi", category:  [.all, .machiato]),
         ProductModel(id: 4, name: "Caffe Panna", description: "Ice/Hot", price: 5.53, rating: "4.8", image: "caffePanna", category:  [.all, .latte])
     ]
+    
     func goToDetails () {
         path.append(.details)
     }
@@ -82,9 +83,9 @@ struct MainScreen: View {
                             .navigationDestination(for: Screen.self) { screen in
                                 switch screen {
                                 case .details:
-                                    DetailScreen(inputSelectedProduct: $model.selectedProduct)
+                                    DetailScreen(inputSelectedProduct: model.selectedProduct)
                                 case .delivery:
-                                    DeliveryScreen(model: model)
+                                    DeliveryScreen()
                                 case .order:
                                     OrderScreen(inputSelectedProduct: $model.selectedProduct)
                                 case .main:

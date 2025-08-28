@@ -2,7 +2,6 @@ import SwiftUI
 
 class CustomTabViewModel: ObservableObject {
     @Published var selectionTab: Tab = .Main
-    @Published var path: [Tab] = [.Main]
     
     var tabViewIcons: [TabViewButton] = [
         TabViewButton(id: 1, activeIcon: .activeHome, inactiveIcon: .inactiveHome, tab: .Main),
@@ -10,14 +9,11 @@ class CustomTabViewModel: ObservableObject {
         TabViewButton(id: 3, activeIcon: .activeShoppingBag, inactiveIcon: .inactiveShoppingBag, tab: .ShoppingBag),
         TabViewButton(id: 4, activeIcon: .activeNotifications, inactiveIcon: .inactiveNotifications, tab: .Notifications)
     ]
-
-    
 }
 
 struct CustomTabView: View {
     @StateObject var model = CustomTabViewModel()
     var body: some View {
-        NavigationStack(path: $model.path) {
             VStack(spacing: 0) {
                 ZStack {
                     switch model.selectionTab {
@@ -35,7 +31,7 @@ struct CustomTabView: View {
             }
             .background(.mainBg)
             .ignoresSafeArea(edges: .bottom)
-        }
+        
     }
 }
 
