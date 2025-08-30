@@ -19,6 +19,7 @@ class FavoritesScreenModel: ObservableObject {
 
 struct FavoritesScreen: View {
     @EnvironmentObject var favoritesScreenModel: FavoritesScreenModel
+    @StateObject var router = Router()
     var body: some View {
         VStack(spacing: 0) {
             NavigationStack(path: $favoritesScreenModel.path) {
@@ -26,7 +27,7 @@ struct FavoritesScreen: View {
                     ForEach(favoritesScreenModel.wishList, id: \.self) { productModel in
                         WishCard(productModel: productModel)
                             .onTapGesture {
-                                print("WishCard Tapped")
+                                
                                 //передать в detailScreen(inputSelectedProduct: productModel)
                             }
                             .addFullSwipeAction(menu: .slided,

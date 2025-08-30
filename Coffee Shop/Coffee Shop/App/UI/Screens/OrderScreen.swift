@@ -26,6 +26,7 @@ class OrderScreenModel: ObservableObject {
 struct OrderScreen: View {
     @StateObject var model = OrderScreenModel()
     @Binding var inputSelectedProduct: SelectedProduct?
+    @EnvironmentObject var router: Router
     @Environment(\.dismiss) var dismiss
     var body: some View {
         ScrollView(.vertical) {
@@ -108,7 +109,7 @@ struct OrderScreen: View {
                                 return
                             } else {
                                 print("\(String(describing: inputSelectedProduct))")
-                                //mainModel.goToDelivery()
+                                router.push(.delivery)
                             }
                         } label: {
                             ZStack {

@@ -4,6 +4,7 @@ class MainScreenModel: ObservableObject {
     @Published var searchBar = ""
     @Published var categorySelected: CategorySelected = .all
     @Published var selectedProduct: SelectedProduct?
+    
     @Environment(\.dismiss) var dismiss
     var filteredProducts: [ProductModel] {
         get {
@@ -33,7 +34,9 @@ class MainScreenModel: ObservableObject {
 
 struct MainScreen: View {
     @StateObject var model = MainScreenModel()
+    @StateObject var router = Router()
     var body: some View {
+        NavigationStack(path: $router.path) {
             ScrollView(.vertical) {
                 ZStack {
                     VStack(spacing: 0) {
@@ -58,7 +61,7 @@ struct MainScreen: View {
                         Location()
                             .padding(EdgeInsets(top: 24, leading: 0, bottom: 24, trailing: 0))
                         Button(action: {
-                            //model.goToSearch()
+                            router.push(.search)
                         }, label: {
                             SearchBarView()
                         })
@@ -82,8 +85,11 @@ struct MainScreen: View {
                     }
                 }
                 .background(Color.mainBg)
+                
             }
-        
+            
+        }
+        .environmentObject(router)
     }
 }
 
@@ -308,6 +314,7 @@ struct Product: View {
 ///////////////////////////////////////////////////////////
 struct Category: View {
     @ObservedObject var model: MainScreenModel
+    @EnvironmentObject var router: Router
     var body: some View {
         CategorySlider(model: model)
         LazyVGrid(columns: [
@@ -319,8 +326,7 @@ struct Category: View {
                     if model.selectedProduct == nil {
                         model.selectedProduct = SelectedProduct(product: product)
                     }
-                    //model.goToDetails()
-                    
+                    router.push(.details)
                 } label: {
                     Product(product: product)
                 }

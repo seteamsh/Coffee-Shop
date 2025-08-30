@@ -159,6 +159,7 @@ struct DetailScreen: View {
 
 struct TapBar: View {
     @Binding var inputSelectedProduct: SelectedProduct?
+    @EnvironmentObject var router: Router
     @ObservedObject var model: DetailScreenModel
     var body: some View {
         ZStack {
@@ -182,8 +183,10 @@ struct TapBar: View {
                 }
                 Spacer()
                 Button {
-                    if model.selectedSize != nil {
-                        //inputModel.goToOrder()
+                    if model.selectedSize == nil {
+                        return
+                    } else {
+                        router.push(.order)
                     }
                 } label: {
                     ZStack {
