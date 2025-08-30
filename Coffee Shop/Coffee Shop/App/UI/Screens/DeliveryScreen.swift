@@ -18,7 +18,6 @@ struct DeliveryScreen: View {
             VStack(spacing: 0) {
                 HStack(spacing: 0) {
                     Button {
-                        model.path = []
                     } label: {
                         ZStack{
                             Rectangle()

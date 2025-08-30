@@ -17,7 +17,6 @@ class CustomTabViewModel: ObservableObject {
 struct CustomTabView: View {
     @StateObject var model = CustomTabViewModel()
     var body: some View {
-        NavigationStack(path: $model.path) {
             VStack(spacing: 0) {
                 ZStack {
                     switch model.selectionTab {
@@ -35,7 +34,6 @@ struct CustomTabView: View {
             }
             .background(.mainBg)
             .ignoresSafeArea(edges: .bottom)
-        }
     }
 }
 

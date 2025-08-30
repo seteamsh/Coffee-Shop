@@ -1,7 +1,6 @@
 import SwiftUI
 
 class MainScreenModel: ObservableObject {
-    @Published var path : [Screen] = []
     @Published var searchBar = ""
     @Published var categorySelected: CategorySelected = .all
     @Published var selectedProduct: SelectedProduct?
@@ -30,24 +29,11 @@ class MainScreenModel: ObservableObject {
         ProductModel(id: 3, name: "Mocha Fusion", description: "Ice/Hot", price: 7.53, rating: "4.8", image: "mochaFusi", category:  [.all, .machiato]),
         ProductModel(id: 4, name: "Caffe Panna", description: "Ice/Hot", price: 5.53, rating: "4.8", image: "caffePanna", category:  [.all, .latte])
     ]
-    func goToDetails () {
-        path.append(.details)
-    }
-    func goToOrder() {
-        path.append(.order)
-    }
-    func goToDelivery() {
-        path.append(.delivery)
-    }
-    func goToSearch() {
-        path.append(.search)
-    }
 }
 
 struct MainScreen: View {
     @StateObject var model = MainScreenModel()
     var body: some View {
-        NavigationStack(path: $model.path) {
             ScrollView(.vertical) {
                 ZStack {
                     VStack(spacing: 0) {
@@ -72,7 +58,7 @@ struct MainScreen: View {
                         Location()
                             .padding(EdgeInsets(top: 24, leading: 0, bottom: 24, trailing: 0))
                         Button(action: {
-                            model.goToSearch()
+                            //model.goToSearch()
                         }, label: {
                             SearchBarView()
                         })
@@ -97,8 +83,7 @@ struct MainScreen: View {
                 }
                 .background(Color.mainBg)
             }
-        }
-        .navigationBarBackButtonHidden()
+        
     }
 }
 
@@ -334,7 +319,7 @@ struct Category: View {
                     if model.selectedProduct == nil {
                         model.selectedProduct = SelectedProduct(product: product)
                     }
-                    model.goToDetails()
+                    //model.goToDetails()
                     
                 } label: {
                     Product(product: product)
