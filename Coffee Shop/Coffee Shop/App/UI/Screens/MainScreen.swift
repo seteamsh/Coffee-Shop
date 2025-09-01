@@ -4,7 +4,6 @@ class MainScreenModel: ObservableObject {
     @Published var searchBar = ""
     @Published var categorySelected: CategorySelected = .all
     @Published var selectedProduct: SelectedProduct?
-    @Published var path: [Screen] = []
     @Environment(\.dismiss) var dismiss
     var filteredProducts: [ProductModel] {
         get {
@@ -30,25 +29,14 @@ class MainScreenModel: ObservableObject {
         ProductModel(id: 3, name: "Mocha Fusion", description: "Ice/Hot", price: 7.53, rating: "4.8", image: "mochaFusi", category:  [.all, .machiato]),
         ProductModel(id: 4, name: "Caffe Panna", description: "Ice/Hot", price: 5.53, rating: "4.8", image: "caffePanna", category:  [.all, .latte])
     ]
-    
-    func goToDetails () {
-        path.append(.details)
-    }
-    func goToOrder() {
-        path.append(.order)
-    }
-    func goToDelivery() {
-        path.append(.delivery)
-    }
-    func goToSearch() {
-        path.append(.search)
-    }
 }
 
 struct MainScreen: View {
     @StateObject var model = MainScreenModel()
+    @StateObject var router = Router()
+    @StateObject var orderModel = OrderModel()
     var body: some View {
-        NavigationStack(path: $model.path) {
+        NavigationStack(path: $router.path) {
             ScrollView(.vertical) {
                 ZStack {
                     VStack(spacing: 0) {
@@ -73,7 +61,7 @@ struct MainScreen: View {
                         Location()
                             .padding(EdgeInsets(top: 24, leading: 0, bottom: 24, trailing: 0))
                         Button(action: {
-                            model.goToSearch()
+                            router.push(.search)
                         }, label: {
                             SearchBarView()
                         })
@@ -83,11 +71,11 @@ struct MainScreen: View {
                             .navigationDestination(for: Screen.self) { screen in
                                 switch screen {
                                 case .details:
-                                    DetailScreen(inputSelectedProduct: model.selectedProduct)
+                                    DetailScreen()
                                 case .delivery:
                                     DeliveryScreen()
                                 case .order:
-                                    OrderScreen(inputSelectedProduct: $model.selectedProduct)
+                                    OrderScreen()
                                 case .main:
                                     EmptyView()
                                 case .search:
@@ -97,9 +85,12 @@ struct MainScreen: View {
                     }
                 }
                 .background(Color.mainBg)
+                
             }
+            
         }
-        .navigationBarBackButtonHidden()
+        .environmentObject(router)
+        .environmentObject(orderModel)
     }
 }
 
@@ -324,6 +315,8 @@ struct Product: View {
 ///////////////////////////////////////////////////////////
 struct Category: View {
     @ObservedObject var model: MainScreenModel
+    @EnvironmentObject var router: Router
+    @EnvironmentObject var orderModel: OrderModel
     var body: some View {
         CategorySlider(model: model)
         LazyVGrid(columns: [
@@ -332,11 +325,10 @@ struct Category: View {
         ], spacing: 24) {
             ForEach(model.filteredProducts) { product in
                 Button {
-                    if model.selectedProduct == nil {
-                        model.selectedProduct = SelectedProduct(product: product)
-                    }
-                    model.goToDetails()
-                    
+                    //if orderModel.product == nil {
+                        orderModel.product = product
+                    //}
+                    router.push(.details)
                 } label: {
                     Product(product: product)
                 }

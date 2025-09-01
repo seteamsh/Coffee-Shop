@@ -9,82 +9,95 @@ import SwiftUI
 import SwipeActions
 
 class FavoritesScreenModel: ObservableObject {
-    @Published var wishList: [SelectedProduct?] = []
-    @Published var path: [Screen] = []
-    func goToDetails () {
-        path.append(.details)
-    }
-    func goToOrder() {
-        path.append(.order)
-    }
-    func goToDelivery() {
-        path.append(.delivery)
-    }
-    func goToSearch() {
-        path.append(.search)
-    }
-    
+    @Published var wishList: [ProductModel?] = []
 }
 
 struct FavoritesScreen: View {
-    @StateObject var favoritesScreenModel: FavoritesScreenModel
+    @EnvironmentObject var favoritesScreenModel: FavoritesScreenModel
+    @StateObject var orderModel = OrderModel()
+    @StateObject var router = Router()
     var body: some View {
-        NavigationStack(path: $favoritesScreenModel.path) {
+        NavigationStack(path: $router.path) {
             VStack(spacing: 0) {
                 ScrollView(.vertical) {
                     ForEach(favoritesScreenModel.wishList, id: \.self) { productModel in
                         WishCard(productModel: productModel)
                             .onTapGesture {
-                                print("WishCard Tapped")
+                                orderModel.product = productModel
+                                router.push(.details)
                                 //передать в detailScreen(inputSelectedProduct: productModel)
                             }
-                            
-                            .navigationDestination(for: Screen.self) { screen in
-                                switch screen {
-                                case .details:
-                                    DetailScreen(inputSelectedProduct: productModel)
-                                case .delivery:
-                                    DeliveryScreen()
-                                case .order:
-                                    OrderScreen(inputSelectedProduct: $productModel)
-                                case .main:
-                                    EmptyView()
-                                case .search:
-                                    SearchScreen()
+                            .addFullSwipeAction(menu: .slided,
+                                                swipeColor: .red) {
+                                Leading {
+                                    
                                 }
+                                Trailing {
+                                    HStack(spacing: 0) {
+                                        Button {
+                                            favoritesScreenModel.wishList.remove(at: favoritesScreenModel.wishList.firstIndex(of: productModel)!)
+                                        } label: {
+                                            Image(systemName: "trash")
+                                                .foregroundStyle(.white)
+                                            
+                                        }
+                                        .contentShape(Rectangle())
+                                        .frame(width: 80)
+                                        .frame(maxHeight: .infinity)
+                                        .background(Color.red)
+                                        
+                                    }
+                                }
+                            } action: {
+                                favoritesScreenModel.wishList.remove(at: favoritesScreenModel.wishList.firstIndex(of: productModel)!)
                             }
-                        //Проблема в destination, попробовать передать через перменную выбранный продукт, напрямую не получится из за того что походу нельзя дестинатион ложить в for each
                     }
                     Spacer()
                 }
             }
+            .navigationDestination(for: Screen.self) { screen in
+                switch screen {
+                case .details:
+                    DetailScreen()
+                case .delivery:
+                    DeliveryScreen()
+                case .order:
+                    OrderScreen()
+                case .main:
+                    EmptyView()
+                case .search:
+                    SearchScreen()
+                }
+            }
         }
+        .environmentObject(orderModel)
+        .environmentObject(router)
     }
 }
 
 struct WishCard: View {
-    var productModel: SelectedProduct?
+    var productModel: ProductModel?
     var body: some View {
         VStack(spacing: 0) {
             HStack(spacing: 0) {
-                Image(productModel?.product?.image ?? "")
+                Image(productModel?.image ?? "")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .clipShape(RoundedRectangle(cornerRadius: 8))
                     .padding(.trailing, 15)
                 VStack(alignment: .leading, spacing: 0) {
-                    Text(productModel?.product?.name ?? "")
+                    Text(productModel?.name ?? "")
                         .font(Font.custom(.sora, size: 16))
                         .fontWeight(.semibold)
                         .foregroundStyle(.grayNormalActive)
                     
-                    Text(productModel?.product?.description ?? "")
+                    Text(productModel?.description ?? "")
                         .font(Font.custom(.sora, size: 12))
                         .fontWeight(.regular)
                         .foregroundStyle(.grayLighter)
                 }
                 Spacer()
-                Text("$ \(String(format: "%.2f", productModel?.product?.price ?? 0.0))")
+                Text("$ \(String(format: "%.2f", productModel?.price ?? 0.0))")
                     .font(Font.custom(.sora, size: 16))
                     .fontWeight(.semibold)
                     .foregroundStyle(.grayNormalActive)

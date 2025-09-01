@@ -9,7 +9,7 @@ import SwiftUI
 
 struct DeliveryScreen: View {
     @Environment(\.dismiss) var dismiss
-    //@State var model: MainScreenModel
+    @EnvironmentObject var router: Router
     var body: some View {
         ZStack {
             Image(.map)
@@ -18,7 +18,9 @@ struct DeliveryScreen: View {
             VStack(spacing: 0) {
                 HStack(spacing: 0) {
                     Button {
-                        //model.path = []
+                        router.path = []
+                        dismiss()
+                        
                     } label: {
                         ZStack{
                             Rectangle()
@@ -169,6 +171,7 @@ struct DeliveryScreen: View {
             }
         }
             .navigationBarBackButtonHidden()
+            .environmentObject(router)
     }
 }
 

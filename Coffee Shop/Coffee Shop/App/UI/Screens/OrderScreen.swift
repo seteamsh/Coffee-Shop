@@ -25,7 +25,8 @@ class OrderScreenModel: ObservableObject {
 
 struct OrderScreen: View {
     @StateObject var model = OrderScreenModel()
-    @Binding var inputSelectedProduct: SelectedProduct?
+    @EnvironmentObject var orderModel: OrderModel
+    @EnvironmentObject var router: Router
     @Environment(\.dismiss) var dismiss
     var body: some View {
         ScrollView(.vertical) {
@@ -57,20 +58,20 @@ struct OrderScreen: View {
                             .padding(10)
                     }
                     .padding(.top, 24)
-                    OrderType(model: model, inputSelectedProduct: $inputSelectedProduct)
+                    OrderType(model: model)
                         .padding(.bottom, 24)
                     DeliveryAddress(model: model)
                         .padding(.bottom, 16)
                     CustomDivider()
                         .padding(.bottom, 16)
-                    CheckoutProduct(model: model, inputSelectedProduct: $inputSelectedProduct)
+                    CheckoutProduct(model: model)
                     Rectangle()
                         .fill(.brownLight)
                         .frame(height: 4)
                         .padding([.top, .bottom], 16)
                     Discount()
                         .padding(.bottom, 24)
-                    PaymentSummary(inputSelectedProduct: $inputSelectedProduct)
+                    PaymentSummary()
                 }
                 .padding([.leading, .trailing], 24)
                 Spacer()
@@ -91,7 +92,7 @@ struct OrderScreen: View {
                                     .font(Font.custom(.sora, size: 14))
                                     .fontWeight(.semibold)
                                     .foregroundStyle(.grayNormalActive)
-                                Text("$ \(String(format: "%.2f", inputSelectedProduct?.totalAmount ?? 0.0))")
+                                Text("$ \(String(format: "%.2f", orderModel.totalAmount ?? 0.0))")
                                     .font(Font.custom(.sora, size: 12))
                                     .fontWeight(.semibold)
                                     .foregroundStyle(.brownNormal)
@@ -104,11 +105,11 @@ struct OrderScreen: View {
                         .padding(EdgeInsets(top: 16, leading: 24, bottom: 12, trailing: 24))
                         Button {
                             //mainModel.selectedProduct?.count = model.count
-                            if inputSelectedProduct?.typeDelivery == nil {
+                            if orderModel.typeDelivery == nil {
                                 return
                             } else {
-                                print("\(String(describing: inputSelectedProduct))")
-                                //mainModel.goToDelivery()
+                                print("\(String(describing: orderModel))")
+                                router.push(.delivery)
                             }
                         } label: {
                             ZStack {
@@ -130,6 +131,7 @@ struct OrderScreen: View {
                 .navigationBarBackButtonHidden()
                 .ignoresSafeArea(edges: .bottom)
         }
+        .environmentObject(router)
     }
 }
 
@@ -155,7 +157,7 @@ struct TypeCountBtn: View {
 }
 
 struct PaymentSummary: View {
-    @Binding var inputSelectedProduct: SelectedProduct?
+    @EnvironmentObject var orderModel: OrderModel
     var body: some View {
         Text("Payment Summary")
             .font(Font.custom(.sora, size: 16))
@@ -167,7 +169,7 @@ struct PaymentSummary: View {
                 .fontWeight(.regular)
                 .foregroundStyle(.grayNormal)
             Spacer()
-            Text("$ \(String(format: "%.2f", inputSelectedProduct?.totalAmount ?? 0.0))")
+            Text("$ \(String(format: "%.2f", orderModel.totalAmount ?? 0.0))")
                 .font(Font.custom(.sora, size: 16))
                 .fontWeight(.semibold)
                 .foregroundStyle(.grayNormalActive)
@@ -221,20 +223,20 @@ struct Discount: View {
 
 struct CheckoutProduct: View {
     @ObservedObject var model: OrderScreenModel
-    @Binding var inputSelectedProduct: SelectedProduct?
+    @EnvironmentObject var orderModel: OrderModel
     var body: some View {
         HStack(spacing: 0) {
-            Image(inputSelectedProduct?.product?.image ?? "")
+            Image(orderModel.product?.image ?? "")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .clipShape(RoundedRectangle(cornerRadius: 8))
             VStack(alignment: .leading, spacing: 0) {
-                Text(inputSelectedProduct?.product?.name ?? "")
+                Text(orderModel.product?.name ?? "")
                     .font(Font.custom(.sora, size: 16))
                     .fontWeight(.semibold)
                     .foregroundStyle(.grayNormalActive)
                 
-                Text(inputSelectedProduct?.product?.description ?? "")
+                Text(orderModel.product?.description ?? "")
                     .font(Font.custom(.sora, size: 12))
                     .fontWeight(.regular)
                     .foregroundStyle(.grayLighter)
@@ -244,7 +246,7 @@ struct CheckoutProduct: View {
             HStack(spacing: 0) {
                 TypeCountBtn(type: model.isActiveMinus ? .activeMinus : .notActiveMinus) {
                     model.increaseCount()
-                    inputSelectedProduct?.count = model.count
+                    orderModel.count = model.count
                     
                 }
                 .padding(.trailing, 18)
@@ -252,7 +254,7 @@ struct CheckoutProduct: View {
                     .padding(.trailing, 18)
                 TypeCountBtn(type: .plus) {
                     model.count += 1
-                    inputSelectedProduct?.count = model.count
+                    orderModel.count = model.count
                     
                 }
             }
@@ -313,7 +315,7 @@ struct DeliveryAddress: View {
 
 struct OrderType: View {
     @ObservedObject var model: OrderScreenModel
-    @Binding var inputSelectedProduct: SelectedProduct?
+    @EnvironmentObject var orderModel: OrderModel
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 12)
@@ -322,7 +324,7 @@ struct OrderType: View {
                 ForEach(model.orderTypes) { type in
                     OrderTypeButton(isActive: model.selectedTypeOrder == type, type: type) {
                         model.selectedTypeOrder = type
-                        inputSelectedProduct?.typeDelivery = type.name
+                        orderModel.typeDelivery = type.name
                     }
                 }
             }
@@ -353,5 +355,7 @@ struct OrderTypeButton: View {
 }
 
 #Preview {
-    OrderScreen(inputSelectedProduct: .constant(SelectedProduct()))
+    OrderScreen()
+        .environmentObject(OrderModel())
+        .environmentObject(Router())
 }
