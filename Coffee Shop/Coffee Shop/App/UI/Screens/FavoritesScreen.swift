@@ -10,24 +10,21 @@ import SwipeActions
 
 class FavoritesScreenModel: ObservableObject {
     @Published var wishList: [ProductModel?] = []
-    @Published var path: [Screen] = []
-    
-    func goToDetails() {
-        path.append(.details)
-    }
 }
 
 struct FavoritesScreen: View {
     @EnvironmentObject var favoritesScreenModel: FavoritesScreenModel
+    @StateObject var orderModel = OrderModel()
     @StateObject var router = Router()
     var body: some View {
-        VStack(spacing: 0) {
-            NavigationStack(path: $favoritesScreenModel.path) {
+        NavigationStack(path: $router.path) {
+            VStack(spacing: 0) {
                 ScrollView(.vertical) {
                     ForEach(favoritesScreenModel.wishList, id: \.self) { productModel in
                         WishCard(productModel: productModel)
                             .onTapGesture {
-                                
+                                orderModel.product = productModel
+                                router.push(.details)
                                 //передать в detailScreen(inputSelectedProduct: productModel)
                             }
                             .addFullSwipeAction(menu: .slided,
@@ -58,7 +55,23 @@ struct FavoritesScreen: View {
                     Spacer()
                 }
             }
+            .navigationDestination(for: Screen.self) { screen in
+                switch screen {
+                case .details:
+                    DetailScreen()
+                case .delivery:
+                    DeliveryScreen()
+                case .order:
+                    OrderScreen()
+                case .main:
+                    EmptyView()
+                case .search:
+                    SearchScreen()
+                }
+            }
         }
+        .environmentObject(orderModel)
+        .environmentObject(router)
     }
 }
 

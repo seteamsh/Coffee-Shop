@@ -27,11 +27,12 @@ class DetailScreenModel: ObservableObject {
 
 struct DetailScreen: View {
     @StateObject var model = DetailScreenModel()
-    @Binding var inputSelectedProduct: SelectedProduct?
+    //@Binding var inputSelectedProduct: SelectedProduct?
     @EnvironmentObject var favoritesScreenModel: FavoritesScreenModel
+    @EnvironmentObject var orderModel: OrderModel
     @Environment(\.dismiss) var dismiss
     var isAdded: Bool {
-        favoritesScreenModel.wishList.contains(inputSelectedProduct?.product)
+        favoritesScreenModel.wishList.contains(orderModel.product)
     }
     var body: some View {
         VStack(spacing: 0, content: {
@@ -40,7 +41,6 @@ struct DetailScreen: View {
                     VStack(alignment: .leading, spacing: 0) {
                         HStack(spacing: 0) {
                             Button {
-                                inputSelectedProduct = nil
                                 dismiss()
                             } label: {
                                 Image("back")
@@ -57,9 +57,9 @@ struct DetailScreen: View {
                                 .foregroundStyle(.grayNormalActive)
                             Spacer()
                             Button {
-                                if isAdded { favoritesScreenModel.wishList.remove(at: favoritesScreenModel.wishList.firstIndex(of: inputSelectedProduct?.product)!) }
+                                if isAdded { favoritesScreenModel.wishList.remove(at: favoritesScreenModel.wishList.firstIndex(of: orderModel.product)!) }
                                 else {
-                                    favoritesScreenModel.wishList.append(inputSelectedProduct?.product)
+                                    favoritesScreenModel.wishList.append(orderModel.product)
                                 }
                                 print("\(favoritesScreenModel.wishList)")
                             } label: {
@@ -71,14 +71,14 @@ struct DetailScreen: View {
 
                         }
                         .padding(.top, 24)
-                        Image(inputSelectedProduct?.product?.image ?? "")
+                        Image(orderModel.product?.image ?? "")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 327, height: 202, alignment: .center)
                         
                         HStack(spacing: 0) {
                             VStack(alignment: .leading, spacing: 0) {
-                                Text(inputSelectedProduct?.product?.name ?? "")
+                                Text(orderModel.product?.name ?? "")
                                     .font(Font.custom(.sora, size: 20))
                                     .fontWeight(.semibold)
                                     .foregroundStyle(.grayNormalActive)
@@ -92,7 +92,7 @@ struct DetailScreen: View {
                                     Image(.star)
                                         .resizable()
                                         .frame(width: 20, height: 20)
-                                    Text(inputSelectedProduct?.product?.rating ?? "")
+                                    Text(orderModel.product?.rating ?? "")
                                         .font(Font.custom(.sora, size: 15))
                                         .fontWeight(.semibold)
                                         .foregroundStyle(.greyNormalHover)
@@ -140,14 +140,14 @@ struct DetailScreen: View {
                             .fontWeight(.semibold)
                             .foregroundStyle(.grayNormalActive)
                             .padding(.bottom, 16)
-                        ChoiceSize(model: model, inputSelectedProduct: $inputSelectedProduct)
+                        ChoiceSize(model: model)
                         Spacer()
                     }
                     
                     .padding([.leading, .trailing], 24)
                     .background(Color.mainBg)
                 }
-                TapBar(inputSelectedProduct: $inputSelectedProduct, model: model)
+                TapBar(model: model)
                 .background(Color.mainBg)
             }
         })
@@ -158,8 +158,9 @@ struct DetailScreen: View {
 }
 
 struct TapBar: View {
-    @Binding var inputSelectedProduct: SelectedProduct?
+    @EnvironmentObject var orderModel: OrderModel
     @EnvironmentObject var router: Router
+    
     @ObservedObject var model: DetailScreenModel
     var body: some View {
         ZStack {
@@ -176,7 +177,7 @@ struct TapBar: View {
                         .fontWeight(.regular)
                         .foregroundStyle(.greyLightHover)
                         .padding(.bottom, 4)
-                    Text("\(String(inputSelectedProduct?.product?.price ?? 0.0))")
+                    Text("\(String(orderModel.product?.price ?? 0.0))")
                         .font(Font.custom(.sora, size: 18))
                         .fontWeight(.semibold)
                         .foregroundStyle(.brownNormal)
@@ -213,7 +214,7 @@ struct TapBar: View {
 
 struct ChoiceSize: View {
     @ObservedObject var model: DetailScreenModel
-    @Binding var inputSelectedProduct: SelectedProduct?
+    @EnvironmentObject var orderModel: OrderModel
     var body: some View {
         HStack(spacing: 0) {
             ForEach(model.sizes) { size in
@@ -221,7 +222,7 @@ struct ChoiceSize: View {
                              isLast: model.sizes.last == size,
                              size: size) {
                     model.selectedSize = size
-                    inputSelectedProduct?.size = size
+                    orderModel.size = size
                 }
             }
         }
@@ -292,6 +293,7 @@ struct Superiority: View {
 
 
 #Preview {
-    DetailScreen(inputSelectedProduct: .constant(SelectedProduct()))
+    DetailScreen()
         .environmentObject(FavoritesScreenModel())
+        .environmentObject(OrderModel())
 }

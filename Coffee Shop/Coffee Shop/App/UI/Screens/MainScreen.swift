@@ -4,7 +4,6 @@ class MainScreenModel: ObservableObject {
     @Published var searchBar = ""
     @Published var categorySelected: CategorySelected = .all
     @Published var selectedProduct: SelectedProduct?
-    
     @Environment(\.dismiss) var dismiss
     var filteredProducts: [ProductModel] {
         get {
@@ -35,6 +34,7 @@ class MainScreenModel: ObservableObject {
 struct MainScreen: View {
     @StateObject var model = MainScreenModel()
     @StateObject var router = Router()
+    @StateObject var orderModel = OrderModel()
     var body: some View {
         NavigationStack(path: $router.path) {
             ScrollView(.vertical) {
@@ -71,11 +71,11 @@ struct MainScreen: View {
                             .navigationDestination(for: Screen.self) { screen in
                                 switch screen {
                                 case .details:
-                                    DetailScreen(inputSelectedProduct: $model.selectedProduct)
+                                    DetailScreen()
                                 case .delivery:
-                                    DeliveryScreen(model: model)
+                                    DeliveryScreen()
                                 case .order:
-                                    OrderScreen(inputSelectedProduct: $model.selectedProduct)
+                                    OrderScreen()
                                 case .main:
                                     EmptyView()
                                 case .search:
@@ -90,6 +90,7 @@ struct MainScreen: View {
             
         }
         .environmentObject(router)
+        .environmentObject(orderModel)
     }
 }
 
@@ -315,6 +316,7 @@ struct Product: View {
 struct Category: View {
     @ObservedObject var model: MainScreenModel
     @EnvironmentObject var router: Router
+    @EnvironmentObject var orderModel: OrderModel
     var body: some View {
         CategorySlider(model: model)
         LazyVGrid(columns: [
@@ -323,9 +325,9 @@ struct Category: View {
         ], spacing: 24) {
             ForEach(model.filteredProducts) { product in
                 Button {
-                    if model.selectedProduct == nil {
-                        model.selectedProduct = SelectedProduct(product: product)
-                    }
+                    //if orderModel.product == nil {
+                        orderModel.product = product
+                    //}
                     router.push(.details)
                 } label: {
                     Product(product: product)
