@@ -27,14 +27,13 @@ struct OrderScreen: View {
     @StateObject var model = OrderScreenModel()
     @EnvironmentObject var orderModel: OrderModel
     @EnvironmentObject var router: Router
-    @Environment(\.dismiss) var dismiss
     var body: some View {
         ScrollView(.vertical) {
             VStack(spacing: 0) {
                 VStack(alignment: .leading, spacing: 0) {
                     HStack(spacing: 0) {
                         Button {
-                            dismiss()
+                            router.goBack()
                         } label: {
                             Image(.back)
                                 .resizable()

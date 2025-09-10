@@ -19,6 +19,16 @@ struct FavoritesScreen: View {
     var body: some View {
         NavigationStack(path: $router.path) {
             VStack(spacing: 0) {
+                HStack(spacing: 0) {
+                    Spacer()
+                    Text("Wish List")
+                        .font(Font.custom(.sora, size: 16))
+                        .fontWeight(.semibold)
+                        .foregroundStyle(.grayNormalActive)
+                    Spacer()
+                }
+                .padding([.top, .bottom], 24)
+                Divider()
                 ScrollView(.vertical) {
                     ForEach(favoritesScreenModel.wishList, id: \.self) { productModel in
                         WishCard(productModel: productModel)
@@ -55,6 +65,7 @@ struct FavoritesScreen: View {
                     Spacer()
                 }
             }
+            .background(Color.mainBg)
             .navigationDestination(for: Screen.self) { screen in
                 switch screen {
                 case .details:

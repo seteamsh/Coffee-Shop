@@ -30,7 +30,7 @@ struct DetailScreen: View {
     //@Binding var inputSelectedProduct: SelectedProduct?
     @EnvironmentObject var favoritesScreenModel: FavoritesScreenModel
     @EnvironmentObject var orderModel: OrderModel
-    @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var router: Router
     var isAdded: Bool {
         favoritesScreenModel.wishList.contains(orderModel.product)
     }
@@ -41,7 +41,7 @@ struct DetailScreen: View {
                     VStack(alignment: .leading, spacing: 0) {
                         HStack(spacing: 0) {
                             Button {
-                                dismiss()
+                                router.goBack()
                             } label: {
                                 Image("back")
                                     .resizable()
