@@ -9,26 +9,11 @@ enum CategorySelected: Identifiable, Equatable {
     }
 }
 
-struct CategoryModel: Identifiable, Hashable, Equatable {
-    let id: Int
-    var name: String
-    var isActive: Bool = false
-    var category : CategorySelected
-}
+
 
 struct Size: Identifiable, Hashable {
     var id: Int
     var text: String
-}
-
-struct ProductModel: Identifiable, Hashable {
-    let id: Int
-    var name: String
-    var description: String
-    var price: Double
-    var rating: String
-    var image: String
-    var category: [CategorySelected] = [.all]
 }
 
 struct SelectedProduct: Hashable {

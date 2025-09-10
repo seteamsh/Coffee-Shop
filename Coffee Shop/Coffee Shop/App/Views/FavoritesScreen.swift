@@ -8,10 +8,6 @@
 import SwiftUI
 import SwipeActions
 
-class FavoritesScreenModel: ObservableObject {
-    @Published var wishList: [ProductModel?] = []
-}
-
 struct FavoritesScreen: View {
     @EnvironmentObject var favoritesScreenModel: FavoritesScreenModel
     @StateObject var orderModel = OrderModel()

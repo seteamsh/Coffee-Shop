@@ -1,10 +1,3 @@
-//
-//  DeliveryScreen.swift
-//  Coffee Shop
-//
-//  Created by Temirlan Zhumashov on 08.08.2025.
-//
-
 import SwiftUI
 
 struct DeliveryScreen: View {

@@ -1,10 +1,3 @@
-//
-//  AppFlowScreen.swift
-//  Coffee Shop
-//
-//  Created by Temirlan Zhumashov on 21.08.2025.
-//
-
 import SwiftUI
 
 enum AppFlowState {
