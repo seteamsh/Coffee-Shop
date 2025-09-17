@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct MainScreen: View {
+struct MainView: View {
     @StateObject var model = MainScreenModel()
     @StateObject var router = Router()
     @StateObject var orderModel = OrderModel()
@@ -240,20 +240,14 @@ struct Product: View {
                 }
             }.frame(width: 140, height: 128)
             Text(product.name)
-                .font(Font.custom(.sora, size: 16))
-                .fontWeight(.semibold)
-                .foregroundStyle(.grayNormalActive)
+                .fontSora(size: 16, weight: .semibold, color: .grayNormalActive)
                 .padding(EdgeInsets(top: 8, leading: 0, bottom: 4, trailing: 0))
             Text(product.description)
-                .font(Font.custom(.sora, size: 12))
-                .fontWeight(.regular)
-                .foregroundStyle(.grayLighter)
+                .fontSora(size: 12, weight: .regular, color: .grayLighter)
                 .padding(.bottom, 8)
             HStack(spacing: 0) {
                 Text("$ \(String(product.price))")
-                    .font(Font.custom(.sora, size: 16))
-                    .fontWeight(.semibold)
-                    .foregroundStyle(.greyDarkActive)
+                    .fontSora(size: 16, weight: .semibold, color: .greyDarkActive)
                 Spacer()
                 Button {
                     
@@ -293,9 +287,7 @@ struct Category: View {
         ], spacing: 24) {
             ForEach(model.filteredProducts) { product in
                 Button {
-                    //if orderModel.product == nil {
-                        orderModel.product = product
-                    //}
+                    orderModel.product = product
                     router.push(.details)
                 } label: {
                     Product(product: product)
@@ -322,9 +314,7 @@ struct CategorySliderButton: View {
                     .clipShape(RoundedRectangle(cornerRadius: 6))
                     .frame(height: 29)
                 Text(name.name)
-                    .font(Font.custom(.sora, size: 14))
-                    .fontWeight(.regular)
-                    .foregroundStyle(isActive ? Color.white : Color.grayNormal)
+                    .fontSora(size: 14, weight: .regular, color: isActive ? Color.white : Color.grayNormal)
                     .lineLimit(1)
                     .padding(EdgeInsets(top: 4, leading: 8, bottom: 4, trailing: 8))
             }
@@ -335,6 +325,6 @@ struct CategorySliderButton: View {
 }
 
 #Preview {
-    MainScreen()
+    MainView()
         .environmentObject(FavoritesScreenModel())
 }

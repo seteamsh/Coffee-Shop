@@ -27,9 +27,7 @@ struct DetailScreen: View {
 
                             Spacer()
                             Text("Detail")
-                                .font(Font.custom(.sora, size: 16))
-                                .fontWeight(.semibold)
-                                .foregroundStyle(.grayNormalActive)
+                                .fontSora(size: 16, weight: .semibold, color: .grayNormalActive)
                             Spacer()
                             Button {
                                 if isAdded { favoritesScreenModel.wishList.remove(at: favoritesScreenModel.wishList.firstIndex(of: orderModel.product)!) }
@@ -54,23 +52,17 @@ struct DetailScreen: View {
                         HStack(spacing: 0) {
                             VStack(alignment: .leading, spacing: 0) {
                                 Text(orderModel.product?.name ?? "")
-                                    .font(Font.custom(.sora, size: 20))
-                                    .fontWeight(.semibold)
-                                    .foregroundStyle(.grayNormalActive)
+                                    .fontSora(size: 20, weight: .semibold, color: .grayNormalActive)
                                     .padding(.bottom, 4)
                                 Text("Ice/Hot")
-                                    .font(Font.custom(.sora, size: 12))
-                                    .fontWeight(.regular)
-                                    .foregroundStyle(.grayLighter)
+                                    .fontSora(size: 12, weight: .regular, color: .grayLighter)
                                     .padding(.bottom,  16)
                                 HStack(spacing: 0) {
                                     Image(.star)
                                         .resizable()
                                         .frame(width: 20, height: 20)
                                     Text(orderModel.product?.rating ?? "")
-                                        .font(Font.custom(.sora, size: 15))
-                                        .fontWeight(.semibold)
-                                        .foregroundStyle(.greyNormalHover)
+                                        .fontSora(size: 15, weight: .semibold, color: .greyNormalHover)
                                     Text("(230)")
                                         .font(Font.custom(.sora, size: 12))
                                         .foregroundStyle(.grayLighter)
@@ -89,14 +81,10 @@ struct DetailScreen: View {
                         .padding(.bottom, 16)
                         CustomDivider()
                         Text("Description")
-                            .font(Font.custom(.sora, size: 16))
-                            .fontWeight(.semibold)
-                            .foregroundStyle(.grayNormalActive)
+                            .fontSora(size: 16, weight: .semibold, color: .grayNormalActive)
                             .padding(.bottom, 8)
                         Text("A cappuccino is an approximately 150 ml (5 oz) beverage, with 25 ml of espresso coffee and 85 ml of fresh milk. The foam on top, made from steamed milk, adds both texture and sweetness to the drink. Traditionally served in a ceramic cup, the cappuccino is known for its perfect balance between bold espresso and creamy milk.")
-                            .font(Font.custom(.sora, size: 14))
-                            .fontWeight(.light)
-                            .foregroundStyle(.grayLighter)
+                            .fontSora(size: 14, weight: .light, color: .grayLighter)
                             .lineLimit(model.lineLimit)
                         HStack(spacing: 0) {
                             Spacer()
@@ -104,16 +92,13 @@ struct DetailScreen: View {
                                 model.toggleMore()
                             }, label: {
                                 Text(model.textMore())
-                                    .font(Font.custom(.sora, size: 14))
-                                    .fontWeight(.semibold)
-                                    .foregroundStyle(.brownNormal)
+                                    .fontSora(size: 14, weight: .semibold, color: .brownNormal)
+
                             })
                         }
                         .padding(.bottom, 24)
                         Text("Size")
-                            .font(Font.custom(.sora, size: 16))
-                            .fontWeight(.semibold)
-                            .foregroundStyle(.grayNormalActive)
+                            .fontSora(size: 16, weight: .semibold, color: .grayNormalActive)
                             .padding(.bottom, 16)
                         ChoiceSize(model: model)
                         Spacer()
@@ -148,14 +133,10 @@ struct TapBar: View {
             HStack(spacing: 0) {
                 VStack(spacing: 0) {
                     Text("Price")
-                        .font(Font.custom(.sora, size: 14))
-                        .fontWeight(.regular)
-                        .foregroundStyle(.greyLightHover)
+                        .fontSora(size: 14, weight: .regular, color: .greyLightHover)
                         .padding(.bottom, 4)
                     Text("\(String(orderModel.product?.price ?? 0.0))")
-                        .font(Font.custom(.sora, size: 18))
-                        .fontWeight(.semibold)
-                        .foregroundStyle(.brownNormal)
+                        .fontSora(size: 18, weight: .semibold, color: .brownNormal)
                 }
                 Spacer()
                 Button {
@@ -172,9 +153,7 @@ struct TapBar: View {
                             .clipShape(RoundedRectangle(cornerRadius: 16))
 
                         Text("Buy Now")
-                            .font(Font.custom(.sora, size: 16))
-                            .fontWeight(.semibold)
-                            .foregroundStyle(.white)
+                            .fontSora(size: 16, weight: .semibold, color: .white)
                     }
                 }
 
@@ -220,9 +199,7 @@ struct ChoiceButton: View {
                     .cornerRadius(12)
                     .overlay(RoundedRectangle(cornerRadius: 12).stroke(isActive ? .brownNormal : .lightActive, lineWidth: 1))
                 Text(size.text)
-                    .font(Font.custom(.sora, size: 14))
-                    .fontWeight(.regular)
-                    .foregroundStyle(isActive ? .brownNormal : .grayNormalActive)
+                    .fontSora(size: 14, weight: .regular, color: isActive ? .brownNormal : .grayNormalActive)
             }
         }.padding(.trailing, isLast ? 0 : 16)
 

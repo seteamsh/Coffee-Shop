@@ -57,9 +57,8 @@ struct Search: View {
                         
                     TextField(text: $searchBar) {
                         Text("Search coffee")
-                            .font(Font.custom(.sora, size: 14))
-                            .foregroundStyle(.grayLighter)
-                    }
+                            .fontSora(size: 14, weight: .regular, color: .grayLighter)
+                    }                    
                     .font(Font.custom(.sora, size: 14))
                     .foregroundStyle(.white)
                     .frame(width: 207, height: 17)

@@ -22,9 +22,8 @@ struct OrderScreen: View {
                         Spacer()
                         
                         Text("Order")
-                            .font(Font.custom(.sora, size: 16))
-                            .fontWeight(.semibold)
-                            .foregroundStyle(.grayNormalActive)
+                            .fontSora(size: 16, weight: .semibold, color: .grayNormalActive)
+
                             .padding(EdgeInsets(top: 12.5, leading: 0, bottom: 12.5, trailing: 0))
                         
                         Spacer()
@@ -96,9 +95,7 @@ struct OrderScreen: View {
                                     .clipShape(RoundedRectangle(cornerRadius: 16))
                                 
                                 Text("Buy Now")
-                                    .font(Font.custom(.sora, size: 16))
-                                    .fontWeight(.semibold)
-                                    .foregroundStyle(.white)
+                                    .fontSora(size: 16, weight: .semibold, color: .white)
                             }
                         }
                         .padding(EdgeInsets(top: 16, leading: 24, bottom: 12, trailing: 24))
@@ -209,14 +206,10 @@ struct CheckoutProduct: View {
                 .clipShape(RoundedRectangle(cornerRadius: 8))
             VStack(alignment: .leading, spacing: 0) {
                 Text(orderModel.product?.name ?? "")
-                    .font(Font.custom(.sora, size: 16))
-                    .fontWeight(.semibold)
-                    .foregroundStyle(.grayNormalActive)
+                    .fontSora(size: 16, weight: .semibold, color: .grayNormalActive)
                 
                 Text(orderModel.product?.description ?? "")
-                    .font(Font.custom(.sora, size: 12))
-                    .fontWeight(.regular)
-                    .foregroundStyle(.grayLighter)
+                    .fontSora(size: 12, weight: .regular, color: .grayLighter)
             }
             .padding(.leading, 16)
             Spacer()
@@ -268,19 +261,13 @@ struct DeliveryAddress: View {
     @ObservedObject var model: OrderScreenModel
     var body: some View {
         Text("Delivery Address")
-            .font(Font.custom(.sora, size: 16))
-            .fontWeight(.semibold)
-            .foregroundStyle(.grayNormalActive)
+            .fontSora(size: 16, weight: .semibold, color: .grayNormalActive)
             .padding(.bottom, 16)
         Text("Jl. Kpg Sutoyo")
-            .font(Font.custom(.sora, size: 16))
-            .fontWeight(.semibold)
-            .foregroundStyle(.grayNormalActive)
+            .fontSora(size: 16, weight: .semibold, color: .grayNormalActive)
             .padding(.bottom, 4)
         Text("Kpg. Sutoyo No. 620, Bilzen, Tanjungbalai.")
-            .font(Font.custom(.sora, size: 12))
-            .fontWeight(.regular)
-            .foregroundStyle(.grayLighter)
+            .fontSora(size: 12, weight: .regular, color: .grayLighter)
             .padding(.bottom, 16)
         HStack(spacing: 0) {
             ForEach(model.editButtons) { button in
@@ -323,9 +310,11 @@ struct OrderTypeButton: View {
                     .frame(width: 150, height: 34)
                     .foregroundStyle(isActive ? .brownNormal : .categoryNotActive)
                 Text(type.name)
-                    .font(Font.custom(.sora, size: 16))
-                    .fontWeight(isActive ? .semibold : .regular)
-                    .foregroundStyle(isActive ? .white : .grayNormalActive)
+                    .fontSora(
+                        size: 16,
+                        weight: isActive ? .semibold : .regular,
+                        color: isActive ? .white : .grayNormalActive
+                    )
             }
         }
     }

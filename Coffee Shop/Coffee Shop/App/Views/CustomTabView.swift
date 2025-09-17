@@ -7,7 +7,7 @@ struct CustomTabView: View {
                 ZStack {
                     switch model.selectionTab {
                     case .Main:
-                        MainScreen()
+                        MainView()
                     case .Favorites:
                         FavoritesScreen()
                     case .ShoppingBag:

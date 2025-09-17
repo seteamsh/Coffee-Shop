@@ -74,4 +74,3 @@ struct TabViewButton: Identifiable, Equatable {
     var inactiveIcon: IconsState
     var tab: Tab
 }
-
