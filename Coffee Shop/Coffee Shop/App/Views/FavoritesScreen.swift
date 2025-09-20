@@ -98,7 +98,7 @@ struct WishCard: View {
                         .fontWeight(.semibold)
                         .foregroundStyle(.grayNormalActive)
                     
-                    Text(productModel?.description ?? "")
+                    Text(productModel?.modificator ?? "")
                         .font(Font.custom(.sora, size: 12))
                         .fontWeight(.regular)
                         .foregroundStyle(.grayLighter)

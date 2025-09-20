@@ -1,6 +1,7 @@
-struct ProductModel: Identifiable, Hashable {
+struct ProductModel: Identifiable, Hashable, Decodable {
     let id: Int
     var name: String
+    var modificator: String
     var description: String
     var price: Double
     var rating: String

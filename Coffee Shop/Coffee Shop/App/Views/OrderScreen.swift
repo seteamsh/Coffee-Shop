@@ -208,7 +208,7 @@ struct CheckoutProduct: View {
                 Text(orderModel.product?.name ?? "")
                     .fontSora(size: 16, weight: .semibold, color: .grayNormalActive)
                 
-                Text(orderModel.product?.description ?? "")
+                Text(orderModel.product?.modificator ?? "")
                     .fontSora(size: 12, weight: .regular, color: .grayLighter)
             }
             .padding(.leading, 16)

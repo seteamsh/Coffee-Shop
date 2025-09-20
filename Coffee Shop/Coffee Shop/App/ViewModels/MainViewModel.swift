@@ -1,18 +1,16 @@
 import SwiftUI
-
-class MainScreenModel: ObservableObject {
+@MainActor
+final class MainViewModel: ObservableObject {
     @Published var searchBar = ""
     @Published var categorySelected: CategorySelected = .all
     @Published var selectedProduct: SelectedProduct?
     @Published private(set) var categories: [CategoryModel] = []
-    @Published private(set) var  products: [ProductModel] = []
-    private let productService: ProductServiceProtocol
+    @Published var  products: [ProductModel] = []
     private let categoryService: CategoryServiceProtocol
-    init(categoryService: CategoryServiceProtocol = MockCategoryService(), productService: ProductServiceProtocol = MockProductService()) {
+    init(categoryService: CategoryServiceProtocol = MockCategoryService()) {
         self.categoryService = categoryService
-        self.productService = productService
         loadCategories()
-        loadProducts()
+        fetchProducts()
     }
     
     var filteredProducts: [ProductModel] {
@@ -28,8 +26,20 @@ class MainScreenModel: ObservableObject {
     private func loadCategories() {
         categories = categoryService.getCategories()
     }
-    private func loadProducts() {
-        products = productService.getProducts()
+    
+    func fetchProducts()  {
+        Task {
+            do {
+                let fetchedProducts = try await NetworkManager.shared.getProducts()
+                print("fd")
+                print(fetchedProducts)
+                products = fetchedProducts
+            } catch {
+                if let error = error as? URLError {
+                    print(error)
+                }
+            }
+        }
     }
     
 }
