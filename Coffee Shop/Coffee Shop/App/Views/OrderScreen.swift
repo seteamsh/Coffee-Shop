@@ -200,10 +200,17 @@ struct CheckoutProduct: View {
     @EnvironmentObject var orderModel: OrderModel
     var body: some View {
         HStack(spacing: 0) {
-            Image(orderModel.product?.image ?? "")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .clipShape(RoundedRectangle(cornerRadius: 8))
+            
+            if let imageUrl = orderModel.product?.image, let url = URL(string: imageUrl) {
+                AsyncImage(url: url) { phase in
+                    if let image = phase.image {
+                        image
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                    }
+                }
+            }
             VStack(alignment: .leading, spacing: 0) {
                 Text(orderModel.product?.name ?? "")
                     .fontSora(size: 16, weight: .semibold, color: .grayNormalActive)
@@ -221,6 +228,7 @@ struct CheckoutProduct: View {
                 }
                 .padding(.trailing, 18)
                 Text("\(model.count)")
+                    .fontSora(size: 14, weight: .semibold, color: .greyNormalHover)
                     .padding(.trailing, 18)
                 TypeCountBtn(type: .plus) {
                     model.count += 1

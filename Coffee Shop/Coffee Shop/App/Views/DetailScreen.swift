@@ -44,10 +44,17 @@ struct DetailScreen: View {
 
                         }
                         .padding(.top, 24)
-                        Image(orderModel.product?.image ?? "")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 327, height: 202, alignment: .center)
+                        
+                        if let imageUrl = orderModel.product?.image, let url = URL(string: imageUrl) {
+                            AsyncImage(url: url) { phase in
+                                if let image = phase.image {
+                                    image
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 327, height: 202, alignment: .center)
+                                }
+                            }
+                        }
                         
                         HStack(spacing: 0) {
                             VStack(alignment: .leading, spacing: 0) {

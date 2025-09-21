@@ -31,8 +31,6 @@ final class MainViewModel: ObservableObject {
         Task {
             do {
                 let fetchedProducts = try await NetworkManager.shared.getProducts()
-                print("fd")
-                print(fetchedProducts)
                 products = fetchedProducts
             } catch {
                 if let error = error as? URLError {

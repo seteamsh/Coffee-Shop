@@ -14,7 +14,7 @@ struct AuthScreen: View {
             .frame(height: SizeConstants.avatarWidth)
             Spacer()
             Container {
-                
+                action()
             }
             
         }
