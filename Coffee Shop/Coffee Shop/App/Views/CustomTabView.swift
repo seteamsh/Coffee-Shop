@@ -37,7 +37,7 @@ struct TabView: View {
                 }
             }
         }
-        .padding(EdgeInsets(top: 24, leading: 55.5, bottom: 51, trailing: 55.5))
+        .padding(EdgeInsets(top: 20, leading: 55.5, bottom: 30, trailing: 55.5))
         .background(.white)
         .clipShape(UnevenRoundedRectangle(cornerRadii: RectangleCornerRadii(topLeading: 24, topTrailing: 24)))
     }

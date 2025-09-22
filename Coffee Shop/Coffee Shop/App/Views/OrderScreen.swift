@@ -3,107 +3,62 @@ import SwiftUI
 
 struct OrderScreen: View {
     @StateObject var model = OrderScreenModel()
-    @EnvironmentObject var orderModel: OrderModel
+    
     @EnvironmentObject var router: Router
     var body: some View {
-        ScrollView(.vertical) {
-            VStack(spacing: 0) {
-                VStack(alignment: .leading, spacing: 0) {
-                    HStack(spacing: 0) {
-                        Button {
-                            router.goBack()
-                        } label: {
-                            Image(.back)
-                                .resizable()
-                                .frame(width: 24, height: 24)
-                        }
-                        .padding(10)
-                        
-                        Spacer()
-                        
-                        Text("Order")
-                            .fontSora(size: 16, weight: .semibold, color: .grayNormalActive)
-
-                            .padding(EdgeInsets(top: 12.5, leading: 0, bottom: 12.5, trailing: 0))
-                        
-                        Spacer()
-                        
-                        Rectangle()
-                            .fill(.mainBg)
-                            .frame(width: 24, height: 24)
-                            .padding(10)
-                    }
-                    .padding(.top, 24)
-                    OrderType(model: model)
-                        .padding(.bottom, 24)
-                    DeliveryAddress(model: model)
-                        .padding(.bottom, 16)
-                    CustomDivider()
-                        .padding(.bottom, 16)
-                    CheckoutProduct(model: model)
-                    Rectangle()
-                        .fill(.brownLight)
-                        .frame(height: 4)
-                        .padding([.top, .bottom], 16)
-                    Discount()
-                        .padding(.bottom, 24)
-                    PaymentSummary()
-                }
-                .padding([.leading, .trailing], 24)
-                Spacer()
-                ZStack {
-                    Rectangle()
-                        .fill(.white)
-                        .frame(height: 165)
-                        .clipShape(
-                            .rect(topLeadingRadius: 16, bottomLeadingRadius: 0, bottomTrailingRadius: 0, topTrailingRadius: 16))
-                    VStack(spacing: 0) {
+        VStack(spacing: 0) {
+            ScrollView(.vertical) {
+                VStack(spacing: 0) {
+                    VStack(alignment: .leading, spacing: 0) {
                         HStack(spacing: 0) {
-                            Image(.wallet)
-                                .resizable()
-                                .frame(width: 15.95, height: 14.73)
-                                .padding(.trailing, 9.5)
-                            VStack(alignment: .leading, spacing: 0) {
-                                Text("Cash/Wallet")
-                                    .font(Font.custom(.sora, size: 14))
-                                    .fontWeight(.semibold)
-                                    .foregroundStyle(.grayNormalActive)
-                                Text("$ \(String(format: "%.2f", orderModel.totalAmount ?? 0.0))")
-                                    .font(Font.custom(.sora, size: 12))
-                                    .fontWeight(.semibold)
-                                    .foregroundStyle(.brownNormal)
+                            Button {
+                                router.goBack()
+                            } label: {
+                                Image(.back)
+                                    .resizable()
+                                    .frame(width: 24, height: 24)
                             }
+                            .padding(10)
+                            
                             Spacer()
-                            Image(.down)
-                                .resizable()
+                            
+                            Text("Order")
+                                .fontSora(size: 16, weight: .semibold, color: .grayNormalActive)
+
+                                .padding(EdgeInsets(top: 12.5, leading: 0, bottom: 12.5, trailing: 0))
+                            
+                            Spacer()
+                            
+                            Rectangle()
+                                .fill(.mainBg)
                                 .frame(width: 24, height: 24)
+                                .padding(10)
                         }
-                        .padding(EdgeInsets(top: 16, leading: 24, bottom: 12, trailing: 24))
-                        Button {
-                            //mainModel.selectedProduct?.count = model.count
-                            if orderModel.typeDelivery == nil {
-                                return
-                            } else {
-                                print("\(String(describing: orderModel))")
-                                router.push(.delivery)
-                            }
-                        } label: {
-                            ZStack {
-                                Rectangle()
-                                    .fill(.brownNormal)
-                                    .frame(height: 56)
-                                    .clipShape(RoundedRectangle(cornerRadius: 16))
-                                
-                                Text("Buy Now")
-                                    .fontSora(size: 16, weight: .semibold, color: .white)
-                            }
-                        }
-                        .padding(EdgeInsets(top: 16, leading: 24, bottom: 12, trailing: 24))
+                        .padding(.top, 24)
+                        OrderType(model: model)
+                            .padding(.bottom, 24)
+                        DeliveryAddress(model: model)
+                            .padding(.bottom, 16)
+                        CustomDivider()
+                            .padding(.bottom, 16)
+                        CheckoutProduct(model: model)
+                        Rectangle()
+                            .fill(.brownLight)
+                            .frame(height: 4)
+                            .padding([.top, .bottom], 16)
+                        Discount()
+                            .padding(.bottom, 24)
+                        PaymentSummary()
                     }
+                    .padding([.leading, .trailing], 24)
+                    Spacer()
+                    
                 }
+                    .navigationBarBackButtonHidden()
+                    .ignoresSafeArea(edges: .bottom)
+                
             }.background(.mainBg)
-                .navigationBarBackButtonHidden()
-                .ignoresSafeArea(edges: .bottom)
+            OrderTapBar()
         }
         .environmentObject(router)
     }

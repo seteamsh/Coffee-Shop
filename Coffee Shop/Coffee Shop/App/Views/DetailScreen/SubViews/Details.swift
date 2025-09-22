@@ -1,0 +1,43 @@
+//
+//  Details.swift
+//  Coffee Shop
+//
+//  Created by Temirlan Zhumashov on 22.09.2025.
+//
+
+import SwiftUI
+
+struct Details: View {
+    @EnvironmentObject var orderModel: OrderModel
+    var body: some View {
+        HStack(spacing: 0) {
+            VStack(alignment: .leading, spacing: 0) {
+                Text(orderModel.product?.name ?? "")
+                    .fontSora(size: 20, weight: .semibold, color: .grayNormalActive)
+                    .padding(.bottom, 4)
+                Text("Ice/Hot")
+                    .fontSora(size: 12, weight: .regular, color: .grayLighter)
+                    .padding(.bottom,  16)
+                HStack(spacing: 0) {
+                    Image(.star)
+                        .resizable()
+                        .frame(width: 20, height: 20)
+                    Text(orderModel.product?.rating ?? "")
+                        .fontSora(size: 15, weight: .semibold, color: .greyNormalHover)
+                    Text("(230)")
+                        .font(Font.custom(.sora, size: 12))
+                        .foregroundStyle(.grayLighter)
+                }
+            }
+            Spacer()
+            HStack(spacing: 0) {
+                Superiority(logo: .fastDelivery)
+                    .padding(.trailing, 12)
+                Superiority(logo: .qualityBean)
+                    .padding(.trailing, 12)
+                Superiority(logo: .extraMilk)
+            }
+            .padding([.top, .bottom], 20)
+        }
+    }
+}
