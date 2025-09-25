@@ -1,10 +1,3 @@
-//
-//  FavoritesScreen.swift
-//  Coffee Shop
-//
-//  Created by Temirlan Zhumashov on 17.08.2025.
-//
-
 import SwiftUI
 import SwipeActions
 
@@ -42,6 +35,7 @@ struct FavoritesScreen: View {
                                     HStack(spacing: 0) {
                                         Button {
                                             favoritesScreenModel.wishList.remove(at: favoritesScreenModel.wishList.firstIndex(of: productModel)!)
+                                            UserDefaults.standard.saveFavoritesCoffee(favoritesScreenModel.wishList)
                                         } label: {
                                             Image(systemName: "trash")
                                                 .foregroundStyle(.white)
@@ -56,6 +50,7 @@ struct FavoritesScreen: View {
                                 }
                             } action: {
                                 favoritesScreenModel.wishList.remove(at: favoritesScreenModel.wishList.firstIndex(of: productModel)!)
+                                UserDefaults.standard.saveFavoritesCoffee(favoritesScreenModel.wishList)
                             }
                     }
                     Spacer()
@@ -79,6 +74,9 @@ struct FavoritesScreen: View {
         }
         .environmentObject(orderModel)
         .environmentObject(router)
+        .onAppear {
+            favoritesScreenModel.wishList = UserDefaults.standard.loadFavoritesCoffee()
+        }
     }
 }
 

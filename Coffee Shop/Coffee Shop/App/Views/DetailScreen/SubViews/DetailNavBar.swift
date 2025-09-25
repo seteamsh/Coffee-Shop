@@ -33,6 +33,7 @@ struct DetailNavBar: View {
                 if isAdded { favoritesScreenModel.wishList.remove(at: favoritesScreenModel.wishList.firstIndex(of: orderModel.product)!) }
                 else {
                     favoritesScreenModel.wishList.append(orderModel.product)
+                    UserDefaults.standard.saveFavoritesCoffee(favoritesScreenModel.wishList)
                 }
                 print("\(favoritesScreenModel.wishList)")
             } label: {

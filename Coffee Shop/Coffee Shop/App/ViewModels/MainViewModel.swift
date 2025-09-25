@@ -11,6 +11,7 @@ final class MainViewModel: ObservableObject {
         self.categoryService = categoryService
         loadCategories()
         fetchProducts()
+        NotificationService.shared.requestPermission()
     }
     
     var filteredProducts: [ProductModel] {

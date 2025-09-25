@@ -1,4 +1,4 @@
-struct ProductModel: Identifiable, Hashable, Decodable {
+struct ProductModel: Identifiable, Hashable, Encodable, Decodable {
     let id: Int
     var name: String
     var modificator: String

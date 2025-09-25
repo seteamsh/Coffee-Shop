@@ -1,4 +1,4 @@
-enum CategorySelected: String, Identifiable, Equatable, Decodable {
+enum CategorySelected: String, Identifiable, Equatable, Encodable, Decodable {
     case all
     case machiato
     case latte

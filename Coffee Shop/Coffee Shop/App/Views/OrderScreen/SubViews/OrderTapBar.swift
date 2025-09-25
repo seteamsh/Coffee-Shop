@@ -39,23 +39,13 @@ struct OrderTapBar: View {
                         .frame(width: 24, height: 24)
                 }
                 .padding(EdgeInsets(top: 16, leading: 24, bottom: 12, trailing: 24))
-                Button {
-                    //mainModel.selectedProduct?.count = model.count
+                
+                OrangeButton(text: "Buy Now", width: .infinity, height: 56) {
                     if orderModel.typeDelivery == nil {
                         return
                     } else {
                         print("\(String(describing: orderModel))")
                         router.push(.delivery)
-                    }
-                } label: {
-                    ZStack {
-                        Rectangle()
-                            .fill(.brownNormal)
-                            .frame(height: 56)
-                            .clipShape(RoundedRectangle(cornerRadius: 16))
-                        
-                        Text("Buy Now")
-                            .fontSora(size: 16, weight: .semibold, color: .white)
                     }
                 }
                 .padding(EdgeInsets(top: 16, leading: 24, bottom: 12, trailing: 24))
