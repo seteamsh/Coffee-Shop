@@ -4,35 +4,24 @@ struct Product: View {
     var product: ProductModel
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            ZStack {
+            ZStack(alignment: .topTrailing) {
                 CardImage(imageURL: product.image)
-                VStack(spacing: 0) {
-                    HStack(spacing: 0) {
-                        Spacer()
-                        ZStack {
-                            Rectangle()
-                                .fill(LinearGradient(colors: [.mainBgGradientStart, .mainBgGradientEnd], startPoint: .bottomLeading, endPoint: .topTrailing))
-                            
-                                .clipShape(UnevenRoundedRectangle(bottomLeadingRadius: CGFloat(24.0), topTrailingRadius: CGFloat(12.0)))
-                                .opacity(0.3)
-                            HStack(spacing: 0) {
-                                Image(.star)
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                    .frame(width: 12, height: 12)
-                                    .padding(.trailing, 4)
-                                Text("\(product.rating)")
-                                    .font(Font.custom(.sora, size: 8))
-                                    .fontWeight(.semibold)
-                                    .foregroundStyle(.white)
-                            }
-                            .padding(EdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 14))
-                        }
-                        .frame(width: 51, height: 28)
-                    }
-                    Spacer()
+                HStack(spacing: 0) {
+                    Image(.star)
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 12, height: 12)
+                        .padding(.trailing, 4)
+                    Text("\(product.rating)")
+                        .font(Font.custom(.sora, size: 8))
+                        .fontWeight(.semibold)
+                        .foregroundStyle(.white)
                 }
-            }.frame(width: 140, height: 128)
+                .padding(8)
+                .frame(width: 51, height: 28)
+                .background(LinearGradient(colors: [.mainBgGradientStart, .mainBgGradientEnd], startPoint: .bottomLeading, endPoint: .topTrailing).opacity(0.3))
+                .clipShape(UnevenRoundedRectangle(bottomLeadingRadius: CGFloat(24.0), topTrailingRadius: CGFloat(12.0)))
+            }
             Text(product.name)
                 .fontSora(size: 16, weight: .semibold, color: .grayNormalActive)
                 .padding(EdgeInsets(top: 8, leading: 0, bottom: 4, trailing: 0))
@@ -46,24 +35,19 @@ struct Product: View {
                 Button {
                     
                 } label: {
-                    ZStack {
-                        Rectangle()
-                            .fill(Color.brownNormal)
-                            .frame(width: 32, height: 32)
-                            .clipShape(RoundedRectangle(cornerRadius: 8))
-                        Image(.productAdd)
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: 16, height: 16)
-                        
-                    }
-                    
+                    Image(.productAdd)
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 16, height: 16)
                 }
-                
+                .frame(width: 32, height: 32)
+                .background(Color.brownNormal)
+                .clipShape(RoundedRectangle(cornerRadius: 8))
             }
+            
         }
-        .padding(EdgeInsets(top: 8, leading: 8, bottom: 12, trailing: 8))
-        .frame(width: 156, height: 238)
+        .padding(8)
+        .frame(width: 156)
         .background(Color.white)
         .clipShape(RoundedRectangle(cornerRadius: 16))
     }

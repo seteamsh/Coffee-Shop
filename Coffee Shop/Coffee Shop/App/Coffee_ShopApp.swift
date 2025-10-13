@@ -1,9 +1,4 @@
-//
-//  Coffee_ShopApp.swift
-//  Coffee Shop
-//
-//  Created by Temirlan Zhumashov on 08.07.2025.
-//
+
 
 import SwiftUI
 

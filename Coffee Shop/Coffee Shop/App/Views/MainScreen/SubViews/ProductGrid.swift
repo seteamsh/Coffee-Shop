@@ -9,8 +9,8 @@ struct ProductGrid: View {
     var body: some View {
         CategorySlider(model: model)
         LazyVGrid(columns: [
-            GridItem(.fixed(156), spacing: 20),
-            GridItem(.fixed(156))
+            GridItem(.flexible(maximum: .infinity)),
+            GridItem(.flexible(maximum: .infinity))
         ], spacing: 24) {
             ForEach(model.filteredProducts) { product in
                 Button {
@@ -22,6 +22,10 @@ struct ProductGrid: View {
                 
             }
         }
-        .padding(EdgeInsets(top: 0, leading: 24, bottom: 24, trailing: 24))
+        //.padding(EdgeInsets(top: 0, leading: 24, bottom: 24, trailing: 24))
     }
+}
+
+#Preview {
+    MainView()
 }

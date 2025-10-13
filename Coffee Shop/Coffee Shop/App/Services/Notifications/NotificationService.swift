@@ -11,7 +11,7 @@ class NotificationService {
             }
     }
     
-    func scheduleDailyNotification(id: String, title: String, body: String, hour: Int, minute: Int) {
+    func scheduleDailyNotification(id: String, title: String, body: String, ho ur: Int, minute: Int) {
         let content = UNMutableNotificationContent()
             content.title = title
             content.body = body
