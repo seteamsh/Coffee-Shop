@@ -9,14 +9,16 @@ struct OrangeButton: View {
         Button {
             action()
         } label: {
-            ZStack {
-                Rectangle()
-                    .frame(width: width, height: height)
-                    .foregroundColor(.brownNormal)
-                    .cornerRadius(16)
-                Text(text)
-                    .fontSora(size: 16, weight: .semibold, color: .white)
-            }
+            Text(text)
+                .fontSora(size: 16, weight: .semibold, color: .white)
+            
+                .frame(width: width, height: height)
+                .background(.brownNormal)
+                .cornerRadius(16)
         }
     }
+}
+
+#Preview {
+    OrangeButton(text: "fdg", width: 140, height: 56, action: {})
 }
