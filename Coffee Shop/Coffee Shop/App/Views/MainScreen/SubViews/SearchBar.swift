@@ -1,14 +1,12 @@
 import SwiftUI
 
 struct SearchBar: View {
+    @EnvironmentObject var router: Router
     var body: some View {
-        HStack(spacing: 0) {
-            ZStack {
-                Rectangle()
-                    .fill(.blackLighter)
-                    .frame(height: 52)
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
-                
+        HStack(spacing: 16) {
+            Button {
+                router.push(.search)
+            } label: {
                 HStack(spacing: 0) {
                     Image(.searchLoop)
                         .resizable()
@@ -18,22 +16,26 @@ struct SearchBar: View {
                     Text("Search coffee")
                         .font(Font.custom(.sora, size: 14))
                         .foregroundStyle(.grayLighter)
-                        .frame(width: 207, height: 17)
                 }
-                .background(.blackLighter)
-                .padding(EdgeInsets(top: 17.5, leading: 16, bottom: 17.5, trailing: 0))
+                .frame(maxWidth: .infinity, maxHeight: 52)
             }
-            ZStack {
-                Rectangle()
-                    .fill(.brownNormal)
-                    .frame(width: 52, height: 52)
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
+            .background(.blackLighter)
+            .clipShape(RoundedRectangle(cornerRadius: 12))
+            Button {
+                
+            } label: {
                 Image(.filter)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 20, height: 20)
             }
-            .padding(.leading, 16)
+            .frame(width: 52, height: 52)
+            .background(.brownNormal)
+            .clipShape(RoundedRectangle(cornerRadius: 12))
         }
     }
+}
+
+#Preview {
+    SearchBar()
 }

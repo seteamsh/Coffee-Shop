@@ -16,7 +16,6 @@ struct Location: View {
                     .padding(EdgeInsets(top: 3.5, leading: 4, bottom: 0, trailing: 3.5))
                 Spacer()
             }
-            .frame(width: 327)
         }
     }
 }

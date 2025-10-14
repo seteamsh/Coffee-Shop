@@ -7,7 +7,6 @@ struct ProductGrid: View {
     @EnvironmentObject var router: Router
     @EnvironmentObject var orderModel: OrderModel
     var body: some View {
-        CategorySlider(model: model)
         LazyVGrid(columns: [
             GridItem(.flexible(maximum: .infinity)),
             GridItem(.flexible(maximum: .infinity))

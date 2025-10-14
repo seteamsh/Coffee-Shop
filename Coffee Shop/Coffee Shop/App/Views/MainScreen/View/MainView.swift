@@ -6,36 +6,29 @@ struct MainView: View {
     @StateObject var orderModel = OrderModel()
     var body: some View {
         NavigationStack(path: $router.path) {
-            ScrollView(.vertical) {
+            ScrollView(.vertical, showsIndicators: false) {
                 ZStack {
                     VStack(spacing: 0) {
-                        ZStack {
-                            Rectangle()
-                                .fill(
-                                    LinearGradient(
-                                        stops: [
-                                            Gradient.Stop(color: .mainBgGradientEnd, location: 0.2),
-                                            Gradient.Stop(color: .mainBgGradientStart, location: 1)
-                                        ],
-                                        startPoint: .bottomLeading,
-                                        endPoint: .topTrailing
-                                    )
+                        Rectangle()
+                            .fill(
+                                LinearGradient(
+                                    stops: [
+                                        Gradient.Stop(color: .mainBgGradientEnd, location: 0.2),
+                                        Gradient.Stop(color: .mainBgGradientStart, location: 1)
+                                    ],
+                                    startPoint: .bottomLeading,
+                                    endPoint: .topTrailing
                                 )
-                            
-                        }
-                        .frame(height: 238)
+                            )
+                            .frame(height: UIScreen.main.bounds.height * 0.29)
                         Spacer()
                     }
-                    VStack(spacing: 0) {
+                    VStack(spacing: 24) {
                         Location()
-                            .padding(EdgeInsets(top: 24, leading: 0, bottom: 24, trailing: 0))
-                        Button(action: {
-                            router.push(.search)
-                        }, label: {
-                            SearchBar()
-                        })
-                        .padding(EdgeInsets(top: 0, leading: 24, bottom: 24, trailing: 24))
+                            .padding(.top, 24)
+                        SearchBar()
                         Banner()
+                        CategorySlider(model: model)
                         ProductGrid(model: model)
                             .navigationDestination(for: Screen.self) { screen in
                                 switch screen {
@@ -52,6 +45,7 @@ struct MainView: View {
                                 }
                             }
                     }
+                    .padding(.horizontal, 24)
                 }
             }
             .background(Color.mainBg)

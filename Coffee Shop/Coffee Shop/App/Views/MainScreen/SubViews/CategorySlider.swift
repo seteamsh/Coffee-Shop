@@ -3,7 +3,7 @@ import SwiftUI
 struct CategorySlider: View {
     @ObservedObject var model: MainViewModel
     var body: some View {
-        ScrollView(.horizontal) {
+        ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 0) {
                 ForEach(model.categories) { category in
                     CategorySliderButton(isActive:
@@ -16,6 +16,6 @@ struct CategorySlider: View {
                     }
                 }
             }
-        }.padding(EdgeInsets(top: 0, leading: 24, bottom: 16, trailing: 24))
+        }
     }
 }
