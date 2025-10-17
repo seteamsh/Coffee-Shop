@@ -26,11 +26,6 @@ struct SelectedProduct: Hashable {
     var typeDelivery: String?
 }
 
-struct TypeOrder: Identifiable, Hashable {
-    let id: Int
-    var name: String
-}
-
 struct EditTypeButton: Identifiable, Hashable {
     let id: Int
     var name: String

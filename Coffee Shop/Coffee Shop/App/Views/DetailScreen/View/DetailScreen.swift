@@ -1,5 +1,5 @@
 import SwiftUI
-
+import Kingfisher
 struct DetailScreen: View {
     @StateObject var model = DetailScreenModel()
     @EnvironmentObject var orderModel: OrderModel
@@ -9,17 +9,7 @@ struct DetailScreen: View {
             ScrollView(.vertical) {
                     VStack(spacing: 0) {
                         DetailNavBar()
-                        if let imageUrl = orderModel.product?.image, let url = URL(string: imageUrl) {
-                            AsyncImage(url: url) { phase in
-                                if let image = phase.image {
-                                    image
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                    
-                                }
-                            }
-                        }
-                            
+                        CardImage(imageURL: orderModel.product?.image ?? "", width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height * 0.3)
                         Details()
                             .padding([.top, .bottom], 16)
                         CustomDivider()

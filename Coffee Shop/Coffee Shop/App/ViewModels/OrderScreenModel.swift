@@ -1,13 +1,10 @@
 import SwiftUI
 
 class OrderScreenModel: ObservableObject {
-    @Published var selectedTypeOrder: TypeOrder?
+    @Published var selectedTypeOrder = "Deliver"
     @Published var selectedEditButton: EditTypeButton?
     @Published var count = 1
-    var orderTypes = [
-        TypeOrder(id: 1, name: "Deliver"),
-        TypeOrder(id: 2, name: "Pick Up")
-        ]
+
     var editButtons = [
         EditTypeButton(id: 1, name: "Edit Address", image: "edit"),
         EditTypeButton(id: 2, name: "Add note", image: "note")

@@ -1,17 +1,16 @@
 import SwiftUI
+import Kingfisher
 
 struct CardImage: View {
     let imageURL: String
-    
+    let width: CGFloat
+    let height: CGFloat
     var body: some View {
-        AsyncImage(url: URL(string: imageURL)) { phase in
-            if let image = phase.image {
-                image
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: 140, height: 128)
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
+        KFImage(URL(string: imageURL))
+            .placeholder {
+                Image(systemName: "photo")
             }
-        }
+            .resizable()
+            .frame(width: width, height: height)
     }
 }

@@ -1,5 +1,5 @@
 import SwiftUI
-
+import Kingfisher
 
 struct OrderScreen: View {
     @StateObject var model = OrderScreenModel()
@@ -11,7 +11,7 @@ struct OrderScreen: View {
                 VStack(spacing: 0) {
                     VStack(alignment: .leading, spacing: 0) {
                         OrderNavBar()
-                        .padding(.top, 24)
+                            .padding(.top, 24)
                         OrderType(model: model)
                             .padding(.bottom, 24)
                         DeliveryAddress(model: model)
@@ -31,8 +31,8 @@ struct OrderScreen: View {
                     Spacer()
                     
                 }
-                    .navigationBarBackButtonHidden()
-                    .ignoresSafeArea(edges: .bottom)
+                .navigationBarBackButtonHidden()
+                .ignoresSafeArea(edges: .bottom)
                 
             }.background(.mainBg)
             OrderTapBar()
@@ -123,7 +123,7 @@ struct Discount: View {
                     .aspectRatio(contentMode: .fill)
             }.padding(EdgeInsets(top: 18, leading: 16, bottom: 18, trailing: 16))
         }
-            
+        
     }
 }
 
@@ -132,17 +132,9 @@ struct CheckoutProduct: View {
     @EnvironmentObject var orderModel: OrderModel
     var body: some View {
         HStack(spacing: 0) {
-            
-            if let imageUrl = orderModel.product?.image, let url = URL(string: imageUrl) {
-                AsyncImage(url: url) { phase in
-                    if let image = phase.image {
-                        image
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .clipShape(RoundedRectangle(cornerRadius: 8))
-                    }
-                }
-            }
+            CardImage(imageURL: orderModel.product?.image ?? "", width: 54, height: 54)
+                .aspectRatio(contentMode: .fit)
+                .clipShape(RoundedRectangle(cornerRadius: 8))
             VStack(alignment: .leading, spacing: 0) {
                 Text(orderModel.product?.name ?? "")
                     .fontSora(size: 16, weight: .semibold, color: .grayNormalActive)
@@ -225,40 +217,23 @@ struct OrderType: View {
             RoundedRectangle(cornerRadius: 12)
                 .fill(.categoryNotActive)
             HStack(spacing: 0) {
-                ForEach(model.orderTypes) { type in
-                    OrderTypeButton(isActive: model.selectedTypeOrder == type, type: type) {
-                        model.selectedTypeOrder = type
-                        orderModel.typeDelivery = type.name
-                    }
+                OrderTypeButton(name: "Deliver", isActive: model.selectedTypeOrder == "Deliver") {
+                    model.selectedTypeOrder = "Deliver"
+                    orderModel.typeDelivery = "Deliver"
                 }
+                Spacer()
+                OrderTypeButton(name: "Pick Up", isActive: model.selectedTypeOrder == "Deliver") {
+                    model.selectedTypeOrder = "Deliver"
+                    orderModel.typeDelivery = "Deliver"
+                }
+                
             }
             
         }
         .frame(height: 43)
     }
 }
-struct OrderTypeButton: View {
-    var isActive: Bool
-    var type: TypeOrder
-    var action: () -> Void
-    var body: some View {
-        Button {
-            action()
-        } label: {
-            ZStack {
-                RoundedRectangle(cornerRadius: 8)
-                    .frame(width: 150, height: 34)
-                    .foregroundStyle(isActive ? .brownNormal : .categoryNotActive)
-                Text(type.name)
-                    .fontSora(
-                        size: 16,
-                        weight: isActive ? .semibold : .regular,
-                        color: isActive ? .white : .grayNormalActive
-                    )
-            }
-        }
-    }
-}
+
 
 #Preview {
     OrderScreen()
