@@ -16,8 +16,9 @@ struct SearchBar: View {
                     Text("Search coffee")
                         .font(Font.custom(.sora, size: 14))
                         .foregroundStyle(.grayLighter)
+                    Spacer()
                 }
-                .frame(maxWidth: .infinity, maxHeight: 52)
+                .padding(16)
             }
             .background(.blackLighter)
             .clipShape(RoundedRectangle(cornerRadius: 12))

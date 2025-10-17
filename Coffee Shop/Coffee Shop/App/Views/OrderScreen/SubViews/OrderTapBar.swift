@@ -11,12 +11,6 @@ struct OrderTapBar: View {
     @EnvironmentObject var orderModel: OrderModel
     @EnvironmentObject var router: Router
     var body: some View {
-        ZStack {
-            Rectangle()
-                .fill(.white)
-                .frame(height: 165)
-                .clipShape(
-                    .rect(topLeadingRadius: 16, bottomLeadingRadius: 0, bottomTrailingRadius: 0, topTrailingRadius: 16))
             VStack(spacing: 0) {
                 HStack(spacing: 0) {
                     Image(.wallet)
@@ -38,19 +32,19 @@ struct OrderTapBar: View {
                         .resizable()
                         .frame(width: 24, height: 24)
                 }
-                .padding(EdgeInsets(top: 16, leading: 24, bottom: 12, trailing: 24))
-                
                 OrangeButton(text: "Buy Now", width: .infinity, height: 56) {
-                    if orderModel.typeDelivery == nil {
-                        return
-                    } else {
                         print("\(String(describing: orderModel))")
                         router.push(.delivery)
-                    }
                 }
-                .padding(EdgeInsets(top: 16, leading: 24, bottom: 12, trailing: 24))
             }
-        }
-        .background(.mainBg)
+            .frame(height: UIScreen.main.bounds.height * 0.15)
+            .background(.white)
+            .clipShape(
+                .rect(topLeadingRadius: 16, bottomLeadingRadius: 0, bottomTrailingRadius: 0, topTrailingRadius: 16))
     }
+}
+
+#Preview {
+    OrderTapBar()
+        .environmentObject(OrderModel())
 }

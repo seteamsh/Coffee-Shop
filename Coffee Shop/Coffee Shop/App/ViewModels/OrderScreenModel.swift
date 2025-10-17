@@ -1,7 +1,7 @@
 import SwiftUI
 
 class OrderScreenModel: ObservableObject {
-    @Published var selectedTypeOrder = "Deliver"
+    @Published var selectedTypeOrder: DeliveryType = .devlier
     @Published var selectedEditButton: EditTypeButton?
     @Published var count = 1
 

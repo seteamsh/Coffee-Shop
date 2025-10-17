@@ -1,20 +1,20 @@
 import SwiftUI
 
 struct OrderTypeButton: View {
-    var name: String
+    var name: DeliveryType
     var isActive: Bool
     var action: () -> Void
     var body: some View {
         Button {
             action()
         } label: {
-            Text(name)
+            Text(name.rawValue)
                 .fontSora(
                     size: 16,
                     weight: isActive ? .semibold : .regular,
                     color: isActive ? .white : .grayNormalActive
                 )
-                .frame(width: 150, height: 34)
+                .frame(maxWidth: .infinity, maxHeight: 34)
                 .background(isActive ? .brownNormal : .categoryNotActive)
                 .cornerRadius(8)
         }
@@ -24,7 +24,7 @@ struct OrderTypeButton: View {
 
 #Preview {
     OrderTypeButton(
-        name: "Deliver",
+        name: .devlier,
         isActive: false,
         action: {}
     )

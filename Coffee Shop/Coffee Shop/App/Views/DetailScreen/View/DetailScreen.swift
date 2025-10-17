@@ -9,7 +9,8 @@ struct DetailScreen: View {
             ScrollView(.vertical) {
                     VStack(spacing: 0) {
                         DetailNavBar()
-                        CardImage(imageURL: orderModel.product?.image ?? "", width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height * 0.3)
+                        CardImage(imageURL: orderModel.product?.image ?? "")
+                            .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height * 0.3)
                         Details()
                             .padding([.top, .bottom], 16)
                         CustomDivider()

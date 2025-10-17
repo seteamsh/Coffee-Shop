@@ -12,7 +12,7 @@ struct OrangeButton: View {
             Text(text)
                 .fontSora(size: 16, weight: .semibold, color: .white)
             
-                .frame(width: width, height: height)
+                .frame(maxWidth: width,  maxHeight: height)
                 .background(.brownNormal)
                 .cornerRadius(16)
         }

@@ -5,7 +5,8 @@ struct Product: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             ZStack(alignment: .topTrailing) {
-                CardImage(imageURL: product.image, width: 140, height: 128)
+                CardImage(imageURL: product.image)
+                    .frame(width: 140, height: 128)
                     .aspectRatio(contentMode: .fill)
                     .clipShape(RoundedRectangle(cornerRadius: 12))
                 HStack(spacing: 0) {

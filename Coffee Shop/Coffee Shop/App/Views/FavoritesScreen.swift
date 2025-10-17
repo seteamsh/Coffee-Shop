@@ -85,18 +85,10 @@ struct WishCard: View {
     var body: some View {
         VStack(spacing: 0) {
             HStack(spacing: 0) {
-                
-                if let imageUrl = productModel?.image, let url = URL(string: imageUrl) {
-                    AsyncImage(url: url) { phase in
-                        if let image = phase.image {
-                            image
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .clipShape(RoundedRectangle(cornerRadius: 8))
-                                .padding(.trailing, 15)
-                        }
-                    }
-                }
+                CardImage(imageURL: productModel?.image ?? "")
+                .aspectRatio(contentMode: .fit)
+                .clipShape(RoundedRectangle(cornerRadius: 8))
+                .padding(.trailing, 15)
                 VStack(alignment: .leading, spacing: 0) {
                     Text(productModel?.name ?? "")
                         .font(Font.custom(.sora, size: 16))

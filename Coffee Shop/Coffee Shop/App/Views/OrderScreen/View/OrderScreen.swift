@@ -6,38 +6,27 @@ struct OrderScreen: View {
     
     @EnvironmentObject var router: Router
     var body: some View {
-        VStack(spacing: 0) {
+        ZStack(alignment: .bottom) {
             ScrollView(.vertical) {
-                VStack(spacing: 0) {
-                    VStack(alignment: .leading, spacing: 0) {
-                        OrderNavBar()
-                            .padding(.top, 24)
-                        OrderType(model: model)
-                            .padding(.bottom, 24)
-                        DeliveryAddress(model: model)
-                            .padding(.bottom, 16)
-                        CustomDivider()
-                            .padding(.bottom, 16)
-                        CheckoutProduct(model: model)
-                        Rectangle()
-                            .fill(.brownLight)
-                            .frame(height: 4)
-                            .padding([.top, .bottom], 16)
-                        Discount()
-                            .padding(.bottom, 24)
-                        PaymentSummary()
-                    }
-                    .padding([.leading, .trailing], 24)
-                    Spacer()
-                    
+                VStack(alignment: .leading, spacing: 16) {
+                    OrderNavBar()
+                    SelectedDeliveryType(model: model)
+                    DeliveryAddress(model: model)
+                    CustomDivider()
+                    CheckoutProduct(model: model)
+                    Rectangle()
+                        .fill(.brownLight)
+                        .frame(height: 4)
+                    Discount()
+                    PaymentSummary()
                 }
-                .navigationBarBackButtonHidden()
-                .ignoresSafeArea(edges: .bottom)
-                
-            }.background(.mainBg)
+                .padding(.horizontal, 24)
+            }
+            .background(.mainBg)
             OrderTapBar()
         }
         .environmentObject(router)
+        .navigationBarBackButtonHidden()
     }
 }
 
@@ -99,40 +88,15 @@ struct PaymentSummary: View {
     }
 }
 
-struct Discount: View {
-    var body: some View {
-        ZStack {
-            Rectangle()
-                .fill(.white)
-                .frame(height: 56)
-                .cornerRadius(16)
-                .overlay(RoundedRectangle(cornerRadius: 16) .stroke(.categoryNotActive, lineWidth: 1))
-            HStack(spacing: 0) {
-                Image(.discount)
-                    .resizable()
-                    .frame(width: 20, height: 20)
-                    .aspectRatio(contentMode: .fill)
-                    .padding(.trailing, 16)
-                Text("1 Discount is Applies")
-                    .font(Font.custom(.sora, size: 14))
-                    .fontWeight(.semibold)
-                Spacer()
-                Image(.right)
-                    .resizable()
-                    .frame(width: 21, height: 21)
-                    .aspectRatio(contentMode: .fill)
-            }.padding(EdgeInsets(top: 18, leading: 16, bottom: 18, trailing: 16))
-        }
-        
-    }
-}
+
 
 struct CheckoutProduct: View {
     @ObservedObject var model: OrderScreenModel
     @EnvironmentObject var orderModel: OrderModel
     var body: some View {
         HStack(spacing: 0) {
-            CardImage(imageURL: orderModel.product?.image ?? "", width: 54, height: 54)
+            CardImage(imageURL: orderModel.product?.image ?? "")
+                .frame(width: 54, height: 54)
                 .aspectRatio(contentMode: .fit)
                 .clipShape(RoundedRectangle(cornerRadius: 8))
             VStack(alignment: .leading, spacing: 0) {
@@ -194,13 +158,10 @@ struct DeliveryAddress: View {
     var body: some View {
         Text("Delivery Address")
             .fontSora(size: 16, weight: .semibold, color: .grayNormalActive)
-            .padding(.bottom, 16)
         Text("Jl. Kpg Sutoyo")
             .fontSora(size: 16, weight: .semibold, color: .grayNormalActive)
-            .padding(.bottom, 4)
         Text("Kpg. Sutoyo No. 620, Bilzen, Tanjungbalai.")
             .fontSora(size: 12, weight: .regular, color: .grayLighter)
-            .padding(.bottom, 16)
         HStack(spacing: 0) {
             ForEach(model.editButtons) { button in
                 EditButton(editType: button)
@@ -209,30 +170,7 @@ struct DeliveryAddress: View {
     }
 }
 
-struct OrderType: View {
-    @ObservedObject var model: OrderScreenModel
-    @EnvironmentObject var orderModel: OrderModel
-    var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 12)
-                .fill(.categoryNotActive)
-            HStack(spacing: 0) {
-                OrderTypeButton(name: "Deliver", isActive: model.selectedTypeOrder == "Deliver") {
-                    model.selectedTypeOrder = "Deliver"
-                    orderModel.typeDelivery = "Deliver"
-                }
-                Spacer()
-                OrderTypeButton(name: "Pick Up", isActive: model.selectedTypeOrder == "Deliver") {
-                    model.selectedTypeOrder = "Deliver"
-                    orderModel.typeDelivery = "Deliver"
-                }
-                
-            }
-            
-        }
-        .frame(height: 43)
-    }
-}
+
 
 
 #Preview {
