@@ -2,17 +2,10 @@ import SwiftUI
 
 class DetailScreenModel: ObservableObject {
     @Published var isMore: Bool = false
-    @Published var sizeSelected: Size?
-    @Published var selectedSize: Size?
+    @Published var selectedSize: SizeOfCup?
     var lineLimit: Int {
         isMore ? .max : 3
     }
-    
-    var sizes: [Size] = [
-        Size(id: 1, text: "S"),
-        Size(id: 2, text: "M"),
-        Size(id: 3, text: "L")
-    ]
     
     func toggleMore() {
         isMore.toggle()

@@ -2,7 +2,6 @@ import SwiftUI
 
 struct CategorySliderButton: View {
     var isActive: Bool
-    var isLast: Bool
     var name: CategoryModel
     var action: () -> Void
     var body: some View {
@@ -17,10 +16,11 @@ struct CategorySliderButton: View {
                     .clipShape(RoundedRectangle(cornerRadius: 6))
                     .frame(height: 29)
         }
-        .padding(.trailing, isLast ? 0 : 16)
     }
 }
 
 #Preview {
-    CategorySliderButton(isActive: true, isLast: false, name: CategoryModel(id: 1, name: "fd", category: .americano), action: {})
+    CategorySliderButton(isActive: true, name: CategoryModel(id: 1, name: "fd", category: .americano) ) {
+        
+    }
 }

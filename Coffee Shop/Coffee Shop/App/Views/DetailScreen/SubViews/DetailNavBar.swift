@@ -43,5 +43,13 @@ struct DetailNavBar: View {
             }
         }
         .padding([.top, .bottom], 10)
+        .background(.mainBg)
     }
+}
+
+#Preview {
+    DetailNavBar()
+        .environmentObject(FavoritesScreenModel())
+        .environmentObject(Router())
+        .environmentObject(OrderModel())
 }

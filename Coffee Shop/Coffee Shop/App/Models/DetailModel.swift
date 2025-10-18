@@ -8,3 +8,9 @@ enum SuperiorityLogo: String {
     case qualityBean
     case extraMilk
 }
+
+enum SizeOfCup: String {
+    case S
+    case M
+    case L
+}

@@ -1,9 +1,8 @@
 import SwiftUI
 
-struct ChoiceButton: View {
+struct SelectedSizeButton: View {
     var isActive: Bool
-    var isLast: Bool
-    var size: Size
+    var size: SizeOfCup
     var action: () -> Void
     var body: some View {
         Button {
@@ -15,10 +14,14 @@ struct ChoiceButton: View {
                     .foregroundStyle(isActive ? .brownLight : .white)
                     .cornerRadius(12)
                     .overlay(RoundedRectangle(cornerRadius: 12).stroke(isActive ? .brownNormal : .lightActive, lineWidth: 1))
-                Text(size.text)
+                Text(size.rawValue)
                     .fontSora(size: 14, weight: .regular, color: isActive ? .brownNormal : .grayNormalActive)
             }
-        }.padding(.trailing, isLast ? 0 : 16)
+        }
 
     }
+}
+
+#Preview {
+    SelectedSizeButton(isActive: true, size: SizeOfCup.L) {}
 }

@@ -4,12 +4,10 @@ struct CategorySlider: View {
     @ObservedObject var model: MainViewModel
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 0) {
+            HStack(spacing: 16) {
                 ForEach(model.categories) { category in
                     CategorySliderButton(isActive:
                                             category.category == model.categorySelected ? true : false,
-                                         isLast:
-                                            model.categories.lastIndex(of: category) == model.categories.count - 1 ? true : false,
                                          name: category
                     ){
                         model.categorySelected = category.category
@@ -18,4 +16,8 @@ struct CategorySlider: View {
             }
         }
     }
+}
+
+#Preview {
+    CategorySlider(model: MainViewModel())
 }

@@ -9,16 +9,9 @@ enum CategorySelected: String, Identifiable, Equatable, Encodable, Decodable {
     }
 }
 
-
-
-struct Size: Identifiable, Hashable {
-    var id: Int
-    var text: String
-}
-
 struct SelectedProduct: Hashable {
     var product: ProductModel?
-    var size: Size?
+    var size: SizeOfCup?
     var count = 1
     var totalAmount: Double? {
         (product?.price ?? 0.0) * Double(count)

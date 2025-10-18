@@ -1,9 +1,12 @@
 import SwiftUI
 import Kingfisher
+
 struct DetailScreen: View {
+    //MARK: - Properties
     @StateObject var model = DetailScreenModel()
     @EnvironmentObject var orderModel: OrderModel
 
+    //MARK: - Body
     var body: some View {
         VStack(spacing: 0) {
             ScrollView(.vertical) {
@@ -17,7 +20,7 @@ struct DetailScreen: View {
                             .padding(.bottom, 16)
                         DetailDescriptionView(model: model)
                         .padding(.bottom, 24)
-                        ChoiceSize(model: model)
+                        SelectedSize(model: model)
                             .padding(.bottom, 24)
                         Spacer()
                     }

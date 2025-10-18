@@ -11,13 +11,12 @@ struct Details: View {
     @EnvironmentObject var orderModel: OrderModel
     var body: some View {
         HStack(spacing: 0) {
-            VStack(alignment: .leading, spacing: 0) {
+            VStack(alignment: .leading, spacing: 4) {
                 Text(orderModel.product?.name ?? "")
                     .fontSora(size: 20, weight: .semibold, color: .grayNormalActive)
-                    .padding(.bottom, 4)
                 Text("Ice/Hot")
                     .fontSora(size: 12, weight: .regular, color: .grayLighter)
-                    .padding(.bottom,  16)
+                    .padding(.bottom,  12)
                 HStack(spacing: 0) {
                     Image(.star)
                         .resizable()
