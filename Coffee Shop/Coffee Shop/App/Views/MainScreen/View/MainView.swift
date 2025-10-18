@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct MainView: View {
-    @StateObject var model = MainViewModel()
+    @StateObject var vm = MainViewModel()
     @StateObject var router = Router()
     @StateObject var orderModel = OrderModel()
     var body: some View {
@@ -28,8 +28,8 @@ struct MainView: View {
                             .padding(.top, 24)
                         SearchBar()
                         Banner()
-                        CategorySlider(model: model)
-                        ProductGrid(model: model)
+                        CategorySlider(model: vm)
+                        ProductGrid(model: vm)
                             .navigationDestination(for: Screen.self) { screen in
                                 switch screen {
                                 case .details:
