@@ -11,7 +11,3 @@ class OrderModel: ObservableObject {
     
 }
 
-enum DeliveryType: String {
-    case devlier = "Devlier"
-    case pickUp = "Pick Up"
-}

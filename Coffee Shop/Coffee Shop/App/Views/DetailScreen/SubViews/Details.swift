@@ -30,14 +30,18 @@ struct Details: View {
                 }
             }
             Spacer()
-            HStack(spacing: 0) {
+            HStack(spacing: 12) {
                 Superiority(logo: .fastDelivery)
-                    .padding(.trailing, 12)
                 Superiority(logo: .qualityBean)
-                    .padding(.trailing, 12)
                 Superiority(logo: .extraMilk)
             }
             .padding([.top, .bottom], 20)
         }
+        .background(.mainBg)
     }
+}
+
+#Preview {
+    Details()
+        .environmentObject(OrderModel())
 }

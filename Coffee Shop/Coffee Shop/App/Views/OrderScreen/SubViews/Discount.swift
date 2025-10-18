@@ -17,6 +17,7 @@ struct Discount: View {
                 Text("1 Discount is Applies")
                     .font(Font.custom(.sora, size: 14))
                     .fontWeight(.semibold)
+                    .foregroundColor(.grayNormal)
                 Spacer()
                 Image(.right)
                     .resizable()
@@ -26,4 +27,8 @@ struct Discount: View {
         }
         
     }
+}
+
+#Preview {
+    Discount()
 }

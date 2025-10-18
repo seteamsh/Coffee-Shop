@@ -26,12 +26,6 @@ struct SelectedProduct: Hashable {
     var typeDelivery: String?
 }
 
-struct EditTypeButton: Identifiable, Hashable {
-    let id: Int
-    var name: String
-    var image: String
-}
-
 enum TypeCountButton: String {
     case plus = "plus"
     case notActiveMinus = "notActiveMinus"

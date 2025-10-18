@@ -8,12 +8,12 @@ struct SelectedDeliveryType: View {
             RoundedRectangle(cornerRadius: 12)
                 .fill(.categoryNotActive)
             HStack(spacing: 0) {
-                OrderTypeButton(name: .devlier, isActive: model.selectedTypeOrder == .devlier) {
-                    model.selectedTypeOrder = .devlier
+                OrderTypeButton(name: .devlier, isActive: model.getSelectedTypeOrder() == .devlier) {
+                    model.setSelectedTypeOrder(.devlier)
                     orderModel.typeDelivery = .devlier
                 }
-                OrderTypeButton(name: .pickUp, isActive: model.selectedTypeOrder == .pickUp) {
-                    model.selectedTypeOrder = .pickUp
+                OrderTypeButton(name: .pickUp, isActive: model.getSelectedTypeOrder() == .pickUp) {
+                    model.setSelectedTypeOrder(.pickUp) 
                     orderModel.typeDelivery = .pickUp
                 }
                 
@@ -22,4 +22,9 @@ struct SelectedDeliveryType: View {
         }
         .frame(height: 43)
     }
+}
+
+#Preview {
+    SelectedDeliveryType(model: OrderScreenModel())
+        .environmentObject(OrderModel())
 }
