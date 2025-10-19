@@ -3,9 +3,9 @@ import SwiftUI
 
 struct ProductGrid: View {
     
-    @ObservedObject var vm: MainViewModel
+    @ObservedObject var vm: MainScreenViewModel
     @EnvironmentObject var router: Router
-    @EnvironmentObject var orderModel: OrderModel
+    @EnvironmentObject var orderModel: OrderViewModel
     var body: some View {
         LazyVGrid(columns: [
             GridItem(.flexible(maximum: .infinity)),
@@ -25,5 +25,5 @@ struct ProductGrid: View {
 }
 
 #Preview {
-    MainView()
+    MainScreen()
 }

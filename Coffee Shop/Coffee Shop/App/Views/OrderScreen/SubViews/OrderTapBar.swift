@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct OrderTapBar: View {
-    @EnvironmentObject var orderModel: OrderModel
+    @EnvironmentObject var orderModel: OrderViewModel
     @EnvironmentObject var router: Router
     var body: some View {
             VStack(spacing: 0) {
@@ -46,5 +46,5 @@ struct OrderTapBar: View {
 
 #Preview {
     OrderTapBar()
-        .environmentObject(OrderModel())
+        .environmentObject(OrderViewModel())
 }

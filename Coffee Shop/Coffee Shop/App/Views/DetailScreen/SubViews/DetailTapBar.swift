@@ -1,10 +1,10 @@
 import SwiftUI
 
 struct DetailTapBar: View {
-    @EnvironmentObject var orderModel: OrderModel
+    @EnvironmentObject var orderModel: OrderViewModel
     @EnvironmentObject var router: Router
     
-    @ObservedObject var model: DetailScreenModel
+    @ObservedObject var model: DetailScreenViewModel
     var body: some View {
         ZStack {
             Rectangle()

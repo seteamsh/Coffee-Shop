@@ -3,7 +3,7 @@ import Kingfisher
 
 struct OrderScreen: View {
     //MARK: - Properties
-    @StateObject var model = OrderScreenModel()
+    @StateObject var model = OrderScreenViewModel()
     @EnvironmentObject var router: Router
     
     //MARK: - Body
@@ -34,6 +34,6 @@ struct OrderScreen: View {
 
 #Preview {
     OrderScreen()
-        .environmentObject(OrderModel())
+        .environmentObject(OrderViewModel())
         .environmentObject(Router())
 }

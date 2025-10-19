@@ -1,6 +1,6 @@
 import SwiftUI
 @MainActor
-final class MainViewModel: ObservableObject {
+final class MainScreenViewModel: ObservableObject {
     //MARK: - Properties
     @Published var searchBar = ""
     @Published var selectedProduct: SelectedProduct?

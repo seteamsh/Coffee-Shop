@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct DeliveryAddress: View {
-    @ObservedObject var model: OrderScreenModel
+    @ObservedObject var model: OrderScreenViewModel
     var body: some View {
         Text("Delivery Address")
             .fontSora(size: 16, weight: .semibold, color: .grayNormalActive)
@@ -17,5 +17,5 @@ struct DeliveryAddress: View {
 }
 
 #Preview {
-    DeliveryAddress(model: OrderScreenModel())
+    DeliveryAddress(model: OrderScreenViewModel())
 }

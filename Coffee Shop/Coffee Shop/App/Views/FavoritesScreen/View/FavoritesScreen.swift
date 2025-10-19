@@ -2,8 +2,8 @@ import SwiftUI
 import SwipeActions
 
 struct FavoritesScreen: View {
-    @EnvironmentObject var favoritesScreenModel: FavoritesScreenModel
-    @StateObject var orderModel = OrderModel()
+    @EnvironmentObject var favoritesScreenModel: FavoritesScreenViewModel
+    @StateObject var orderModel = OrderViewModel()
     @StateObject var router = Router()
     var body: some View {
         NavigationStack(path: $router.path) {
@@ -114,5 +114,5 @@ struct WishCard: View {
 }
 #Preview {
     FavoritesScreen()
-        .environmentObject(FavoritesScreenModel())
+        .environmentObject(FavoritesScreenViewModel())
 }

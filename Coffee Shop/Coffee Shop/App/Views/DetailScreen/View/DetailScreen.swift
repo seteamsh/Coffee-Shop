@@ -3,8 +3,8 @@ import Kingfisher
 
 struct DetailScreen: View {
     //MARK: - Properties
-    @StateObject var model = DetailScreenModel()
-    @EnvironmentObject var orderModel: OrderModel
+    @StateObject var model = DetailScreenViewModel()
+    @EnvironmentObject var orderModel: OrderViewModel
 
     //MARK: - Body
     var body: some View {
@@ -36,6 +36,6 @@ struct DetailScreen: View {
 
 #Preview {
     DetailScreen()
-        .environmentObject(FavoritesScreenModel())
-        .environmentObject(OrderModel())
+        .environmentObject(FavoritesScreenViewModel())
+        .environmentObject(OrderViewModel())
 }

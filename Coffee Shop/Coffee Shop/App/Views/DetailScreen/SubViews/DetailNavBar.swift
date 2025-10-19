@@ -9,8 +9,8 @@ import SwiftUI
 
 struct DetailNavBar: View {
     @EnvironmentObject var router: Router
-    @EnvironmentObject var favoritesScreenModel: FavoritesScreenModel
-    @EnvironmentObject var orderModel: OrderModel
+    @EnvironmentObject var favoritesScreenModel: FavoritesScreenViewModel
+    @EnvironmentObject var orderModel: OrderViewModel
     var isAdded: Bool {
         favoritesScreenModel.wishList.contains(orderModel.product)
     }
@@ -49,7 +49,7 @@ struct DetailNavBar: View {
 
 #Preview {
     DetailNavBar()
-        .environmentObject(FavoritesScreenModel())
+        .environmentObject(FavoritesScreenViewModel())
         .environmentObject(Router())
-        .environmentObject(OrderModel())
+        .environmentObject(OrderViewModel())
 }

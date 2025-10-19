@@ -1,8 +1,8 @@
 import SwiftUI
 
 struct SelectedDeliveryType: View {
-    @ObservedObject var model: OrderScreenModel
-    @EnvironmentObject var orderModel: OrderModel
+    @ObservedObject var model: OrderScreenViewModel
+    @EnvironmentObject var orderModel: OrderViewModel
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 12)
@@ -25,6 +25,6 @@ struct SelectedDeliveryType: View {
 }
 
 #Preview {
-    SelectedDeliveryType(model: OrderScreenModel())
-        .environmentObject(OrderModel())
+    SelectedDeliveryType(model: OrderScreenViewModel())
+        .environmentObject(OrderViewModel())
 }

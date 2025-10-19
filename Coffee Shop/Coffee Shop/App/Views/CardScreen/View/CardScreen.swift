@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ShoppingBagScreen: View {
+struct CardScreen: View {
     var body: some View {
         VStack {
             Spacer()
@@ -18,5 +18,5 @@ struct ShoppingBagScreen: View {
 }
 
 #Preview {
-    ShoppingBagScreen()
+    CardScreen()
 }

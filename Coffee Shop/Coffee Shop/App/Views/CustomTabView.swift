@@ -7,11 +7,11 @@ struct CustomTabView: View {
                 ZStack {
                     switch model.selectionTab {
                     case .Main:
-                        MainView()
+                        MainScreen()
                     case .Favorites:
                         FavoritesScreen()
                     case .ShoppingBag:
-                        ShoppingBagScreen()
+                        CardScreen()
                     case .Notifications:
                         NotificationsScreen()
                     }
@@ -71,5 +71,5 @@ struct ButtonIcon: View {
 
 #Preview {
     CustomTabView()
-        .environmentObject(FavoritesScreenModel())
+        .environmentObject(FavoritesScreenViewModel())
 }

@@ -1,5 +1,3 @@
-
-
 enum Screen: Hashable {
     case main
     case details

@@ -1,8 +1,8 @@
 import SwiftUI
 
 struct CheckoutProduct: View {
-    @ObservedObject var model: OrderScreenModel
-    @EnvironmentObject var orderModel: OrderModel
+    @ObservedObject var model: OrderScreenViewModel
+    @EnvironmentObject var orderModel: OrderViewModel
     var body: some View {
         HStack(spacing: 0) {
             CardImage(imageURL: orderModel.product?.image ?? "")
@@ -18,19 +18,18 @@ struct CheckoutProduct: View {
             }
             .padding(.leading, 16)
             Spacer()
-            HStack(spacing: 0) {
+            HStack(spacing: 18) {
                 TypeCountBtn(type: model.isActiveMinus ? .activeMinus : .notActiveMinus) {
                     model.decreaseCount()
-                    orderModel.count = model.getCount()
-                    
+                    orderModel.quantity = model.getCount()
                 }
-                .padding(.trailing, 18)
+                
                 Text("\(model.getCount())")
                     .fontSora(size: 14, weight: .semibold, color: .greyNormalHover)
-                    .padding(.trailing, 18)
+                
                 TypeCountBtn(type: .plus) {
                     model.increaseCount()
-                    orderModel.count = model.getCount()
+                    orderModel.quantity = model.getCount()
                     
                 }
             }
@@ -40,6 +39,6 @@ struct CheckoutProduct: View {
 }
 
 #Preview {
-    CheckoutProduct(model: OrderScreenModel())
-        .environmentObject(OrderModel())
+    CheckoutProduct(model: OrderScreenViewModel())
+        .environmentObject(OrderViewModel())
 }

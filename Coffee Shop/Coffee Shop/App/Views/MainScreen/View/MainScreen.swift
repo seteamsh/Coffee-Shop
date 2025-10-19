@@ -1,9 +1,9 @@
 import SwiftUI
 
-struct MainView: View {
-    @StateObject var vm = MainViewModel()
+struct MainScreen: View {
+    @StateObject var vm = MainScreenViewModel()
     @StateObject var router = Router()
-    @StateObject var orderModel = OrderModel()
+    @StateObject var orderModel = OrderViewModel()
     var body: some View {
         NavigationStack(path: $router.path) {
             ScrollView(.vertical, showsIndicators: false) {
@@ -56,6 +56,6 @@ struct MainView: View {
 }
 
 #Preview {
-    MainView()
-        .environmentObject(FavoritesScreenModel())
+    MainScreen()
+        .environmentObject(FavoritesScreenViewModel())
 }

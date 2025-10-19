@@ -1,8 +1,8 @@
 import SwiftUI
 
 struct DetailDescriptionView: View {
-    @ObservedObject var model: DetailScreenModel
-    @EnvironmentObject var orderModel: OrderModel
+    @ObservedObject var model: DetailScreenViewModel
+    @EnvironmentObject var orderModel: OrderViewModel
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             Text("Description")

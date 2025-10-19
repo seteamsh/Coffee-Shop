@@ -3,8 +3,8 @@
 import SwiftUI
 
 struct SelectedSize: View {
-    @ObservedObject var model: DetailScreenModel
-    @EnvironmentObject var orderModel: OrderModel
+    @ObservedObject var model: DetailScreenViewModel
+    @EnvironmentObject var orderModel: OrderViewModel
     var body: some View {
         Text("Size")
             .fontSora(size: 16, weight: .semibold, color: .grayNormalActive)
@@ -31,6 +31,6 @@ struct SelectedSize: View {
 }
 
 #Preview {
-    SelectedSize(model: DetailScreenModel())
-        .environmentObject(OrderModel())
+    SelectedSize(model: DetailScreenViewModel())
+        .environmentObject(OrderViewModel())
 }

@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct CategorySlider: View {
-    @ObservedObject var vm: MainViewModel
+    @ObservedObject var vm: MainScreenViewModel
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 16) {
@@ -19,5 +19,5 @@ struct CategorySlider: View {
 }
 
 #Preview {
-    CategorySlider(vm: MainViewModel())
+    CategorySlider(vm: MainScreenViewModel())
 }

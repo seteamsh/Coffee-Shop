@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct Details: View {
-    @EnvironmentObject var orderModel: OrderModel
+    @EnvironmentObject var orderModel: OrderViewModel
     var body: some View {
         HStack(spacing: 0) {
             VStack(alignment: .leading, spacing: 4) {
@@ -42,5 +42,5 @@ struct Details: View {
 
 #Preview {
     Details()
-        .environmentObject(OrderModel())
+        .environmentObject(OrderViewModel())
 }

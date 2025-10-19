@@ -1,6 +1,6 @@
 import SwiftUI
 
-class OrderScreenModel: ObservableObject {
+class OrderScreenViewModel: ObservableObject {
     
     //MARK: - Properties
     private var selectedTypeOrder: DeliveryType = .devlier // Может не обновлять в будущем, иметь ввиду поменять на @Published privat(set) var

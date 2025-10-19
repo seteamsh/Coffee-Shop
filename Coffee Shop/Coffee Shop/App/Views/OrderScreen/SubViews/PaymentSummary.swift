@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct PaymentSummary: View {
-    @EnvironmentObject var orderModel: OrderModel
+    @EnvironmentObject var orderModel: OrderViewModel
     var body: some View {
         Text("Payment Summary")
             .font(Font.custom(.sora, size: 16))
@@ -39,5 +39,5 @@ struct PaymentSummary: View {
 
 #Preview {
     PaymentSummary()
-        .environmentObject(OrderModel())
+        .environmentObject(OrderViewModel())
 }

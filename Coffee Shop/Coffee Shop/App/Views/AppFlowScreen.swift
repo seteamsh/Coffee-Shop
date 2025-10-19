@@ -7,7 +7,7 @@ enum AppFlowState {
 
 
 struct AppFlowScreen: View {
-    @StateObject var favoritesScreenModel = FavoritesScreenModel()
+    @StateObject var favoritesScreenModel = FavoritesScreenViewModel()
     @State var appFlowState: AppFlowState = .Auth
     
     var body: some View {

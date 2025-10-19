@@ -1,6 +1,6 @@
 import SwiftUI
 
-class FavoritesScreenModel: ObservableObject {
+class FavoritesScreenViewModel: ObservableObject {
     @Published var wishList: [ProductModel?] = []
     
 }
