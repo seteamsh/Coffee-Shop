@@ -1,34 +1,38 @@
 import SwiftUI
 @MainActor
 final class MainViewModel: ObservableObject {
+    //MARK: - Properties
     @Published var searchBar = ""
-    @Published var categorySelected: CategorySelected = .all
     @Published var selectedProduct: SelectedProduct?
-    @Published private(set) var categories: [CategoryModel] = []
-    @Published var  products: [ProductModel] = []
-    private let categoryService: CategoryServiceProtocol
-    init(categoryService: CategoryServiceProtocol = MockCategoryService()) {
-        self.categoryService = categoryService
-        loadCategories()
+    @Published var products: [ProductModel] = []
+    private var categories: [Category] = [Category(id: 0, name: "All Coffee")]
+    @Published private(set) var categorySelected: Category = Category(id: 0, name: "All Coffee")
+    
+    //MARK: - Initalizer
+    init() {
+        fetchCategories()
         fetchProducts()
         NotificationService.shared.requestPermission()
     }
     
-    var filteredProducts: [ProductModel] {
-        get {
-            if categorySelected == .all {
-                return products
-            } else {
-                return products.filter { $0.category.contains(categorySelected) }
-            }
+    //MARK: - Methods
+    func setCategorySelected(category: Category) {
+        categorySelected = category
+    }
+    
+    func getCategories() -> [Category] {
+        return categories
+    }
+    
+    func getProductFromSelectedCategories() -> [ProductModel] {
+        if categorySelected.id == 0 {
+            return products
+        } else {
+            return products.filter { $0.category.contains(categorySelected) }
         }
     }
     
-    private func loadCategories() {
-        categories = categoryService.getCategories()
-    }
-    
-    func fetchProducts()  {
+    func fetchProducts() {
         Task {
             do {
                 let fetchedProducts = try await NetworkManager.shared.getProducts()
@@ -41,4 +45,16 @@ final class MainViewModel: ObservableObject {
         }
     }
     
+    func fetchCategories() {
+        Task {
+            do {
+                let fetchCategories = try await NetworkManager.shared.getCategories()
+                categories.append(contentsOf: fetchCategories)
+            } catch {
+                if let error = error as? URLError {
+                    print(error)
+                }
+            }
+        }
+    }
 }

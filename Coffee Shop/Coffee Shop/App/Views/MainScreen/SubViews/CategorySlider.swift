@@ -1,16 +1,16 @@
 import SwiftUI
 
 struct CategorySlider: View {
-    @ObservedObject var model: MainViewModel
+    @ObservedObject var vm: MainViewModel
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 16) {
-                ForEach(model.categories) { category in
-                    CategorySliderButton(isActive:
-                                            category.category == model.categorySelected ? true : false,
-                                         name: category
+                ForEach(vm.getCategories()) { category in
+                    CategorySliderButton(
+                        name: category.name,
+                        isActive: category == vm.categorySelected ? true : false
                     ){
-                        model.categorySelected = category.category
+                        vm.setCategorySelected(category: category)
                     }
                 }
             }
@@ -19,5 +19,5 @@ struct CategorySlider: View {
 }
 
 #Preview {
-    CategorySlider(model: MainViewModel())
+    CategorySlider(vm: MainViewModel())
 }

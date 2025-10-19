@@ -3,7 +3,7 @@ import SwiftUI
 
 struct ProductGrid: View {
     
-    @ObservedObject var model: MainViewModel
+    @ObservedObject var vm: MainViewModel
     @EnvironmentObject var router: Router
     @EnvironmentObject var orderModel: OrderModel
     var body: some View {
@@ -11,14 +11,13 @@ struct ProductGrid: View {
             GridItem(.flexible(maximum: .infinity)),
             GridItem(.flexible(maximum: .infinity))
         ], spacing: 24) {
-            ForEach(model.filteredProducts) { product in
+            ForEach(vm.getProductFromSelectedCategories()) { product in
                 Button {
                     orderModel.product = product
                     router.push(.details)
                 } label: {
                     Product(product: product)
                 }
-                
             }
         }
         //.padding(EdgeInsets(top: 0, leading: 24, bottom: 24, trailing: 24))

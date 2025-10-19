@@ -24,4 +24,18 @@ final class NetworkManager {
             throw NetworkError.invalidData
         }
     }
+    func getCategories() async throws -> [Category] {
+        guard let url = URL(string: URLConstans.urlCategories) else {
+            throw NetworkError.invalidURL
+        }
+        let (data, response) = try await URLSession.shared.data(from: url)
+        guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+            throw NetworkError.invalidResponse
+        }
+        do {
+            return try decoder.decode([Category].self, from: data)
+        } catch {
+            throw NetworkError.invalidData
+        }
+    }
 }

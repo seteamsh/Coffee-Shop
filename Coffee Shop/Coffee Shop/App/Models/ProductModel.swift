@@ -1,4 +1,4 @@
-struct ProductModel: Identifiable, Hashable, Encodable, Decodable {
+struct ProductModel: Identifiable, Hashable, Codable {
     let id: Int
     var name: String
     var modificator: String
@@ -6,5 +6,5 @@ struct ProductModel: Identifiable, Hashable, Encodable, Decodable {
     var price: Double
     var rating: String
     var image: String
-    var category: [CategorySelected] = [.all]
+    var category: [Category]
 }

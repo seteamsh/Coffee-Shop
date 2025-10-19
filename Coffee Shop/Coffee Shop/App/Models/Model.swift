@@ -1,29 +1,4 @@
-enum CategorySelected: String, Identifiable, Equatable, Encodable, Decodable {
-    case all
-    case machiato
-    case latte
-    case americano
-    
-    var id: Self {
-        return self
-    }
-}
 
-struct SelectedProduct: Hashable {
-    var product: ProductModel?
-    var size: SizeOfCup?
-    var count = 1
-    var totalAmount: Double? {
-        (product?.price ?? 0.0) * Double(count)
-    }
-    var typeDelivery: String?
-}
-
-enum TypeCountButton: String {
-    case plus = "plus"
-    case notActiveMinus = "notActiveMinus"
-    case activeMinus = "activeMinus"
-}
 
 enum Screen: Hashable {
     case main

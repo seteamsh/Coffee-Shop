@@ -65,7 +65,7 @@ struct Product: View {
             description: "A cappuccino is an approximately 150 ml (5 oz) beverage, with 25 ml of espresso coffee and 85ml of fresh milk the fo.. Read More",
             price: 4.53,
             rating: "4.8",
-            image: "https://raw.githubusercontent.com/seteamsh/Coffee-Shop-Product/refs/heads/main/caffeMocha.png"
+            image: "https://raw.githubusercontent.com/seteamsh/Coffee-Shop-Product/refs/heads/main/caffeMocha.png", category: [Category(id: 1, name: "Machiato")]
         )
     )
 }

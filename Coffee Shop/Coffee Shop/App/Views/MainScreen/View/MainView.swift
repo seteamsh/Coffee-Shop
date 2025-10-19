@@ -28,8 +28,8 @@ struct MainView: View {
                             .padding(.top, 24)
                         SearchBar()
                         Banner()
-                        CategorySlider(model: vm)
-                        ProductGrid(model: vm)
+                        CategorySlider(vm: vm)
+                        ProductGrid(vm: vm)
                             .navigationDestination(for: Screen.self) { screen in
                                 switch screen {
                                 case .details:
