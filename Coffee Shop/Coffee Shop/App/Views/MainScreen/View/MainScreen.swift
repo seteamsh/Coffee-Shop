@@ -3,7 +3,7 @@ import SwiftUI
 struct MainScreen: View {
     @StateObject var vm = MainScreenViewModel()
     @StateObject var router = Router()
-    @StateObject var orderModel = OrderViewModel()
+    @StateObject var orderViewModel = OrderViewModel()
     var body: some View {
         NavigationStack(path: $router.path) {
             ScrollView(.vertical, showsIndicators: false) {
@@ -51,7 +51,7 @@ struct MainScreen: View {
             .background(Color.mainBg)
         }
         .environmentObject(router)
-        .environmentObject(orderModel)
+        .environmentObject(orderViewModel)
     }
 }
 

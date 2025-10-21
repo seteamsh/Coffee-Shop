@@ -4,7 +4,7 @@ import Kingfisher
 struct DetailScreen: View {
     //MARK: - Properties
     @StateObject var model = DetailScreenViewModel()
-    @EnvironmentObject var orderModel: OrderViewModel
+    @EnvironmentObject var orderViewModel: OrderViewModel
 
     //MARK: - Body
     var body: some View {
@@ -12,7 +12,7 @@ struct DetailScreen: View {
             ScrollView(.vertical) {
                     VStack(spacing: 0) {
                         DetailNavBar()
-                        CardImage(imageURL: orderModel.product?.image ?? "")
+                        CardImage(imageURL: orderViewModel.getProduct().image)
                             .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height * 0.3)
                         Details()
                             .padding([.top, .bottom], 16)
@@ -27,7 +27,7 @@ struct DetailScreen: View {
                     .padding([.leading, .trailing], 24)
             }
             .background(Color.mainBg)
-            DetailTapBar(model: model)
+            DetailTapBar()
             .background(Color.mainBg)
         }
             .navigationBarBackButtonHidden()            

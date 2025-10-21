@@ -1,8 +1,7 @@
 import SwiftUI
 
-class DetailScreenViewModel: ObservableObject {
-    @Published var isMore: Bool = false
-    @Published var selectedSize: SizeOfCup?
+final class DetailScreenViewModel: ObservableObject {
+    @Published private(set) var isMore: Bool = false
     var lineLimit: Int {
         isMore ? .max : 3
     }

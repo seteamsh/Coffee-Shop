@@ -5,7 +5,7 @@ struct ProductGrid: View {
     
     @ObservedObject var vm: MainScreenViewModel
     @EnvironmentObject var router: Router
-    @EnvironmentObject var orderModel: OrderViewModel
+    @EnvironmentObject var orderViewModel: OrderViewModel
     var body: some View {
         LazyVGrid(columns: [
             GridItem(.flexible(maximum: .infinity)),
@@ -13,14 +13,13 @@ struct ProductGrid: View {
         ], spacing: 24) {
             ForEach(vm.getProductFromSelectedCategories()) { product in
                 Button {
-                    orderModel.product = product
+                    orderViewModel.setProduct(product)
                     router.push(.details)
                 } label: {
                     Product(product: product)
                 }
             }
         }
-        //.padding(EdgeInsets(top: 0, leading: 24, bottom: 24, trailing: 24))
     }
 }
 

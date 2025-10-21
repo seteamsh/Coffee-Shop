@@ -22,7 +22,7 @@ struct FavoritesScreen: View {
                     ForEach(favoritesScreenModel.wishList, id: \.self) { productModel in
                         WishCard(productModel: productModel)
                             .onTapGesture {
-                                orderModel.product = productModel
+                                //orderModel.product = productModel
                                 router.push(.details)
                                 //передать в detailScreen(inputSelectedProduct: productModel)
                             }

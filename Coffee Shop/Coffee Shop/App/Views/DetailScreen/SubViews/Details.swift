@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct Details: View {
-    @EnvironmentObject var orderModel: OrderViewModel
+    @EnvironmentObject var orderViewModel: OrderViewModel
     var body: some View {
         HStack(spacing: 0) {
             VStack(alignment: .leading, spacing: 4) {
-                Text(orderModel.product?.name ?? "")
+                Text(orderViewModel.getProduct().name)
                     .fontSora(size: 20, weight: .semibold, color: .grayNormalActive)
                 Text("Ice/Hot")
                     .fontSora(size: 12, weight: .regular, color: .grayLighter)
@@ -21,7 +21,7 @@ struct Details: View {
                     Image(.star)
                         .resizable()
                         .frame(width: 20, height: 20)
-                    Text(orderModel.product?.rating ?? "")
+                    Text(orderViewModel.getProduct().rating)
                         .fontSora(size: 15, weight: .semibold, color: .greyNormalHover)
                     Text("(230)")
                         .font(Font.custom(.sora, size: 12))

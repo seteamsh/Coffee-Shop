@@ -1,10 +1,8 @@
 import SwiftUI
 
 struct DetailTapBar: View {
-    @EnvironmentObject var orderModel: OrderViewModel
+    @EnvironmentObject var orderViewModel: OrderViewModel
     @EnvironmentObject var router: Router
-    
-    @ObservedObject var model: DetailScreenViewModel
     var body: some View {
         ZStack {
             Rectangle()
@@ -18,12 +16,12 @@ struct DetailTapBar: View {
                     Text("Price")
                         .fontSora(size: 14, weight: .regular, color: .greyLightHover)
                         .padding(.bottom, 4)
-                    Text("\(String(orderModel.product?.price ?? 0.0))")
+                    Text("\(String(orderViewModel.getProduct().price))")
                         .fontSora(size: 18, weight: .semibold, color: .brownNormal)
                 }
                 Spacer()
                 Button {
-                    if model.selectedSize == nil {
+                    if orderViewModel.getSize() == nil {
                         return
                     } else {
                         router.push(.order)

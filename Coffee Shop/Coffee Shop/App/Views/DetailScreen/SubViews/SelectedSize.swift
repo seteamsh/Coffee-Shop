@@ -4,27 +4,24 @@ import SwiftUI
 
 struct SelectedSize: View {
     @ObservedObject var model: DetailScreenViewModel
-    @EnvironmentObject var orderModel: OrderViewModel
+    @EnvironmentObject var orderViewModel: OrderViewModel
     var body: some View {
         Text("Size")
             .fontSora(size: 16, weight: .semibold, color: .grayNormalActive)
             .padding(.bottom, 16)
             .frame(maxWidth: .infinity, alignment: .leading)
         HStack(spacing: 16) {
-            SelectedSizeButton(isActive: model.selectedSize == .S,
+            SelectedSizeButton(isActive: orderViewModel.getSize() == .S,
                          size: .S) {
-                model.selectedSize = .S
-                orderModel.size = .S
+                orderViewModel.setSize(.S)
             }
-            SelectedSizeButton(isActive: model.selectedSize == .M,
+            SelectedSizeButton(isActive: orderViewModel.getSize() == .M,
                          size: .M) {
-                model.selectedSize = .M
-                orderModel.size = .M
+                orderViewModel.setSize(.M)
             }
-            SelectedSizeButton(isActive: model.selectedSize == .L,
+            SelectedSizeButton(isActive: orderViewModel.getSize() == .L,
                          size: .L) {
-                model.selectedSize = .L
-                orderModel.size = .L
+                orderViewModel.setSize(.L)
             }
         }
     }
